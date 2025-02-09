@@ -1,0 +1,7 @@
+.bg-hero{
+    background-image: url('/assets/split-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+
+}

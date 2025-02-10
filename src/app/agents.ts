@@ -1,8 +1,8 @@
 export interface Agents {
-    id:string;
+    id:number;
     name:string;
     role:string;
     image:string;
-    abilities:string;
     description:string;
+    abilities:string;
 }

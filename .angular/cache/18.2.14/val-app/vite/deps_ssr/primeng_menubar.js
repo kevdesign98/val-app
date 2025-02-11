@@ -1,16 +1,11 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-IBC6DDP7.js";
-import {
   BaseStyle,
   PrimeNG,
   base,
   config_default,
   service_default
-} from "./chunk-GCLIG6VF.js";
+} from "./chunk-AMOZBVJD.js";
 import {
   PrimeTemplate,
   SharedModule,
@@ -39,8 +34,13 @@ import {
   removeClass,
   resolve,
   uuid
-} from "./chunk-BG7G2DWW.js";
-import "./chunk-YMVIZYZ4.js";
+} from "./chunk-D7BXVN2U.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-GG3ZDFPL.js";
+import "./chunk-F4JSRFGO.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -51,7 +51,7 @@ import {
   NgTemplateOutlet,
   isPlatformBrowser,
   isPlatformServer
-} from "./chunk-R2TQ3D2E.js";
+} from "./chunk-2WG5QLMT.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

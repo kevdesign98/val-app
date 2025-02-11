@@ -7,7 +7,7 @@ import {
   NoopAnimationDriver,
   WebAnimationsDriver,
   WebAnimationsStyleNormalizer
-} from "./chunk-S4MFUPR3.js";
+} from "./chunk-2MSQ7OCX.js";
 import {
   BrowserDomAdapter,
   BrowserModule,
@@ -16,7 +16,7 @@ import {
   EventManagerPlugin,
   HTTP_ROOT_INTERCEPTOR_FNS,
   HttpClientModule
-} from "./chunk-YMVIZYZ4.js";
+} from "./chunk-F4JSRFGO.js";
 import {
   DOCUMENT,
   NullViewportScroller,
@@ -26,7 +26,7 @@ import {
   XhrFactory,
   getDOM,
   setRootDomAdapter
-} from "./chunk-R2TQ3D2E.js";
+} from "./chunk-2WG5QLMT.js";
 import {
   ALLOW_MULTIPLE_PLATFORMS,
   ANIMATION_MODULE_TYPE,

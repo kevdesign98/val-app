@@ -1,10 +1,16 @@
 import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-2EJ7RQ3U.js";
+import "./chunk-LAGDPNOC.js";
+import {
   BaseStyle,
   PrimeNG,
   base,
   config_default,
   service_default
-} from "./chunk-4GASUZZ6.js";
+} from "./chunk-R5EFOST5.js";
 import {
   PrimeTemplate,
   SharedModule,
@@ -33,13 +39,7 @@ import {
   removeClass,
   resolve,
   uuid
-} from "./chunk-ZLM5F4BB.js";
-import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-JOFRSKWZ.js";
-import "./chunk-TPEQXHBI.js";
+} from "./chunk-OECG2VPB.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -50,7 +50,7 @@ import {
   NgTemplateOutlet,
   isPlatformBrowser,
   isPlatformServer
-} from "./chunk-OGAGG4P6.js";
+} from "./chunk-DUPRP5OR.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Agents } from '../../agents';
+import { Agents } from '../../../models/agents';
 import { DUMMY_AGENTS } from '../../dummy-agents';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +11,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './list-agent.component.css'
 })
 export class ListAgentComponent {
-
   agents: Agents[] = DUMMY_AGENTS;
 }

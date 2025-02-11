@@ -1,13 +1,23 @@
-<div class="flex justify-center items-center red-bg">
-    <div>
-        <img src="" alt="Immagine di esempio" class="h-48 w-96 object-scale-down rounded-lg shadow-lg">
-    </div>
-    <div>
-        <h2 class="text-3xl font-bold mb-4">I tuoi agenti</h2>
-        <p class="text-gray-600">Questo è un esempio di layout a due colonne. Il testo sta a sinistra e l'immagine a
-            destra.</p>
-        <button class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg" [routerLink]="['/agents']">
-            Scopri di più
-        </button>
+<div class="bg-white">
+    <div
+        class="mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+        <div class="grid gap-4 sm:gap-6 lg:gap-8">
+            <img src="/assets/agenti.png"
+                alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
+                class="rounded-lg">
+        </div>
+        <div>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">I tuoi agenti</h2>
+            <p class="mt-4 text-gray-500">Il gioco va ben oltre i semplici scontri a fuoco: potrai scegliere un agente
+                con
+                abilità adattabili, rapide e letali che creano le opportunità giuste per sfoggiare la tua tecnica. Ogni
+                agente è diverso, come del resto sono diverse tutte le migliori azioni del gioco.</p>
+            <button [routerLink]="['/list-agents']"
+                class="mt-6 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg">
+                Scopri di più
+            </button>
+
+        </div>
+        
     </div>
 </div>

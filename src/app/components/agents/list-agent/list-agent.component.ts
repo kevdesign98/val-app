@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Agents } from '../../../models/agents';
-import { DUMMY_AGENTS } from '../../dummy-agents';
+import { DUMMY_AGENTS } from '../../../dummy-agents';
 import { CommonModule } from '@angular/common';
 
 @Component({

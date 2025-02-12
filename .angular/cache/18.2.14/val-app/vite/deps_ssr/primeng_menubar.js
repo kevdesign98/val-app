@@ -2,15 +2,12 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   BaseStyle,
   PrimeNG,
-  base,
-  config_default,
-  service_default
-} from "./chunk-AMOZBVJD.js";
-import {
   PrimeTemplate,
   SharedModule,
   addClass,
   appendChild,
+  base,
+  config_default,
   fadeIn,
   findLastIndex,
   findSingle,
@@ -33,8 +30,9 @@ import {
   removeChild,
   removeClass,
   resolve,
+  service_default,
   uuid
-} from "./chunk-D7BXVN2U.js";
+} from "./chunk-GY6FCRJS.js";
 import {
   RouterLink,
   RouterLinkActive,

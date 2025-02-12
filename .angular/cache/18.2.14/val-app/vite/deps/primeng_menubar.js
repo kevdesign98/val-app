@@ -1,21 +1,12 @@
 import {
-  RouterLink,
-  RouterLinkActive,
-  RouterModule
-} from "./chunk-2EJ7RQ3U.js";
-import "./chunk-LAGDPNOC.js";
-import {
   BaseStyle,
   PrimeNG,
-  base,
-  config_default,
-  service_default
-} from "./chunk-R5EFOST5.js";
-import {
   PrimeTemplate,
   SharedModule,
   addClass,
   appendChild,
+  base,
+  config_default,
   fadeIn,
   findLastIndex,
   findSingle,
@@ -38,8 +29,15 @@ import {
   removeChild,
   removeClass,
   resolve,
+  service_default,
   uuid
-} from "./chunk-OECG2VPB.js";
+} from "./chunk-4MDSPAB5.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterModule
+} from "./chunk-2EJ7RQ3U.js";
+import "./chunk-LAGDPNOC.js";
 import {
   CommonModule,
   DOCUMENT,

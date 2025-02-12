@@ -1,15 +1,13 @@
 import {
   BaseComponent
-} from "./chunk-XDKDCT6G.js";
+} from "./chunk-YESN7ERS.js";
 import {
-  BaseStyle
-} from "./chunk-QR3SND4N.js";
-import {
+  BaseStyle,
   Footer,
   Header,
   SharedModule,
   equals
-} from "./chunk-L2IOIIW6.js";
+} from "./chunk-Z4CP6AOJ.js";
 import {
   CommonModule,
   NgClass,

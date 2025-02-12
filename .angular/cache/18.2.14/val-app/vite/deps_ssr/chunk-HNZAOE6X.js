@@ -2,15 +2,13 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   BaseStyle,
   PrimeNG,
+  PrimeTemplate,
   base,
   config_default,
-  service_default
-} from "./chunk-3BTDUETV.js";
-import {
-  PrimeTemplate,
   getKeyValue,
+  service_default,
   uuid
-} from "./chunk-NVJYMRDV.js";
+} from "./chunk-4PWZ4HAG.js";
 import {
   DOCUMENT,
   isPlatformServer
@@ -289,4 +287,4 @@ var BaseComponent = class _BaseComponent {
 export {
   BaseComponent
 };
-//# sourceMappingURL=chunk-LZV6BMLX.js.map
+//# sourceMappingURL=chunk-HNZAOE6X.js.map

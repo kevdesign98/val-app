@@ -1,11 +1,8 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseComponent
-} from "./chunk-LZV6BMLX.js";
+} from "./chunk-YESN7ERS.js";
 import {
-  BaseStyle
-} from "./chunk-3BTDUETV.js";
-import {
+  BaseStyle,
   SharedModule,
   addClass,
   getHeight,
@@ -19,13 +16,13 @@ import {
   remove,
   removeClass,
   uuid
-} from "./chunk-NVJYMRDV.js";
+} from "./chunk-Z4CP6AOJ.js";
 import {
   CommonModule,
   NgClass,
   NgStyle,
   isPlatformBrowser
-} from "./chunk-2WG5QLMT.js";
+} from "./chunk-DUPRP5OR.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -69,7 +66,7 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-FB6BDKAH.js";
+} from "./chunk-V7MIMNX6.js";
 
 // node_modules/primeng/fesm2022/primeng-badge.mjs
 var theme = ({
@@ -5097,4 +5094,4 @@ export {
   SpinnerIcon,
   Ripple
 };
-//# sourceMappingURL=chunk-7GU73WXS.js.map
+//# sourceMappingURL=chunk-TXQGIVWI.js.map

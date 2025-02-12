@@ -1,16 +1,14 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseComponent
-} from "./chunk-LZV6BMLX.js";
+} from "./chunk-HNZAOE6X.js";
 import {
-  BaseStyle
-} from "./chunk-3BTDUETV.js";
-import {
+  BaseStyle,
   Footer,
   Header,
   SharedModule,
   equals
-} from "./chunk-NVJYMRDV.js";
+} from "./chunk-4PWZ4HAG.js";
 import {
   CommonModule,
   NgClass,

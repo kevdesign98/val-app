@@ -1,10 +1,9 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseComponent
-} from "./chunk-XDKDCT6G.js";
+} from "./chunk-HNZAOE6X.js";
 import {
-  BaseStyle
-} from "./chunk-QR3SND4N.js";
-import {
+  BaseStyle,
   SharedModule,
   addClass,
   getHeight,
@@ -18,13 +17,13 @@ import {
   remove,
   removeClass,
   uuid
-} from "./chunk-L2IOIIW6.js";
+} from "./chunk-4PWZ4HAG.js";
 import {
   CommonModule,
   NgClass,
   NgStyle,
   isPlatformBrowser
-} from "./chunk-DUPRP5OR.js";
+} from "./chunk-2WG5QLMT.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -68,7 +67,7 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-V7MIMNX6.js";
+} from "./chunk-FB6BDKAH.js";
 
 // node_modules/primeng/fesm2022/primeng-badge.mjs
 var theme = ({
@@ -5086,14 +5085,14 @@ var ConnectedOverlayScrollHandler = class {
 };
 
 export {
+  DomHandler,
+  ConnectedOverlayScrollHandler,
   Badge,
   BadgeModule,
   AngleDownIcon,
   AngleRightIcon,
   BarsIcon,
   SpinnerIcon,
-  Ripple,
-  DomHandler,
-  ConnectedOverlayScrollHandler
+  Ripple
 };
-//# sourceMappingURL=chunk-G5A2KO2I.js.map
+//# sourceMappingURL=chunk-7CHMIX5N.js.map

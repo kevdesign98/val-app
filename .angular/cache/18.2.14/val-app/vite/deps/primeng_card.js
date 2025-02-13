@@ -1,13 +1,14 @@
 import {
   BaseComponent
-} from "./chunk-YESN7ERS.js";
+} from "./chunk-3I5GCMRE.js";
 import {
   BaseStyle,
   Footer,
   Header,
+  PrimeTemplate,
   SharedModule,
   equals
-} from "./chunk-Z4CP6AOJ.js";
+} from "./chunk-NMZMKJZC.js";
 import {
   CommonModule,
   NgClass,
@@ -19,6 +20,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
+  ContentChildren,
   Injectable,
   Input,
   NgModule,
@@ -39,6 +41,8 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵelementContainer,
+  ɵɵelementContainerEnd,
+  ɵɵelementContainerStart,
   ɵɵelementEnd,
   ɵɵelementStart,
   ɵɵgetInheritedFactory,
@@ -51,7 +55,7 @@ import {
   ɵɵsetNgModuleScope,
   ɵɵtemplate,
   ɵɵtext,
-  ɵɵtextInterpolate1
+  ɵɵtextInterpolate
 } from "./chunk-V7MIMNX6.js";
 import "./chunk-WDMUDEB6.js";
 
@@ -153,7 +157,19 @@ function Card_div_1_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance(2);
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.headerTemplate);
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.headerTemplate || ctx_r0._headerTemplate);
+  }
+}
+function Card_div_3_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵtext(1);
+    ɵɵelementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = ɵɵnextContext(2);
+    ɵɵadvance();
+    ɵɵtextInterpolate(ctx_r0.header);
   }
 }
 function Card_div_3_ng_container_2_Template(rf, ctx) {
@@ -164,16 +180,27 @@ function Card_div_3_ng_container_2_Template(rf, ctx) {
 function Card_div_3_Template(rf, ctx) {
   if (rf & 1) {
     ɵɵelementStart(0, "div", 9);
-    ɵɵtext(1);
-    ɵɵtemplate(2, Card_div_3_ng_container_2_Template, 1, 0, "ng-container", 6);
+    ɵɵtemplate(1, Card_div_3_ng_container_1_Template, 2, 1, "ng-container", 10)(2, Card_div_3_ng_container_2_Template, 1, 0, "ng-container", 6);
     ɵɵelementEnd();
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance();
-    ɵɵtextInterpolate1(" ", ctx_r0._header, " ");
+    ɵɵproperty("ngIf", ctx_r0.header && !ctx_r0._titleTemplate && !ctx_r0.titleTemplate);
     ɵɵadvance();
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.titleTemplate);
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.titleTemplate || ctx_r0._titleTemplate);
+  }
+}
+function Card_div_4_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵtext(1);
+    ɵɵelementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = ɵɵnextContext(2);
+    ɵɵadvance();
+    ɵɵtextInterpolate(ctx_r0.subheader);
   }
 }
 function Card_div_4_ng_container_2_Template(rf, ctx) {
@@ -183,17 +210,16 @@ function Card_div_4_ng_container_2_Template(rf, ctx) {
 }
 function Card_div_4_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵelementStart(0, "div", 10);
-    ɵɵtext(1);
-    ɵɵtemplate(2, Card_div_4_ng_container_2_Template, 1, 0, "ng-container", 6);
+    ɵɵelementStart(0, "div", 11);
+    ɵɵtemplate(1, Card_div_4_ng_container_1_Template, 2, 1, "ng-container", 10)(2, Card_div_4_ng_container_2_Template, 1, 0, "ng-container", 6);
     ɵɵelementEnd();
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance();
-    ɵɵtextInterpolate1(" ", ctx_r0.subheader, " ");
+    ɵɵproperty("ngIf", ctx_r0.subheader && !ctx_r0._subtitleTemplate && ctx_r0.subtitleTemplate);
     ɵɵadvance();
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.subtitleTemplate);
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.subtitleTemplate || ctx_r0._subtitleTemplate);
   }
 }
 function Card_ng_container_7_Template(rf, ctx) {
@@ -208,7 +234,7 @@ function Card_div_8_ng_container_2_Template(rf, ctx) {
 }
 function Card_div_8_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵelementStart(0, "div", 11);
+    ɵɵelementStart(0, "div", 12);
     ɵɵprojection(1, 2);
     ɵɵtemplate(2, Card_div_8_ng_container_2_Template, 1, 0, "ng-container", 6);
     ɵɵelementEnd();
@@ -216,7 +242,7 @@ function Card_div_8_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance(2);
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.footerTemplate);
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.footerTemplate || ctx_r0._footerTemplate);
   }
 }
 var Card = class _Card extends BaseComponent {
@@ -224,7 +250,7 @@ var Card = class _Card extends BaseComponent {
    * Header of the card.
    * @group Props
    */
-  _header;
+  header;
   /**
    * Subheader of the card.
    * @group Props
@@ -251,10 +277,40 @@ var Card = class _Card extends BaseComponent {
   subtitleTemplate;
   contentTemplate;
   footerTemplate;
+  _headerTemplate;
+  _titleTemplate;
+  _subtitleTemplate;
+  _contentTemplate;
+  _footerTemplate;
   _style = signal(null);
   _componentStyle = inject(CardStyle);
   getBlockableElement() {
     return this.el.nativeElement.children[0];
+  }
+  templates;
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "title":
+          this._titleTemplate = item.template;
+          break;
+        case "subtitle":
+          this._subtitleTemplate = item.template;
+          break;
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+        case "footer":
+          this._footerTemplate = item.template;
+          break;
+        default:
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
   }
   static ɵfac = /* @__PURE__ */ (() => {
     let ɵCard_BaseFactory;
@@ -269,11 +325,12 @@ var Card = class _Card extends BaseComponent {
       if (rf & 1) {
         ɵɵcontentQuery(dirIndex, Header, 5);
         ɵɵcontentQuery(dirIndex, Footer, 5);
-        ɵɵcontentQuery(dirIndex, _c0, 5);
-        ɵɵcontentQuery(dirIndex, _c1, 5);
-        ɵɵcontentQuery(dirIndex, _c2, 5);
-        ɵɵcontentQuery(dirIndex, _c3, 5);
-        ɵɵcontentQuery(dirIndex, _c4, 5);
+        ɵɵcontentQuery(dirIndex, _c0, 4);
+        ɵɵcontentQuery(dirIndex, _c1, 4);
+        ɵɵcontentQuery(dirIndex, _c2, 4);
+        ɵɵcontentQuery(dirIndex, _c3, 4);
+        ɵɵcontentQuery(dirIndex, _c4, 4);
+        ɵɵcontentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
         let _t;
@@ -284,10 +341,11 @@ var Card = class _Card extends BaseComponent {
         ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.subtitleTemplate = _t.first);
         ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.contentTemplate = _t.first);
         ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.footerTemplate = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.templates = _t);
       }
     },
     inputs: {
-      _header: [0, "header", "_header"],
+      header: "header",
       subheader: "subheader",
       style: "style",
       styleClass: "styleClass"
@@ -297,7 +355,7 @@ var Card = class _Card extends BaseComponent {
     ngContentSelectors: _c6,
     decls: 9,
     vars: 10,
-    consts: [[3, "ngClass", "ngStyle"], ["class", "p-card-header", 4, "ngIf"], [1, "p-card-body"], ["class", "p-card-title", 4, "ngIf"], ["class", "p-card-subtitle", 4, "ngIf"], [1, "p-card-content"], [4, "ngTemplateOutlet"], ["class", "p-card-footer", 4, "ngIf"], [1, "p-card-header"], [1, "p-card-title"], [1, "p-card-subtitle"], [1, "p-card-footer"]],
+    consts: [[3, "ngClass", "ngStyle"], ["class", "p-card-header", 4, "ngIf"], [1, "p-card-body"], ["class", "p-card-title", 4, "ngIf"], ["class", "p-card-subtitle", 4, "ngIf"], [1, "p-card-content"], [4, "ngTemplateOutlet"], ["class", "p-card-footer", 4, "ngIf"], [1, "p-card-header"], [1, "p-card-title"], [4, "ngIf"], [1, "p-card-subtitle"], [1, "p-card-footer"]],
     template: function Card_Template(rf, ctx) {
       if (rf & 1) {
         ɵɵprojectionDef(_c5);
@@ -317,15 +375,15 @@ var Card = class _Card extends BaseComponent {
         ɵɵproperty("ngClass", "p-card p-component")("ngStyle", ctx._style());
         ɵɵattribute("data-pc-name", "card");
         ɵɵadvance();
-        ɵɵproperty("ngIf", ctx.headerFacet || ctx.headerTemplate);
+        ɵɵproperty("ngIf", ctx.headerFacet || ctx.headerTemplate || ctx._headerTemplate);
         ɵɵadvance(2);
-        ɵɵproperty("ngIf", ctx._header || ctx.titleTemplate);
+        ɵɵproperty("ngIf", ctx.header || ctx.titleTemplate || ctx._titleTemplate);
         ɵɵadvance();
-        ɵɵproperty("ngIf", ctx.subheader || ctx.subtitleTemplate);
+        ɵɵproperty("ngIf", ctx.subheader || ctx.subtitleTemplate || ctx._subtitleTemplate);
         ɵɵadvance(3);
-        ɵɵproperty("ngTemplateOutlet", ctx.contentTemplate);
+        ɵɵproperty("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
         ɵɵadvance();
-        ɵɵproperty("ngIf", ctx.footerFacet || ctx.footerTemplate);
+        ɵɵproperty("ngIf", ctx.footerFacet || ctx.footerTemplate || ctx._footerTemplate);
       }
     },
     dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, SharedModule],
@@ -342,26 +400,26 @@ var Card = class _Card extends BaseComponent {
       imports: [CommonModule, SharedModule],
       template: `
         <div [ngClass]="'p-card p-component'" [ngStyle]="_style()" [class]="styleClass" [attr.data-pc-name]="'card'">
-            <div class="p-card-header" *ngIf="headerFacet || headerTemplate">
+            <div class="p-card-header" *ngIf="headerFacet || headerTemplate || _headerTemplate">
                 <ng-content select="p-header"></ng-content>
-                <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
             </div>
             <div class="p-card-body">
-                <div class="p-card-title" *ngIf="_header || titleTemplate">
-                    {{ _header }}
-                    <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
+                <div class="p-card-title" *ngIf="header || titleTemplate || _titleTemplate">
+                    <ng-container *ngIf="header && !_titleTemplate && !titleTemplate">{{ header }}</ng-container>
+                    <ng-container *ngTemplateOutlet="titleTemplate || _titleTemplate"></ng-container>
                 </div>
-                <div class="p-card-subtitle" *ngIf="subheader || subtitleTemplate">
-                    {{ subheader }}
-                    <ng-container *ngTemplateOutlet="subtitleTemplate"></ng-container>
+                <div class="p-card-subtitle" *ngIf="subheader || subtitleTemplate || _subtitleTemplate">
+                    <ng-container *ngIf="subheader && !_subtitleTemplate && subtitleTemplate">{{ subheader }}</ng-container>
+                    <ng-container *ngTemplateOutlet="subtitleTemplate || _subtitleTemplate"></ng-container>
                 </div>
                 <div class="p-card-content">
                     <ng-content></ng-content>
-                    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
                 </div>
-                <div class="p-card-footer" *ngIf="footerFacet || footerTemplate">
+                <div class="p-card-footer" *ngIf="footerFacet || footerTemplate || _footerTemplate">
                     <ng-content select="p-footer"></ng-content>
-                    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+                    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
                 </div>
             </div>
         </div>
@@ -371,9 +429,8 @@ var Card = class _Card extends BaseComponent {
       providers: [CardStyle]
     }]
   }], null, {
-    _header: [{
-      type: Input,
-      args: ["header"]
+    header: [{
+      type: Input
     }],
     subheader: [{
       type: Input
@@ -394,23 +451,37 @@ var Card = class _Card extends BaseComponent {
     }],
     headerTemplate: [{
       type: ContentChild,
-      args: ["header"]
+      args: ["header", {
+        descendants: false
+      }]
     }],
     titleTemplate: [{
       type: ContentChild,
-      args: ["title"]
+      args: ["title", {
+        descendants: false
+      }]
     }],
     subtitleTemplate: [{
       type: ContentChild,
-      args: ["subtitle"]
+      args: ["subtitle", {
+        descendants: false
+      }]
     }],
     contentTemplate: [{
       type: ContentChild,
-      args: ["content"]
+      args: ["content", {
+        descendants: false
+      }]
     }],
     footerTemplate: [{
       type: ContentChild,
-      args: ["footer"]
+      args: ["footer", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
     }]
   });
 })();

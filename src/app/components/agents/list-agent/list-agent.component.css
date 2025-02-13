@@ -1,0 +1,9 @@
+.centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pad-top{
+    padding-top: 5%;
+}

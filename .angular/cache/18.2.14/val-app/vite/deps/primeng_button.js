@@ -4,17 +4,18 @@ import {
   DomHandler,
   Ripple,
   SpinnerIcon
-} from "./chunk-TXQGIVWI.js";
+} from "./chunk-6UIB55VO.js";
 import {
   BaseComponent
-} from "./chunk-YESN7ERS.js";
+} from "./chunk-3I5GCMRE.js";
 import {
   BaseStyle,
+  PrimeTemplate,
   SharedModule,
   addClass,
   findSingle,
   isEmpty
-} from "./chunk-Z4CP6AOJ.js";
+} from "./chunk-NMZMKJZC.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -28,6 +29,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ContentChild,
+  ContentChildren,
   Directive,
   ElementRef,
   EventEmitter,
@@ -939,7 +941,7 @@ function Button_ng_container_3_2_Template(rf, ctx) {
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext(2);
-    ɵɵproperty("ngIf", ctx_r0.loadingicon);
+    ɵɵproperty("ngIf", ctx_r0.loadingIconTemplate || ctx_r0._loadingIconTemplate);
   }
 }
 function Button_ng_container_3_Template(rf, ctx) {
@@ -951,9 +953,9 @@ function Button_ng_container_3_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance();
-    ɵɵproperty("ngIf", !ctx_r0.loadingicon);
+    ɵɵproperty("ngIf", !ctx_r0.loadingIconTemplate && !ctx_r0._loadingIconTemplate);
     ɵɵadvance();
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.loadingicon)("ngTemplateOutletContext", ɵɵpureFunction1(3, _c4, ctx_r0.iconClass()));
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.loadingIconTemplate || ctx_r0._loadingIconTemplate)("ngTemplateOutletContext", ɵɵpureFunction1(3, _c4, ctx_r0.iconClass()));
   }
 }
 function Button_ng_container_4_span_1_Template(rf, ctx) {
@@ -975,7 +977,7 @@ function Button_ng_container_4_2_Template(rf, ctx) {
   }
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext(2);
-    ɵɵproperty("ngIf", !ctx_r0.icon && ctx_r0.iconTemplate);
+    ɵɵproperty("ngIf", !ctx_r0.icon && (ctx_r0.iconTemplate || ctx_r0._iconTemplate));
   }
 }
 function Button_ng_container_4_Template(rf, ctx) {
@@ -987,9 +989,9 @@ function Button_ng_container_4_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r0 = ɵɵnextContext();
     ɵɵadvance();
-    ɵɵproperty("ngIf", ctx_r0.icon && !ctx_r0.iconTemplate);
+    ɵɵproperty("ngIf", ctx_r0.icon && !ctx_r0.iconTemplate && !ctx_r0._iconTemplate);
     ɵɵadvance();
-    ɵɵproperty("ngTemplateOutlet", ctx_r0.iconTemplate)("ngTemplateOutletContext", ɵɵpureFunction1(3, _c4, ctx_r0.iconClass()));
+    ɵɵproperty("ngTemplateOutlet", ctx_r0.iconTemplate || ctx_r0._iconTemplate)("ngTemplateOutletContext", ɵɵpureFunction1(3, _c4, ctx_r0.iconClass()));
   }
 }
 function Button_span_5_Template(rf, ctx) {
@@ -1643,12 +1645,12 @@ var Button = class _Button extends BaseComponent {
    * Template of the content.
    * @group Templates
    **/
-  content;
+  contentTemplate;
   /**
    * Template of the loading.
    * @group Templates
    **/
-  loadingicon;
+  loadingIconTemplate;
   /**
    * Template of the icon.
    * @group Templates
@@ -1674,6 +1676,28 @@ var Button = class _Button extends BaseComponent {
     return isEmpty(this.fluid) ? !!fluidComponent : this.fluid;
   }
   _componentStyle = inject(ButtonStyle);
+  templates;
+  _contentTemplate;
+  _iconTemplate;
+  _loadingIconTemplate;
+  ngAfterContentInit() {
+    this.templates?.forEach((item) => {
+      switch (item.getType()) {
+        case "content":
+          this.contentTemplate = item.template;
+          break;
+        case "icon":
+          this.iconTemplate = item.template;
+          break;
+        case "loadingicon":
+          this.loadingIconTemplate = item.template;
+          break;
+        default:
+          this.contentTemplate = item.template;
+          break;
+      }
+    });
+  }
   ngOnChanges(simpleChanges) {
     super.ngOnChanges(simpleChanges);
     const {
@@ -1702,7 +1726,7 @@ var Button = class _Button extends BaseComponent {
   get buttonClass() {
     return {
       "p-button p-component": true,
-      "p-button-icon-only": (this.icon || this.iconTemplate || this.loadingIcon || this.loadingicon) && !this.label,
+      "p-button-icon-only": (this.icon || this.iconTemplate || this.loadingIcon || this.loadingIconTemplate || this._loadingIconTemplate) && !this.label,
       "p-button-vertical": (this.iconPos === "top" || this.iconPos === "bottom") && this.label,
       "p-button-loading": this.loading,
       "p-button-loading-label-only": this.loading && !this.icon && this.label && !this.loadingIcon && this.iconPos === "left",
@@ -1710,8 +1734,8 @@ var Button = class _Button extends BaseComponent {
       [`p-button-${this.severity}`]: this.severity,
       "p-button-raised": this.raised,
       "p-button-rounded": this.rounded,
-      "p-button-text": this.text,
-      "p-button-outlined": this.outlined,
+      "p-button-text": this.text || this.variant == "text",
+      "p-button-outlined": this.outlined || this.variant == "outlined",
       "p-button-sm": this.size === "small",
       "p-button-lg": this.size === "large",
       "p-button-plain": this.plain,
@@ -1733,12 +1757,14 @@ var Button = class _Button extends BaseComponent {
         ɵɵcontentQuery(dirIndex, _c0, 5);
         ɵɵcontentQuery(dirIndex, _c1, 5);
         ɵɵcontentQuery(dirIndex, _c2, 5);
+        ɵɵcontentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
         let _t;
-        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.content = _t.first);
-        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.loadingicon = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.contentTemplate = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.loadingIconTemplate = _t.first);
         ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.iconTemplate = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.templates = _t);
       }
     },
     inputs: {
@@ -1799,15 +1825,15 @@ var Button = class _Button extends BaseComponent {
         ɵɵproperty("ngStyle", ctx.style)("disabled", ctx.disabled || ctx.loading)("ngClass", ctx.buttonClass)("pAutoFocus", ctx.autofocus);
         ɵɵattribute("type", ctx.type)("aria-label", ctx.ariaLabel)("data-pc-name", "button")("data-pc-section", "root")("tabindex", ctx.tabindex);
         ɵɵadvance(2);
-        ɵɵproperty("ngTemplateOutlet", ctx.content);
+        ɵɵproperty("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
         ɵɵadvance();
         ɵɵproperty("ngIf", ctx.loading);
         ɵɵadvance();
         ɵɵproperty("ngIf", !ctx.loading);
         ɵɵadvance();
-        ɵɵproperty("ngIf", !ctx.content && ctx.label);
+        ɵɵproperty("ngIf", !ctx.contentTemplate && !ctx._contentTemplate && ctx.label);
         ɵɵadvance();
-        ɵɵproperty("ngIf", !ctx.content && ctx.badge);
+        ɵɵproperty("ngIf", !ctx.contentTemplate && !ctx._contentTemplate && ctx.badge);
       }
     },
     dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, Ripple, AutoFocus, SpinnerIcon, BadgeModule, Badge, SharedModule],
@@ -1839,20 +1865,20 @@ var Button = class _Button extends BaseComponent {
             [pAutoFocus]="autofocus"
         >
             <ng-content></ng-content>
-            <ng-container *ngTemplateOutlet="content"></ng-container>
+            <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
             <ng-container *ngIf="loading">
-                <ng-container *ngIf="!loadingicon">
+                <ng-container *ngIf="!loadingIconTemplate && !_loadingIconTemplate">
                     <span *ngIf="loadingIcon" [ngClass]="iconClass()" [attr.aria-hidden]="true" [attr.data-pc-section]="'loadingicon'"></span>
                     <SpinnerIcon *ngIf="!loadingIcon" [styleClass]="spinnerIconClass()" [spin]="true" [attr.aria-hidden]="true" [attr.data-pc-section]="'loadingicon'" />
                 </ng-container>
-                <ng-template [ngIf]="loadingicon" *ngTemplateOutlet="loadingicon; context: { class: iconClass() }"></ng-template>
+                <ng-template [ngIf]="loadingIconTemplate || _loadingIconTemplate" *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate; context: { class: iconClass() }"></ng-template>
             </ng-container>
             <ng-container *ngIf="!loading">
-                <span *ngIf="icon && !iconTemplate" [class]="icon" [ngClass]="iconClass()" [attr.data-pc-section]="'icon'"></span>
-                <ng-template [ngIf]="!icon && iconTemplate" *ngTemplateOutlet="iconTemplate; context: { class: iconClass() }"></ng-template>
+                <span *ngIf="icon && !iconTemplate && !_iconTemplate" [class]="icon" [ngClass]="iconClass()" [attr.data-pc-section]="'icon'"></span>
+                <ng-template [ngIf]="!icon && (iconTemplate || _iconTemplate)" *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { class: iconClass() }"></ng-template>
             </ng-container>
-            <span class="p-button-label" [attr.aria-hidden]="icon && !label" *ngIf="!content && label" [attr.data-pc-section]="'label'">{{ label }}</span>
-            <p-badge *ngIf="!content && badge" [value]="badge" [severity]="badgeSeverity"></p-badge>
+            <span class="p-button-label" [attr.aria-hidden]="icon && !label" *ngIf="!contentTemplate && !_contentTemplate && label" [attr.data-pc-section]="'label'">{{ label }}</span>
+            <p-badge *ngIf="!contentTemplate && !_contentTemplate && badge" [value]="badge" [severity]="badgeSeverity"></p-badge>
         </button>
     `,
       changeDetection: ChangeDetectionStrategy.OnPush,
@@ -1977,11 +2003,11 @@ var Button = class _Button extends BaseComponent {
     onBlur: [{
       type: Output
     }],
-    content: [{
+    contentTemplate: [{
       type: ContentChild,
       args: ["content"]
     }],
-    loadingicon: [{
+    loadingIconTemplate: [{
       type: ContentChild,
       args: ["loading"]
     }],
@@ -1991,6 +2017,10 @@ var Button = class _Button extends BaseComponent {
     }],
     buttonProps: [{
       type: Input
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
     }]
   });
 })();

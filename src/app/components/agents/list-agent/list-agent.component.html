@@ -1,5 +1,4 @@
 <h1 class="text-4xl font-bold text-center">Agents</h1>
-
 <!-- <div class="w-full">
   <p-tabMenu [model]="items" class="mb-4"></p-tabMenu>
   <div class="p-4 border rounded-lg shadow-md">
@@ -8,13 +7,11 @@
 </div> -->
 
 
-
-<div class="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 ">
- 
-    <div *ngFor="let agent of agents" class="bg-gray-800 p-4 rounded-lg shadow-lg text-white text-center">
-      <img [src]="agent.image" alt="{{ agent.name }}" class="w-32 h-32 mx-auto rounded-full">
-      <h2 class="text-xl font-bold mt-2">{{ agent.name }}</h2>
-      <p class="text-sm text-gray-400">{{ agent.role }}</p>
-      <p class="mt-2 text-gray-300">{{ agent.description }}</p>
-    </div>
- </div>
+ <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full">
+  <div *ngFor="let agent of agents" class="bg-gray-800 p-4 rounded-lg shadow-lg text-white text-center">
+    <img [src]="agent.image" alt="{{ agent.name }}" class="h-96 mx-auto rounded-full">
+    <h2 class="text-xl font-bold mt-2">{{ agent.name }}</h2>
+    <p class="text-sm text-gray-400">{{ agent.role }}</p>
+    <p class="mt-2 text-gray-300">{{ agent.description }}</p>
+  </div>
+</div>

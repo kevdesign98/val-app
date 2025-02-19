@@ -1,6 +1,17 @@
 <h1 class="text-4xl font-bold text-center">Agents</h1>
 
-<div class=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full">
+
+<p-tabMenu [model]="items" (onTabChange)="onTabChange($event)"></p-tabMenu>
+
+<div class="agents-list">
+  <h2>{{ selectedCategory | titlecase }}</h2>
+  <ul>
+    <li *ngFor="let agent of filteredAgents">{{ agent.name }}</li>
+  </ul>
+</div>
+
+
+<!-- <div class=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full">
   <div *ngFor="let agent of agents" class="p-4 rounded-lg  ">
     <div class="grid place-items-center font-mono">
       <div class="rounded-md shadow-lg">
@@ -22,7 +33,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 

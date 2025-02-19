@@ -15,19 +15,34 @@ import { CardModule } from 'primeng/card';
   styleUrl: './list-agent.component.css'
 })
 export class ListAgentComponent {
-  agents: Agents[] = DUMMY_AGENTS;
+  // agents: Agents[] = DUMMY_AGENTS;
 
-  items =[
-    {label:'Duelist',icon:'pi pi-users'},
-    {label:'Initiator',icon:'pi pi-users'},
-    {label:'Controller',icon:'pi pi-users'},
-    {label:'Sentinel',icon:'pi pi-users'},
-  ]
+  items = [
+    { label: 'Duelist', icon: 'pi pi-bolt', category: 'duelist' },
+    { label: 'Controller', icon: 'pi pi-circle', category: 'controller' },
+    { label: 'Sentinel', icon: 'pi pi-shield', category: 'sentinel' },
+    { label: 'Initiator', icon: 'pi pi-lightbulb', category: 'initiator' }
+  ];
 
-  activeTab = 'Home';
+  selectedCategory = 'duelist';
+
+  agents = [
+    { name: 'Jett', category: 'duelist' },
+    { name: 'Phoenix', category: 'duelist' },
+    { name: 'Omen', category: 'controller' },
+    { name: 'Brimstone', category: 'controller' },
+    { name: 'Sage', category: 'sentinel' },
+    { name: 'Killjoy', category: 'sentinel' },
+    { name: 'Sova', category: 'initiator' },
+    { name: 'Breach', category: 'initiator' }
+  ];
+
+  get filteredAgents() {
+    return this.agents.filter(agent => agent.category === this.selectedCategory);
+  }
 
   onTabChange(event: any) {
-    this.activeTab = this.items[event.index].label;
+    this.selectedCategory = this.items[event.index].category;
   }
 }
  

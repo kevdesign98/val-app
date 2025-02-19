@@ -8,6 +8,20 @@
     padding-top: 5%;
 }
 
+.agents-list {
+  margin-top: 20px;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  font-size: 1.2rem;
+  padding: 5px;
+}
 
 
 /* .card {

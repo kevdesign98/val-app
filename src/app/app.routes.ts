@@ -1,8 +1,15 @@
 import { Routes } from "@angular/router";
 import { HomeComponent } from "./pages/home/home.component";
+import { AgentsComponent } from "./pages/agents/agents.component";
+import { WeaponsComponent } from "./pages/weapons/weapons.component";
+import { MapsComponent } from "./pages/maps/maps.component";
+import { StatsComponent } from "./pages/stats/stats.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
-  { path: "home", component: HomeComponent },
-
+  { path: "Home", component: HomeComponent },
+  { path: "Agents", component: AgentsComponent },
+  { path: "Weapons", component: WeaponsComponent },
+  { path: "Maps", component: MapsComponent },
+  { path: "Stats", component: StatsComponent },
 ];

@@ -6,7 +6,7 @@ import { MapsComponent } from "./pages/maps/maps.component";
 import { StatsComponent } from "./pages/stats/stats.component";
 
 export const routes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: "full" },
+  { path: "", redirectTo: "Home", pathMatch: "full" },
   { path: "Home", component: HomeComponent },
   { path: "Agents", component: AgentsComponent },
   { path: "Weapons", component: WeaponsComponent },

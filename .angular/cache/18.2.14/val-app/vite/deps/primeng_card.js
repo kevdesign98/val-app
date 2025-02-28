@@ -1,19 +1,17 @@
 import {
   BaseStyle,
-  PrimeNG,
-  base,
-  config_default,
-  service_default
-} from "./chunk-TLHEDWOT.js";
-import {
   Footer,
   Header,
+  PrimeNG,
   PrimeTemplate,
   SharedModule,
+  base,
+  config_default,
   equals,
   getKeyValue,
+  service_default,
   uuid
-} from "./chunk-JL3NJF7Q.js";
+} from "./chunk-4FRPIJ4L.js";
 import {
   CommonModule,
   DOCUMENT,

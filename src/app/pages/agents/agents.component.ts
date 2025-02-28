@@ -1,13 +1,25 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
- 
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ListAgentsService } from '../../service/list-agents.service';
+import { Agents } from '../../models/agents';
+
 @Component({
   selector: 'app-agents',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CommonModule],
   templateUrl: './agents.component.html',
   styleUrl: './agents.component.css'
 })
-export class AgentsComponent {
 
+export class AgentsComponent implements OnInit {
+
+  Agents: Agents[] = [];
+
+  constructor(private listAgentsService: ListAgentsService) { }
+
+  ngOnInit(): void {
+    this.listAgentsService.getAgents().subscribe(data => {
+      this.Agents = data.data;
+    });
+  }
 }

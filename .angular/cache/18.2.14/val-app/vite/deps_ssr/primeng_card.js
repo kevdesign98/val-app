@@ -1,20 +1,18 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseStyle,
-  PrimeNG,
-  base,
-  config_default,
-  service_default
-} from "./chunk-P4DPUHVW.js";
-import {
   Footer,
   Header,
+  PrimeNG,
   PrimeTemplate,
   SharedModule,
+  base,
+  config_default,
   equals,
   getKeyValue,
+  service_default,
   uuid
-} from "./chunk-WOZOFGP6.js";
+} from "./chunk-SGWEYPPB.js";
 import {
   CommonModule,
   DOCUMENT,

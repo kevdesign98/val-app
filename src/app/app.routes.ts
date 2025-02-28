@@ -8,8 +8,8 @@ import { StatsComponent } from "./pages/stats/stats.component";
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
   { path: "Home", component: HomeComponent },
-  { path: "Agents", component: AgentsComponent },
-  { path: "Weapons", component: WeaponsComponent },
-  { path: "Maps", component: MapsComponent },
-  { path: "Stats", component: StatsComponent },
+  { path: "agents", component: AgentsComponent },
+  { path: "weapons", component: WeaponsComponent },
+  { path: "maps", component: MapsComponent },
+  { path: "stats", component: StatsComponent },
 ];

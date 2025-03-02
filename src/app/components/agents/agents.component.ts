@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ListAgentsService } from '../../service/list-agents.service';
-import { Agents } from '../../models/agents';
+//  import { Agents } from '../../models/agents';
 
 @Component({
   selector: 'app-agents',
@@ -11,15 +11,16 @@ import { Agents } from '../../models/agents';
   styleUrl: './agents.component.css'
 })
 
+
 export class AgentsComponent implements OnInit {
 
-  Agents: Agents[] = [];
+  agents: any[] = [];
 
   constructor(private listAgentsService: ListAgentsService) { }
 
   ngOnInit(): void {
     this.listAgentsService.getAgents().subscribe(data => {
-      this.Agents = data.data;
+      this.agents = data.data;
     });
   }
 }

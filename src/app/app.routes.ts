@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { HomeComponent } from "./pages/home/home.component";
-import { AgentsComponent } from "./pages/agents/agents.component";
+import { AgentsComponent } from "./components/agents/agents.component";
 import { WeaponsComponent } from "./pages/weapons/weapons.component";
 import { MapsComponent } from "./pages/maps/maps.component";
 import { StatsComponent } from "./pages/stats/stats.component";

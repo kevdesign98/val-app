@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class ListAgentsService {
 
-  private url = 'https://valorant-api.com/v1/agents '
+  private url = 'https://valorant-api.com/v1/agents'
 
   constructor(private http: HttpClient) { }
 
   getAgents(): Observable<any> {
-    return this.http.get(`${this.url}/agents`); // 🔹 Chiamata API per gli agenti
+    return this.http.get(`${this.url}`); // 🔹 Chiamata API per gli agenti
   }
 }

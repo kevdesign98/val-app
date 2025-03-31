@@ -3,17 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { FooterComponent } from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, CardModule,NavbarComponent,RouterLink],
+  imports: [RouterOutlet, CommonModule, CardModule, NavbarComponent, RouterLink, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  patchNotes = [
-    { title: 'Patch 8.02 - Buff Cypher', description: 'Cypher riceve un buff importante...', link: 'https://playvalorant.com' },
-    { title: 'Patch 8.01 - Nerf Jett', description: 'Jett ha meno dash...', link: 'https://playvalorant.com' }
-  ];
+  
 }

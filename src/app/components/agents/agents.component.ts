@@ -10,6 +10,8 @@ import { ListAgentsService } from "../../service/list-agents.service";
   templateUrl: "./agents.component.html",
   styleUrl: "./agents.component.css",
 })
+
+
 export class AgentsComponent implements OnInit {
   agents: any[] = [];
 
@@ -17,7 +19,19 @@ export class AgentsComponent implements OnInit {
 
   ngOnInit() {
     this.listAgentsService.getAgents().subscribe((data) => {
-      this.agents = data.data.sort((a:any, b:any) => a.displayName.localeCompare(b.displayName));;
+      this.agents = data.data
+        .sort((a: any, b: any) => a.displayName.localeCompare(b.displayName))
+        .map((agent: any) => {
+          return {
+            ...agent,
+            imageName: this.getImageFileName(agent.displayName)
+          };
+        });
     });
   }
+
+  getImageFileName(name: string): string {
+    return name.toLowerCase().replace(/\s+/g, '') + '.png';
+  }
 }
+ 

@@ -17,7 +17,7 @@ export class AgentsComponent implements OnInit {
 
   ngOnInit() {
     this.listAgentsService.getAgents().subscribe((data) => {
-      this.agents = data.data;
+      this.agents = data.data.sort((a:any, b:any) => a.displayName.localeCompare(b.displayName));;
     });
   }
 }

@@ -1,8 +1,7 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   CommonModule,
   DOCUMENT
-} from "./chunk-2WG5QLMT.js";
+} from "./chunk-6QY6FD7O.js";
 import {
   APP_INITIALIZER,
   Component,
@@ -16,7 +15,6 @@ import {
   effect,
   inject,
   makeEnvironmentProviders,
-  require_cjs,
   setClassMetadata,
   signal,
   untracked,
@@ -31,14 +29,13 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵsetNgModuleScope
-} from "./chunk-FB6BDKAH.js";
+} from "./chunk-FNRXWYQF.js";
 import {
-  __spreadValues,
-  __toESM
-} from "./chunk-NQ4HTGF6.js";
-
-// node_modules/primeng/fesm2022/primeng-api.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
+  Subject
+} from "./chunk-QSDJTSVE.js";
+import {
+  __spreadValues
+} from "./chunk-WDMUDEB6.js";
 
 // node_modules/@primeuix/utils/dom/index.mjs
 function isElement(element) {
@@ -349,8 +346,8 @@ var ConfirmEventType;
   ConfirmEventType2[ConfirmEventType2["CANCEL"] = 2] = "CANCEL";
 })(ConfirmEventType || (ConfirmEventType = {}));
 var ConfirmationService = class _ConfirmationService {
-  requireConfirmationSource = new import_rxjs.Subject();
-  acceptConfirmationSource = new import_rxjs.Subject();
+  requireConfirmationSource = new Subject();
+  acceptConfirmationSource = new Subject();
   requireConfirmation$ = this.requireConfirmationSource.asObservable();
   accept = this.acceptConfirmationSource.asObservable();
   /**
@@ -391,7 +388,7 @@ var ConfirmationService = class _ConfirmationService {
   }], null, null);
 })();
 var ContextMenuService = class _ContextMenuService {
-  activeItemKeyChange = new import_rxjs.Subject();
+  activeItemKeyChange = new Subject();
   activeItemKeyChange$ = this.activeItemKeyChange.asObservable();
   activeItemKey;
   changeKey(key) {
@@ -652,8 +649,8 @@ var FilterService = class _FilterService {
   }], null, null);
 })();
 var MessageService = class _MessageService {
-  messageSource = new import_rxjs.Subject();
-  clearSource = new import_rxjs.Subject();
+  messageSource = new Subject();
+  clearSource = new Subject();
   messageObserver = this.messageSource.asObservable();
   clearObserver = this.clearSource.asObservable();
   /**
@@ -698,7 +695,7 @@ var MessageService = class _MessageService {
   }], null, null);
 })();
 var OverlayService = class _OverlayService {
-  clickSource = new import_rxjs.Subject();
+  clickSource = new Subject();
   clickObservable = this.clickSource.asObservable();
   add(event) {
     if (event) {
@@ -862,8 +859,8 @@ var SharedModule = class _SharedModule {
   });
 })();
 var TreeDragDropService = class _TreeDragDropService {
-  dragStartSource = new import_rxjs.Subject();
-  dragStopSource = new import_rxjs.Subject();
+  dragStartSource = new Subject();
+  dragStopSource = new Subject();
   dragStart$ = this.dragStartSource.asObservable();
   dragStop$ = this.dragStopSource.asObservable();
   startDrag(event) {
@@ -885,9 +882,6 @@ var TreeDragDropService = class _TreeDragDropService {
     type: Injectable
   }], null, null);
 })();
-
-// node_modules/primeng/fesm2022/primeng-config.mjs
-var import_rxjs2 = __toESM(require_cjs(), 1);
 
 // node_modules/@primeuix/styled/index.mjs
 var __defProp = Object.defineProperty;
@@ -1679,7 +1673,7 @@ var UseStyle = class _UseStyle {
       props = {}
     } = options;
     if (!this.document) return;
-    styleRef = this.document.querySelector(`style[data-primeng-style-id="${name}"]`) || id && this.document.getElementById(id) || this.document.createElement("style");
+    styleRef = this.document.querySelector(`style[data-primeng-style-id="${name}"]`) || this.document.getElementById(id) || this.document.createElement("style");
     if (!styleRef.isConnected) {
       cssRef = css2;
       setAttributes(styleRef, {
@@ -2243,7 +2237,7 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
     menu: 1e3,
     tooltip: 1100
   };
-  translationSource = new import_rxjs2.Subject();
+  translationSource = new Subject();
   translationObserver = this.translationSource.asObservable();
   getTranslation(key) {
     return this.translation[key];
@@ -2323,4 +2317,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-SGWEYPPB.js.map
+//# sourceMappingURL=chunk-GWH5SCD6.js.map

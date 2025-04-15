@@ -1,0 +1,44 @@
+<app-navbar />
+
+
+<div *ngIf="agent">
+  <!-- Titolo e immagine principale dell'agente -->
+  <!-- Sfondo dinamico per ogni agente -->
+  <div class="bg-cover bg-no-repeat h-[500px] md:h-[650px] md:bg-center bg-agents-mobile opacity-20 md:opacity-50" [ngStyle]="{
+    'background-image': 'url(\'../assets/bg-agents/' + agent.displayName + '.png\')'
+  }">
+    <!-- <div class="bg-black/60 p-4 rounded-xl">
+      <h1 class="text-4xl font-bold">{{ agent.displayName }}</h1>
+    </div> -->
+  </div>
+
+  <div class="text-center">
+    <!-- Descrizione dell'agente -->
+    <section class="bg-gray-900 p-6 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold text-white mb-4">Description</h2>
+      <p class="text-white">{{ agent.description }}</p>
+    </section>
+
+    <!-- Abilità dell'agente -->
+    <section class="mt-6 container mx-auto px-4">
+      <h2 class="text-2xl font-semibold text-white mb-4">Abilities</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div *ngFor="let ability of agent.abilities" class="bg-gray-800 p-4 rounded-lg shadow-md">
+          <h3 class="text-xl font-bold text-red-500">{{ ability.displayName }}</h3>
+          <p class="text-white">{{ ability.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Opzionale: Altri dettagli dell'agente -->
+    <section class="mt-6">
+      <h2 class="text-2xl font-semibold text-white mb-4">Altro</h2>
+      <p class="text-white">Puoi aggiungere qui altre informazioni come il ruolo, la velocità, ecc.</p>
+    </section>
+  </div>
+
+  <!-- Loading o messaggio di errore se l'agente non è trovato -->
+  <div *ngIf="!agent" class="text-center text-white">
+    <p>Caricamento in corso o agente non trovato...</p>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +13,13 @@ export class ListAgentsService {
   constructor(private http: HttpClient) { }
 
   getAgents(): Observable<any> {
-    return this.http.get(`${this.url}`); // 🔹 Chiamata API per gli agenti
+    return this.http.get(`${this.url}?isPlayableCharacter=true`); // 🔹 Chiamata API per gli agenti
+  }
+  getAgentById(id: string) {
+    return this.getAgents().pipe(
+      map((response: any) => {
+        return response.data.find((agent: any) => agent.uuid === id);
+      })
+    );
   }
 }

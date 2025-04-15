@@ -14,6 +14,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 })
 
 export class AgentsDetailsComponent implements OnInit {
+  abilityKeys = ['C', 'Q', 'E', 'X'];
   agent: any;
 
   constructor(

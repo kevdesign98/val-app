@@ -1,19 +1,17 @@
 <app-navbar />
 
 
-<div *ngIf="agent">
-  <!-- Titolo e immagine principale dell'agente -->
-  <!-- Sfondo dinamico per ogni agente -->
-  <div class="bg-cover bg-no-repeat h-[500px] md:h-[650px] md:bg-center bg-agents-mobile opacity-20 md:opacity-50"
+<!-- <div *ngIf="agent"> -->
+<!-- Titolo e immagine principale dell'agente -->
+<!-- Sfondo dinamico per ogni agente -->
+<!-- <div class="bg-cover bg-no-repeat h-[500px] md:h-[650px] md:bg-center bg-agents-mobile opacity-20 md:opacity-50"
     [ngStyle]="{
     'background-image': 'url(\'../assets/bg-agents/' + agent.displayName + '.png\')'
   }">
-    <!-- <div class="bg-black/60 p-4 rounded-xl">
-      <h1 class="text-4xl font-bold">{{ agent.displayName }}</h1>
-    </div> -->
-  </div>
+  
+  </div> -->
 
-  <section class="bg-gray-900 p-6 rounded-lg shadow-lg text-center">
+<!-- <section class="bg-gray-900 p-6 rounded-lg shadow-lg text-center">
     <h2 class="text-2xl font-semibold text-white mb-4">Description</h2>
     <p class="text-white">{{ agent.description }}</p>
   </section>
@@ -30,10 +28,10 @@
       </div>
     </div>
 
-  </div>
+  </div> -->
 
 
-  <!-- <div class="text-center">
+<!-- <div class="text-center">
      <section class="bg-gray-900 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-semibold text-white mb-4">Description</h2>
       <p class="text-white">{{ agent.description }}</p>
@@ -55,10 +53,67 @@
       <p class="text-white">Puoi aggiungere qui altre informazioni come il ruolo, la velocità, ecc.</p>
     </section>
   </div> -->
+  <div
+  class="relative min-h-screen w-full bg-black text-white flex items-center justify-center px-4 py-12 overflow-hidden">
 
+  <!-- Immagine di sfondo dell’agente -->
+  <img
+    [src]="agent.background"
+    [alt]="agent.displayName + ' background'"
+    class="absolute inset-0 w-full h-full object-cover object-center opacity-30 z-0" />
 
-  <!-- Loading o messaggio di errore se l'agente non è trovato -->
-  <div *ngIf="!agent" class="text-center text-white">
-    <p>Caricamento in corso o agente non trovato...</p>
+  <!-- Sovrapposizione nera leggera -->
+  <div class="absolute inset-0 bg-black/60 z-0"></div>
+
+  <!-- Contenuto -->
+  <div class="relative z-10 max-w-screen-xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    
+    <!-- Immagine fullPortrait -->
+    <div class="flex justify-center items-center">
+      <img [src]="agent.fullPortrait"
+           [alt]="agent.displayName"
+           class="w-full max-w-[500px] object-contain drop-shadow-[0_10px_25px_rgba(255,70,85,0.4)]" />
+    </div>
+
+    <!-- Testo + Abilità -->
+    <div class="space-y-6 text-center md:text-left">
+      <h1 class="text-5xl font-extrabold tracking-wide leading-tight">
+        {{ agent.displayName }}
+      </h1>
+      <h2 class="text-xl text-red-500 font-semibold uppercase">
+        {{ agent.role.displayName }}
+      </h2>
+      <p class="text-lg text-gray-300">
+        {{ agent.description }}
+      </p>
+
+      <!-- Abilità -->
+      <div class="mt-6 space-y-3">
+        <h3 class="text-2xl font-bold">Abilità</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div *ngFor="let ability of agent.abilities; let i = index"
+               class="flex items-center gap-4 p-3 bg-white/5 hover:bg-white/10 rounded-xl transition duration-300 shadow-md">
+            <div
+              class="w-8 h-8 bg-red-600 text-white font-bold rounded-full flex items-center justify-center text-sm">
+              {{ abilityKeys[i] }}
+            </div>
+            <img [src]="ability.displayIcon" [alt]="ability.displayName"
+                 class="h-8 w-8 object-contain" />
+            <span class="text-white font-medium">{{ ability.displayName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
+  
+
+
+
+<!-- Loading o messaggio di errore se l'agente non è trovato -->
+<!-- <div *ngIf="!agent" class="text-center text-white">
+  <p>Caricamento in corso o agente non trovato...</p>
+</div> -->
+<!-- </div> -->

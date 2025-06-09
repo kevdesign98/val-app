@@ -53,3 +53,10 @@
     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 65%, rgba(0,212,255,0) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#00d4ff",GradientType=1); 
 }
+
+.bg-maps-home{
+    background-image: url('/assets/maps-home.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

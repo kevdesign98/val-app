@@ -14,5 +14,4 @@ export const routes: Routes = [
   { path: "maps", component: MapsComponent },
   { path: "stats", component: StatsComponent },
   { path: "agents/:id", component: AgentsDetailsComponent },
-  
 ];

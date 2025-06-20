@@ -23,10 +23,10 @@ export class AgentsCarouselComponent {
   constructor(private router: Router) {}
   
   agents = [
-    { name: "Reyna", slug: "reyna", image: "assets/agents/reyna.png" },
-    { name: "Jett", slug: "jett", image: "assets/agents/jett.png" },
-    { name: "Phoenix", slug: "phoenix", image: "assets/agents/phoenix.png" },
-    { name: "Sova", slug: "sova", image: "assets/agents/sova.png" },
+    { name: "Reyna", slug: "reyna", image: "assets/agents/Reyna.png" },
+    { name: "Jett", slug: "jett", image: "assets/agents/Jett.png" },
+    { name: "Phoenix", slug: "phoenix", image: "assets/agents/Phoenix.png" },
+    { name: "Sova", slug: "sova", image: "assets/agents/Sova.png" },
   ];
 
   responsiveOptions = [

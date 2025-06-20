@@ -1,58 +1,65 @@
 <app-navbar />
 <div class="cover-up">
     <div class="relative h-[500px] bg-cover bg-center flex items-center justify-center bg-fade-cover"
-    style="background-image: url('../assets/fade-bg.png');">
-    <div class="text-center text-white bg-black bg-opacity-50 p-8 rounded-lg">
-        <h1 class="text-4xl font-bold">Domina il Meta di Valorant</h1>
-        <p class="mt-2 text-lg">Discover more</p>
-        <a routerLink="/agents"
-            class="mt-4 inline-block bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white font-semibold">
-            Esplora gli Agenti
-        </a>
+        style="background-image: url('../assets/fade-bg.png');">
+        <div class="text-center text-white bg-black bg-opacity-50 p-8 rounded-lg">
+            <h1 class="text-4xl font-bold">Lorem ipsum</h1>
+            <p class="mt-2 text-lg">Discover more</p>
+            <a routerLink="/agents"
+                class="mt-4 inline-block bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white font-semibold">
+                Esplora gli Agenti
+            </a>
+        </div>
     </div>
 </div>
+
+
+<div class="relative bg-cover bg-center min-h-[500px] flex items-center justify-end p-6"
+    style="background-image: url('assets/agents-bg-carousel.png');">
+    <div class="w-full md:w-2/3">
+        <h2 class="text-2xl font-bold text-black text-center block md:hidden" style="padding-bottom: 40px;">Agents</h2>
+
+        <app-agents-carousel />
+    </div>
+</div>
+
+<div class="relative h-[500px] bg-cover bg-center flex items-center justify-center"
+    style="background-image: url('assets/maps-home-carousel.png');">
+    <div class="w-full md:w-2/3 lg:hidden">
+
+        <h2 class="text-2xl font-bold text-black text-center block md:hidden" style="padding-bottom: 40px;">Maps</h2>
+
+        <app-maps-carousel />
+    </div>
 </div>
 
 
-<div class="bg-gradient-home pt-6">
-    
-<div class="container mx-auto p-4 text-white">
-    <h2 class="text-3xl font-bold text-center">Scopri gli Agenti e le Mappe</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <!-- Card Agenti -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+<div class="container mx-auto p-4 text-white">
+
+    <div class="grid md:grid-cols-3 gap-6 mt-6 ">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg bg-card-esports">
             <!-- <img src="../assets/agenti.png" alt=""> -->
-            <h3 class="text-2xl font-semibold">Agenti</h3>
+            <h3 class="text-2xl font-semibold">Esports</h3>
             <p class="mt-2">Ogni agente ha abilità uniche. Trova il tuo stile di gioco perfetto.</p>
             <a routerLink="/agents" class="text-red-400 hover:text-red-500 mt-2 inline-block">Scopri di più →</a>
         </div>
 
-        <!-- Card Mappe -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h3 class="text-2xl font-semibold">Mappe</h3>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg bg-card-lineups">
+            <h3 class="text-2xl font-semibold">Line-Ups</h3>
+            <p class="mt-2">Impara i callout e le strategie per ogni mappa.</p>
+            <a routerLink="/maps" class="text-red-400 hover:text-red-500 mt-2 inline-block">Scopri di più →</a>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg bg-card-insights">
+            <h3 class="text-2xl font-semibold">Insights</h3>
             <p class="mt-2">Impara i callout e le strategie per ogni mappa.</p>
             <a routerLink="/maps" class="text-red-400 hover:text-red-500 mt-2 inline-block">Scopri di più →</a>
         </div>
     </div>
 </div>
 
-    <!-- <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold text-center text-white">Valorant Info Hub</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-            <p-card *ngFor="let patch of patchNotes" class="bg-gray-900 text-white">
-                <ng-template pTemplate="header">
-                    <h2 class="text-xl font-semibold">{{ patch.title }}</h2>
-                </ng-template>
-                <ng-template pTemplate="content">
-                    <p>{{ patch.description }}</p>
-                    <a [href]="patch.link" target="_blank" class="text-blue-400">Leggi di più</a>
-                </ng-template>
-            </p-card>
-        </div>
-    </div> -->
-</div>
-
+<app-footer />
 
 
 

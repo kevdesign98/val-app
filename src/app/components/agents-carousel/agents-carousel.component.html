@@ -1,0 +1,25 @@
+<div class="relative z-10 w-full md:w-2/3">
+    <p-carousel
+      [value]="agents"
+      [numVisible]="3"
+      [numScroll]="1"
+      [circular]="true"
+      [autoplayInterval]="3000"
+      [responsiveOptions]="responsiveOptions"
+    >
+      <ng-template pTemplate="item" let-agents>
+        <div class="cursor-pointer p-3 text-center">
+          <a [routerLink]="['/agents', agents.slug]">
+            <img
+              [src]="agents.image"
+              alt="{{ agents.name }}"
+              class="w-full max-h-[350px] object-contain mb-2"
+            />
+          </a>
+          <a [routerLink]="['/agents', agents.slug]">
+            <h3 class="text-lg font-semibold text-black">{{ agents.name }}</h3>
+          </a>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>

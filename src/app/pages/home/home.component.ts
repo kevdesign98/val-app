@@ -1,19 +1,41 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { CardModule } from 'primeng/card';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-
+import { Component } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterLink, RouterOutlet } from "@angular/router";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { FooterComponent } from "../../components/footer/footer.component";
+import { AgentsCarouselComponent } from "../../components/agents-carousel/agents-carousel.component";
+import { MapsCarouselComponent } from "../../maps-carousel/maps-carousel.component";
 @Component({
-  selector: 'app-home',
+  selector: "app-home",
   standalone: true,
-  imports: [RouterOutlet, CommonModule, CardModule,NavbarComponent,RouterLink],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    NavbarComponent,
+    RouterLink,
+    FooterComponent,
+    AgentsCarouselComponent,
+    MapsCarouselComponent
+],
+  templateUrl: "./home.component.html",
+  styleUrl: "./home.component.css",
 })
 export class HomeComponent {
-  patchNotes = [
-    { title: 'Patch 8.02 - Buff Cypher', description: 'Cypher riceve un buff importante...', link: 'https://playvalorant.com' },
-    { title: 'Patch 8.01 - Nerf Jett', description: 'Jett ha meno dash...', link: 'https://playvalorant.com' }
+  responsiveOptions = [
+    {
+      breakpoint: "1024px",
+      numVisible: 3,
+      numScroll: 3,
+    },
+    {
+      breakpoint: "768px",
+      numVisible: 2,
+      numScroll: 2,
+    },
+    {
+      breakpoint: "560px",
+      numVisible: 1,
+      numScroll: 1,
+    },
   ];
 }

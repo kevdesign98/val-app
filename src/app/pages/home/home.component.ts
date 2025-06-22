@@ -4,7 +4,7 @@ import { RouterLink, RouterOutlet } from "@angular/router";
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { AgentsCarouselComponent } from "../../components/agents-carousel/agents-carousel.component";
-import { MapsCarouselComponent } from "../../maps-carousel/maps-carousel.component";
+import { MapsCarouselComponent } from "../../components/maps-carousel/maps-carousel.component";
 @Component({
   selector: "app-home",
   standalone: true,

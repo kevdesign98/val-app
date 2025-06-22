@@ -9,14 +9,14 @@
     >
       <ng-template pTemplate="item" let-agents>
         <div class="cursor-pointer p-3 text-center">
-          <a [routerLink]="['/agents', agents.slug]">
+          <a [routerLink]="['/agents', agents.uuid]">
             <img
               [src]="agents.image"
               alt="{{ agents.name }}"
               class="w-full max-h-[350px] object-contain mb-2"
             />
           </a>
-          <a [routerLink]="['/agents', agents.slug]">
+          <a [routerLink]="['/agents', agents.uuid]">
             <h3 class="text-lg font-semibold text-black">{{ agents.name }}</h3>
           </a>
         </div>

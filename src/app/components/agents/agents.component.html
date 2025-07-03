@@ -17,18 +17,15 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
       <div *ngFor="let agent of agents"
         class="relative group bg-gradient-to-br from-zinc-900 to-zinc-800 rounded-xl overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
-        <!-- Sfondo grafico diagonale -->
         <div
           class="absolute inset-0 bg-gradient-to-tr from-[#ff4655]/10 via-transparent to-transparent pointer-events-none z-0">
         </div>
 
-        <!-- Immagine -->
         <div class="h-64 flex items-center justify-center  z-10 relative">
           <img [src]="agent.fullPortraitV2" [alt]="agent.displayName"
             class="h-full object-contain transition-transform duration-300 group-hover:scale-105 mt-8" />
         </div>
 
-        <!-- Testo -->
         <div class="p-4 text-center z-10 relative">
           <h3 class="text-white text-2xl font-bold tracking-wide mb-2">
             {{ agent.displayName }}

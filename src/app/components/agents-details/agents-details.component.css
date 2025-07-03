@@ -1,6 +1,18 @@
 @media (max-width: 768px) {
-    .bg-agents-mobile{
+    .bg-agents-mobile {
         background-position: 83%;
     }
-    
-  }
+
+}
+
+/* .bg-test {
+    background-image: url('/assets/test.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+} */
+
+.section-hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

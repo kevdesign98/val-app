@@ -5,6 +5,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { AgentsCarouselComponent } from "../../components/agents-carousel/agents-carousel.component";
 import { MapsCarouselComponent } from "../../components/maps-carousel/maps-carousel.component";
+// import { ListResultsService } from "../../service/esports-services/list-results.service";
 @Component({
   selector: "app-home",
   standalone: true,
@@ -21,6 +22,12 @@ import { MapsCarouselComponent } from "../../components/maps-carousel/maps-carou
   styleUrl: "./home.component.css",
 })
 export class HomeComponent {
+ 
+
+
+
+
+
   responsiveOptions = [
     {
       breakpoint: "1024px",

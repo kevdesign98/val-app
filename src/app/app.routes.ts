@@ -15,6 +15,6 @@ export const routes: Routes = [
   { path: "maps", component: MapsComponent },
   { path: "stats", component: StatsComponent },
   { path: "agents/:id", component: AgentsDetailsComponent },
-  { path: "maps/:slug", component: MapStratComponent },
+  { path: 'maps-strat/:slug', component: MapStratComponent },
   { path: '**', redirectTo: '' }
 ];

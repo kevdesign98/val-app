@@ -1,1 +1,45 @@
-<p>map-strat works!</p>
+<app-navbar />
+<section class="text-white min-h-screen">
+  <div class="relative h-screen text-white overflow-hidden">
+    <div class="absolute inset-0">
+      <img [src]="map.image" [alt]="map.name" class="object-cover object-center w-full h-full" />
+      <div class="absolute inset-0 opacity-50" style="background-image: linear-gradient(to bottom, #fff0, #000)"></div>
+    </div>
+
+    <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
+      <h1 class="text-5xl font-bold leading-tight mb-4">{{map.name}}</h1>
+      <!-- <p class="text-lg text-gray-300 mb-8">Lorem ipsum dolor sit amet consectetur adipiscing elit</p> -->
+    </div>
+  </div>
+  <div>
+
+    <p class="text-gray-400 mb-4">{{ map.description }}</p>
+
+    <div class="mt-6">
+      <h2 class="text-2xl font-semibold mb-2">Consigli strategici</h2>
+      <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+        <li *ngFor="let tip of map.tips">{{ tip }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="!map" class="text-red-500">Mappa non trovata</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-footer />

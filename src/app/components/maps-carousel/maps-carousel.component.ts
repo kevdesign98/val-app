@@ -4,6 +4,7 @@ import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { CardModule } from "primeng/card";
 import { RouterModule, Router } from "@angular/router";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-maps-carousel",
@@ -13,6 +14,7 @@ import { RouterModule, Router } from "@angular/router";
     ButtonModule,
     CarouselModule,
     CardModule,
+    RouterLink,
     RouterModule,
   ],
   templateUrl: "./maps-carousel.component.html",
@@ -20,7 +22,7 @@ import { RouterModule, Router } from "@angular/router";
   host: { ngSkipHydration: "true" },
 })
 export class MapsCarouselComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
   maps = [
     { name: "Ascent", slug: "ascent", image: "assets/maps/ascent.png" },
     { name: "Bind", slug: "bind", image: "assets/maps/bind.png" },
@@ -35,6 +37,6 @@ export class MapsCarouselComponent {
   ];
 
   goToMaps(slug: string) {
-    this.router.navigate(["/maps", slug]);
+    this.router.navigate(["/maps-strat", slug]);
   }
 }

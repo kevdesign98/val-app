@@ -1,31 +1,117 @@
 <app-navbar />
-<section class="text-white min-h-screen">
-  <div class="relative h-screen text-white overflow-hidden">
-    <div class="absolute inset-0">
-      <img [src]="map.image" [alt]="map.name" class="object-cover object-center w-full h-full" />
-      <div class="absolute inset-0 opacity-50" style="background-image: linear-gradient(to bottom, #fff0, #000)"></div>
-    </div>
 
-    <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
-      <h1 class="text-5xl font-bold leading-tight mb-4">{{map.name}}</h1>
-      <!-- <p class="text-lg text-gray-300 mb-8">Lorem ipsum dolor sit amet consectetur adipiscing elit</p> -->
+
+<!-- Hero Section -->
+<section class="relative min-h-screen text-white flex items-end bg-cover bg-center"
+  style="background-image: url('/assets/maps-details/abyss.png')">
+  <!-- Overlay nera trasparente -->
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+  <!-- Contenuto -->
+  <div class="relative z-10 w-full px-8 py-16">
+    <div class="max-w-6xl mx-auto space-y-6">
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight uppercase">
+        {{map.name}}
+      </h1>
+
+      <!-- Tags -->
+      <!-- <div class="flex flex-wrap gap-3">
+        <span class="border border-white px-3 py-1 text-sm">Environments</span>
+        <span class="border border-white px-3 py-1 text-sm">Key Art</span>
+        <span class="border border-white px-3 py-1 text-sm">Stylized</span>
+      </div> -->
+
+      <!-- Divider -->
+      <div class="h-px bg-white bg-opacity-20 my-8"></div>
+
+      <!-- Bottom Info -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm uppercase tracking-wide">
+        <div>
+          <div class="text-gray-400">Released</div>
+          <div> {{ map.releaseDate }}</div>
+        </div>
+        <div>
+          <!-- <div class="text-gray-400">Year</div> -->
+          <div>Unrated / Comp</div>
+        </div>
+        <!-- <div>
+          <div class="text-gray-400">Services</div>
+          <div class="text-sm leading-snug">
+            Visual Development, Concept Art, Environment Concepts, Prop Design,
+            Weapons, Vehicles, Illustrations
+          </div>
+        </div> -->
+      </div>
     </div>
   </div>
-  <div>
-
-    <p class="text-gray-400 mb-4">{{ map.description }}</p>
-
-    <div class="mt-6">
-      <h2 class="text-2xl font-semibold mb-2">Consigli strategici</h2>
-      <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
-        <li *ngFor="let tip of map.tips">{{ tip }}</li>
-      </ul>
-    </div>
-  </div>
-
-  <div *ngIf="!map" class="text-red-500">Mappa non trovata</div>
 </section>
 
+
+
+<!-- <div class="min-h-screen bg-gray-900 text-white px-6 py-10">
+  <div class="  mx-auto bg-gray-100 text-black rounded-xl p-8 shadow-xl">
+    <div class="flex flex-col md:flex-row md:justify-between items-start gap-6">
+       <div class="flex-1">
+        <h1 class="text-4xl font-bold uppercase">{{ map.name }}</h1>
+        <p class="text-gray-700 mt-2">{{ map.description }}</p>
+
+        <div class="text-sm text-gray-600 mt-4 space-x-4">
+          <span>{{ map.sites }} SITE</span>
+          <span>Released {{ map.releaseDate }}</span>
+          <span>Unrated / Comp</span>
+        </div>
+      </div>
+
+       <div class="w-40 h-28 rounded overflow-hidden">
+        <img [src]="map.image" [alt]="map.name" class="w-full h-full object-cover" />
+      </div>
+    </div>
+
+     <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+       <div>
+        <h2 class="text-xl font-semibold mb-2">MAP OVERVIEW</h2>
+        <p>Map Overview</p>
+      </div>
+
+       <div>
+        <h2 class="text-xl font-semibold mb-2">STRATEGIES & TIPS</h2>
+
+        <div>
+          <h3 class="font-bold text-sm">ATTACK</h3>
+          <ul class="list-disc list-inside text-sm text-gray-700">
+            <li *ngFor="let strat of map.attackStrategies">{{ strat }}</li>
+          </ul>
+        </div>
+
+        <div class="mt-4">
+          <h3 class="font-bold text-sm">DEFENSE</h3>
+          <ul class="list-disc list-inside text-sm text-gray-700">
+            <li *ngFor="let strat of map.defenseStrategies">{{ strat }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+     <div class="mt-10">
+      <h2 class="text-xl font-semibold mb-2">LINEUPS</h2>
+      <div *ngFor="let lineup of map.lineups">
+        <h4 class="font-semibold">{{ lineup.agent }}</h4>
+        <ul class="list-disc list-inside text-sm text-gray-700">
+          <li *ngFor="let tip of lineup.tips">{{ tip }}</li>
+        </ul>
+      </div>
+    </div>
+
+     <div class="mt-10">
+      <h2 class="text-xl font-semibold mb-2">KEY SPOTS</h2>
+      <div class="space-y-2">
+        <div *ngFor="let spot of map.keySpots" class="bg-white text-black px-4 py-2 rounded-md shadow-sm">
+          {{ spot }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 
 

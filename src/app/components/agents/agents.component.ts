@@ -8,7 +8,7 @@ import { NavbarComponent } from "../navbar/navbar.component";
 @Component({
   selector: "app-agents",
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent],
+  imports: [CommonModule, RouterLink, NavbarComponent,NavbarComponent],
   templateUrl: "./agents.component.html",
   styleUrl: "./agents.component.css",
 })

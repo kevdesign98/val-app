@@ -5,11 +5,12 @@ import { ActivatedRoute } from "@angular/router";
 import { Agent } from "node:http";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { BackgroundsAgentsService } from "../../service/backgrounds-agents/backgrounds-agents.service";
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
   selector: "app-agents-details",
   standalone: true,
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent,FooterComponent],
   templateUrl: "./agents-details.component.html",
   styleUrl: "./agents-details.component.css",
 })

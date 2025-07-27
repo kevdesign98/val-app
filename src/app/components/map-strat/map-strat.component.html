@@ -3,7 +3,7 @@
 
 <!-- Hero Section -->
 <section class="relative min-h-screen text-white flex items-end bg-cover bg-center"
-  style="background-image: url('/assets/maps-details/abyss.png')">
+  [ngStyle]="{ 'background-image': 'url(' + mapBg + ')' }" style="background-size: cover; background-position: center;">
   <!-- Overlay nera trasparente -->
   <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
 
@@ -32,6 +32,7 @@
         </div>
         <div>
           <!-- <div class="text-gray-400">Year</div> -->
+          <div class="text-gray-400">Modality</div>
           <div>Unrated / Comp</div>
         </div>
         <!-- <div>

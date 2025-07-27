@@ -1,0 +1,79 @@
+<app-navbar />
+
+
+
+
+<div class="container mx-auto p-4 pt-24">
+    <div class="rounded-2xl overflow-hidden shadow-lg  text-white"
+        style="background-image: url('/assets/champions.png'); background-size: cover; background-position: center">
+        <div class="bg-black bg-opacity-60 p-6 flex items-center gap-4" style="min-height: 5rem;">
+            <!-- Icona -->
+            <div class="w-14 h-14 bg-gray-800 rounded-xl flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-trophy-icon lucide-trophy">
+                    <path d="M10 14.66v1.626a2 2 0 0 1-.976 1.696A5 5 0 0 0 7 21.978" />
+                    <path d="M14 14.66v1.626a2 2 0 0 0 .976 1.696A5 5 0 0 1 17 21.978" />
+                    <path d="M18 9h1.5a1 1 0 0 0 0-5H18" />
+                    <path d="M4 22h16" />
+                    <path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z" />
+                    <path d="M6 9H4.5a1 1 0 0 1 0-5H6" />
+                </svg>
+                <!-- <lucide-icon name="trophy" class="w-8 h-8" ></lucide-icon> -->
+            </div>
+
+            <!-- Titolo -->
+            <div>
+                <h1 class="text-xl font-bold">
+                    Valorant Esports Match Schedule: Upcoming Games & Live Results
+                </h1>
+                <p class="text-gray-300 text-sm">Full Schedule of Valorant Tournaments</p>
+            </div>
+        </div>
+
+
+
+        <p-tabView>
+            <p-tabPanel header="Schedule">
+                <table class="w-full text-sm text-white bg-gray-900 border border-gray-700 ">
+                    <thead class="bg-gray-800">
+                        <tr>
+                            <th class="p-2">Date</th>
+                            <th class="p-2">Time</th>
+                            <th class="p-2">Teams</th>
+                            <th class="p-2">Event</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let match of matches" class="border-t border-gray-700 text-center text-lg">
+                            <td class="p-2">{{ match.utc | date: 'MMM d, y' }}</td>
+                            <td class="p-2 font-semibold">{{ match.utc | date: 'shortTime' }}</td>
+                            <td class="p-2 font-semibold gap-2">
+                                <span>{{ match.teams[0].name }}</span>
+                                <span class="mx-1">vs</span>
+                                <span>{{ match.teams[1].name }}</span>
+                            </td>
+                            <td class="p-2 gap-2">
+                                <div class="flex items-center justify-center gap-2">
+                                    <img [src]="match.img" alt="Logo evento" class="w-6 h-6 object-contain"
+                                        *ngIf="match.img" />
+                                    <span class="whitespace-nowrap font-semibold">{{ match.event }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p-tabPanel>
+
+            <!-- Tab: Results (puoi riempirlo dopo con match già conclusi) -->
+            <p-tabPanel header="Results">
+                <p class="text-white">Nessun risultato ancora disponibile.</p>
+            </p-tabPanel>
+        </p-tabView>
+
+
+
+    </div>
+</div>
+
+<app-footer />

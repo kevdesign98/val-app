@@ -19,6 +19,8 @@ import { DividerModule } from 'primeng/divider';
 
 export class MapStratComponent implements OnInit {
   map: any;
+  mapBg:string ='';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -29,5 +31,7 @@ export class MapStratComponent implements OnInit {
     const slug = this.route.snapshot.paramMap.get('slug');
     const maps = this.mapsDetailsService.getMapsDetails;
     this.map = maps.find(m => m.slug === slug);
+
+    this.mapBg = this.map?.image || 'assets/maps-details/.png';
   }
 }

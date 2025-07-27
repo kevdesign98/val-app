@@ -6,13 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ListResultsService {
+  private url = 'https://vlr.orlandomm.net/api/v1/matches';
 
-  private url = 'https://vlr.orlandomm.net/api/v1/matches'
+  constructor(private http: HttpClient) {}
 
-//   constructor(private http: HttpClient) {
-
-//     getResults(): Observable < any > {
-//       return this.http.get(`${this.url}`);
-//     }
-//   }
+  getSchedule(): Observable<any> {
+    return this.http.get(this.url);
   }
+}
+

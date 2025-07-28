@@ -1,103 +1,97 @@
 {
-  "hash": "2a141aac",
-  "configHash": "80f5dc79",
+  "hash": "792d3a98",
+  "configHash": "ffdd4ce6",
   "lockfileHash": "54d051e7",
-  "browserHash": "d2844f88",
+  "browserHash": "42d7cf67",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "229a89ea",
+      "fileHash": "1bcc9895",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "b2cc9d99",
+      "fileHash": "15c96148",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "6a5af289",
+      "fileHash": "63868582",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "fd4a0443",
+      "fileHash": "2a15a66c",
       "needsInterop": false
     },
     "@angular/platform-browser/animations/async": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/animations/async.mjs",
       "file": "@angular_platform-browser_animations_async.js",
-      "fileHash": "68f38800",
+      "fileHash": "087f880f",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "a6f0a304",
+      "fileHash": "e34fe5ee",
       "needsInterop": false
     },
     "@primeng/themes/aura": {
       "src": "../../../../../../node_modules/@primeng/themes/aura/index.mjs",
       "file": "@primeng_themes_aura.js",
-      "fileHash": "6eeddefe",
-      "needsInterop": false
-    },
-    "lucide-angular": {
-      "src": "../../../../../../node_modules/lucide-angular/fesm2020/lucide-angular.mjs",
-      "file": "lucide-angular.js",
-      "fileHash": "304352bf",
+      "fileHash": "c29598f8",
       "needsInterop": false
     },
     "primeng/api": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-api.mjs",
       "file": "primeng_api.js",
-      "fileHash": "7d85bf29",
+      "fileHash": "cbead8a8",
       "needsInterop": false
     },
     "primeng/button": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-button.mjs",
       "file": "primeng_button.js",
-      "fileHash": "0fd8da9a",
+      "fileHash": "161be0ee",
       "needsInterop": false
     },
     "primeng/card": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-card.mjs",
       "file": "primeng_card.js",
-      "fileHash": "79d29095",
+      "fileHash": "8d501341",
       "needsInterop": false
     },
     "primeng/carousel": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-carousel.mjs",
       "file": "primeng_carousel.js",
-      "fileHash": "8504d2ae",
+      "fileHash": "19c28ba8",
       "needsInterop": false
     },
     "primeng/config": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-config.mjs",
       "file": "primeng_config.js",
-      "fileHash": "83fe3f5e",
+      "fileHash": "b7608ae1",
       "needsInterop": false
     },
     "primeng/divider": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-divider.mjs",
       "file": "primeng_divider.js",
-      "fileHash": "acdd179d",
+      "fileHash": "adb710aa",
       "needsInterop": false
     },
     "primeng/tabview": {
       "src": "../../../../../../node_modules/primeng/fesm2022/primeng-tabview.mjs",
       "file": "primeng_tabview.js",
-      "fileHash": "ce77381e",
+      "fileHash": "830701be",
       "needsInterop": false
     },
     "rxjs/operators": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/operators/index.js",
       "file": "rxjs_operators.js",
-      "fileHash": "33de3571",
+      "fileHash": "22ab12db",
       "needsInterop": false
     }
   },

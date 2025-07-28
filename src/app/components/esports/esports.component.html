@@ -35,6 +35,7 @@
 
         <p-tabView>
             <p-tabPanel header="Schedule">
+                <h1 class="text-2xl font-bold uppercase mb-4">upcoming games</h1>
                 <table class="w-full text-sm text-white bg-gray-900 border border-gray-700 ">
                     <thead class="bg-gray-800">
                         <tr>
@@ -45,10 +46,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let match of matches" class="border-t border-gray-700 text-center text-lg">
+                        <tr *ngFor="let match of matches" class="border-t border-gray-700 text-center font-semibold">
                             <td class="p-2">{{ match.utc | date: 'MMM d, y' }}</td>
-                            <td class="p-2 font-semibold">{{ match.utc | date: 'shortTime' }}</td>
-                            <td class="p-2 font-semibold gap-2">
+                            <td class="p-2">{{ match.utc | date: 'shortTime' }}</td>
+                            <td class="p-2 gap-2">
                                 <span>{{ match.teams[0].name }}</span>
                                 <span class="mx-1">vs</span>
                                 <span>{{ match.teams[1].name }}</span>
@@ -65,9 +66,41 @@
                 </table>
             </p-tabPanel>
 
-            <!-- Tab: Results (puoi riempirlo dopo con match già conclusi) -->
             <p-tabPanel header="Results">
-                <p class="text-white">Nessun risultato ancora disponibile.</p>
+                <h1 class="text-2xl font-bold uppercase mb-4">results games</h1>
+                <table class="w-full text-sm text-white bg-gray-900 border border-gray-700 ">
+                    <thead class="bg-gray-800">
+                        <tr>
+                            <th class="p-2">Date</th>
+                            <th class="p-2">Time</th>
+                            <th class="p-2">Teams & Score</th>
+                            <th class="p-2">Event</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let match of resultMatches" class="border-t border-gray-700 text-center font-semibold">
+                            <td class="p-2">
+                                <div>{{ match.ago   }}</div>
+                                <div>{{ match.ago  }}</div>
+                            </td>
+                            <td class="p-2">
+                                {{ match.ago  }}
+                            </td>
+                            <td class="p-2">
+                            <span>{{ match.teams[0].name }} – {{ match.teams[1].name }}</span><br>
+                            <span>{{ match.teams[0].score }} – {{ match.teams[1].score }}</span>
+
+                            </td>
+                            <td class="p-2">
+                                <div class="flex items-center justify-center gap-2">
+                                    <img [src]="match.img" alt="Logo evento" class="w-6 h-6 object-contain"
+                                        *ngIf="match.img" />
+                                    <span class="whitespace-nowrap">{{ match.event }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </p-tabPanel>
         </p-tabView>
 

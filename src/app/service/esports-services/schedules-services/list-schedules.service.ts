@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ListResultsService {
+export class ListSchedulesService {
+
   private url = 'https://vlr.orlandomm.net/api/v1/matches';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getSchedule(): Observable<any> {
     return this.http.get(this.url);
   }
 }
-

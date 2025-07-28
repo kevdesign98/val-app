@@ -5,7 +5,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { AgentsCarouselComponent } from "../../components/agents-carousel/agents-carousel.component";
 import { MapsCarouselComponent } from "../../components/maps-carousel/maps-carousel.component";
-import { ListResultsService } from "../../service/esports-services/list-results.service";
+import { ListSchedulesService } from '../../service/esports-services/schedules-services/list-schedules.service';
 import { Match } from "../../models/match.results";
 @Component({
   selector: "app-home",
@@ -28,10 +28,10 @@ export class HomeComponent implements OnInit {
   topMatches: Match[] = [];
 
 
-  constructor(private listResultsService: ListResultsService) { }
+  constructor(private listSchedulesService: ListSchedulesService) { }
 
   ngOnInit(): void {
-    this.listResultsService.getSchedule().subscribe((res) => {
+    this.listSchedulesService.getSchedule().subscribe((res) => {
       const matches = res.data.slice(0, 3); // prendi solo i primi 3
       this.topMatches = matches.map((match: any) => {
         return {

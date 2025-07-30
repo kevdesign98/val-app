@@ -14,14 +14,53 @@
 </div>
 
 
-<div class="relative bg-cover bg-center min-h-[500px] flex items-center justify-end p-6"
+<!-- <div class="relative bg-cover bg-center min-h-[500px] flex items-center justify-end p-6"
     style="background-image: url('assets/agents-bg-carousel.png');">
     <div class="w-full md:w-2/3">
         <h2 class="text-2xl font-bold text-black text-center block md:hidden" style="padding-bottom: 40px;">Agents</h2>
 
         <app-agents-carousel />
     </div>
-</div>
+</div> -->
+
+
+<!-- <section class="relative min-h-[400px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-red-val clip-diagonal"></div>
+    </div>
+
+     <div class="relative z-10 container mx-auto grid grid-cols-1 md:grid-cols-2 text-white p-8 gap-8 items-center">
+        <div class="text-left">
+            <h2 class="text-4xl font-bold mb-4 text-black">PICK YOUR AGENTS</h2>
+            <p class="text-lg text-white/80">Choose your favorite and learn their abilities.</p>
+        </div>
+
+        <div>
+            <app-agents-carousel />
+        </div>
+    </div>
+</section> -->
+
+<section class="relative min-h-[400px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-red-val clip-diagonal"></div>
+    </div>
+
+    <div class="relative z-10 container mx-auto grid grid-cols-1 md:grid-cols-2 text-white p-8 gap-8 items-center">
+        <div class="text-left">
+            <h2 class="text-5xl font-bold mb-4 text-black">PICK YOUR AGENTS</h2>
+            <p class="text-lg font-semibold text-white/80">Choose your favorite and learn their abilities.</p>
+        </div>
+
+        <div class="  p-10 relative z-10">
+            <app-agents-carousel></app-agents-carousel>
+        </div>
+    </div>
+</section>
+
+
+
+
 
 <div class="container mx-auto p-8 text-white">
     <div class="grid md:grid-cols-3 gap-6 mt-6 ">
@@ -35,7 +74,8 @@
                 <div *ngIf="topMatches.length > 0; else loading">
                     <div *ngFor="let match of topMatches" class="text-sm mt-2">
                         <p>
-                            <span [ngClass]="{'text-red-500 font-semibold': match.status === 'LIVE','text-yellow-400': match.status === 'Upcoming'}">
+                            <span
+                                [ngClass]="{'text-red-500 font-semibold': match.status === 'LIVE','text-yellow-400': match.status === 'Upcoming'}">
                                 {{ match.status }}
                             </span>
                             – {{ match.team1 }} vs {{ match.team2 }}

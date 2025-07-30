@@ -24,39 +24,46 @@
 }
 
 
-.bg-card-esports{
+.bg-card-esports {
     background-image: url('/assets/champions.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.bg-card-lineups{
+.bg-card-lineups {
     background-image: url('/assets/banner.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover
 }
 
-.bg-card-insights{
+.bg-card-insights {
     background-image: url('/assets/omen-home.png');
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover
-
 }
 
-.bg-gradient{
-    background: rgb(2,0,36);
-    background: -moz-linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 65%, rgba(0,212,255,0) 100%);
-    background: -webkit-linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 65%, rgba(0,212,255,0) 100%);
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 65%, rgba(0,212,255,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#00d4ff",GradientType=1); 
+.bg-gradient {
+    background: rgb(2, 0, 36);
+    background: -moz-linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
+    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024", endColorstr="#00d4ff", GradientType=1);
 }
 
-.bg-maps-home{
+.bg-maps-home {
     background-image: url('/assets/maps-home.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.clip-diagonal {
+    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+}
+
+.bg-red-val {
+    background-color: #FF4656;
 }

@@ -44,8 +44,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-
   responsiveOptions = [
     {
       breakpoint: "1024px",

@@ -4,6 +4,7 @@ import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { CardModule } from "primeng/card";
 import { RouterModule, Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-agents-carousel",
@@ -19,23 +20,26 @@ import { RouterModule, Router } from "@angular/router";
   styleUrl: "./agents-carousel.component.css",
   host: { ngSkipHydration: "true" },
 })
-export class AgentsCarouselComponent {
-  constructor(private router: Router) {}
-  
-  agents = [
-    { name: "Reyna", slug: "Reyna", image: "assets/agents/Reyna.png" },
-    { name: "Jett", slug: "Jett", image: "assets/agents/Jett.png" },
-    { name: "Phoenix", slug: "Phoenix", image: "assets/agents/Phoenix.png" },
-    { name: "Sova", slug: "Sova", image: "assets/agents/Sova.png" },
-  ];
+export class AgentsCarouselComponent implements OnInit {
+  agents: any = [];
 
+  constructor(private router: Router, private http: HttpClient) { }
+
+  ngOnInit() {
+    this.http.get<any>("https://valorant-api.com/v1/agents").subscribe((res) => {
+      const allAgents = res.data;
+      this.agents = allAgents
+        .filter((agent: any) => agent.isPlayableCharacter)
+        .slice(0, 4); // mostra solo 4 agenti
+    });
+  }
   responsiveOptions = [
     { breakpoint: "1024px", numVisible: 3, numScroll: 1 },
     { breakpoint: "768px", numVisible: 2, numScroll: 1 },
     { breakpoint: "560px", numVisible: 1, numScroll: 1 },
   ];
 
-  goToAgent(slug: string) {
-    this.router.navigate(["/agents", slug]);
+  goToAgent(uuid: string) {
+    this.router.navigate(["/agents", uuid]);
   }
 }

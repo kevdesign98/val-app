@@ -8,13 +8,13 @@
   <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
     <h1 class="text-5xl font-bold leading-tight mb-4">Lorem ipsum</h1>
     <p class="text-lg text-gray-300 mb-8">Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
-    <a [routerLink]="['#']"
+    <a href="#"
       class="bg-yellow-400 text-gray-900 hover:bg-yellow-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">Scroll down</a>
   </div>
 </div>
 
 
-<section class="bg-black py-12 px-6" style="background-color: #1c1b22;">
+<section id="maps" class="bg-black py-12 px-6" style="background-color: #1c1b22;" >
   <h1 class="text-3xl font-bold text-white mb-8 text-center">Scegli la mappa</h1>
   <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
     <div *ngFor="let map of maps" class="relative group text-center">

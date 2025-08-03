@@ -5,24 +5,8 @@
 }
 
 .cover-up {
-    background: #009FFF;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ec2F4B, #009FFF);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ec2F4B, #009FFF);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-}
-
-.bg-gradient-home {
-    background: #009FFF;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ec2F4B, #009FFF);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #ec2F4B, #009FFF);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
+    background: #ff4656;
+ }
 
 .bg-card-esports {
     background-image: url('/assets/champions.png');
@@ -64,6 +48,14 @@
     clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
 }
 
+.clip-diagonal-reverse {
+    clip-path: polygon(100% 0, 40% 0, 60% 100%, 100% 100%);
+}
+
 .bg-red-val {
     background-color: #FF4656;
+}
+
+.bg-white-maps {
+    background-color: #ece7e1
 }

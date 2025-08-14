@@ -1,18 +1,171 @@
 @media (max-width: 768px) {
-    .bg-agents-mobile {
-        background-position: 83%;
-    }
+  .bg-agents-mobile {
+    background-position: 83%;
+  }
 
 }
-
-/* .bg-test {
-    background-image: url('/assets/test.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-} */
 
 .section-hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
+#agent-navigation .agent-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-height: 150px;
+  transition: background-color 0.3s ease;
+}
+
+#agent-navigation .agent-nav.prev {
+  background-color: #222;
+}
+
+#agent-navigation .agent-nav.next {
+  background-color: #333;
+}
+
+#agent-navigation .agent-nav:hover {
+  background-color: #555;
+  /* Qui metterai il tuo effetto */
+}
+
+#agent-navigation .nav-lead {
+  margin-bottom: 5px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+#agent-navigation .nav-title {
+  font-size: 24px;
+  margin: 0;
+}
+
+#agent-navigation .nav-arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  margin-top: 10px;
+}
+
+
+
+/* .next-work {
+  display: block;
+  width: 100%;
+  padding: 45px 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #202020;
+}
+
+.next-work .content {
+  position: relative;
+  z-index: 20;
+}
+
+.next-work:after,
+.next-work:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  transition: -webkit-transform 0.38s cubic-bezier(0.694, 0.048, 0.335, 1);
+  transition: transform 0.38s cubic-bezier(0.694, 0.048, 0.335, 1);
+  -webkit-transform: translateY(-100%);
+}
+
+.next-work:before {
+  background-color: #E8006F;
+  transition-delay: 0.12s;
+  z-index: 2;
+}
+
+.next-work:after {
+  background-color: #0B80FF;
+  z-index: 1;
+}
+
+.next-work .next-work-lead,
+.next-work .next-work-title {
+  transition: color 0.4s ease 0.25s;
+}
+
+.next-work .next-work-title {
+  display: inline-block;
+  position: relative;
+}
+
+.next-work .next-work-title:after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #E8006F;
+  z-index: -1;
+}
+
+.next-work .next-work-arrow {
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 100px;
+  top: 65%;
+  width: 150px;
+  height: 70px;
+  opacity: 0.7;
+  transition: -webkit-transform 0.25s cubic-bezier(0.694, 0.048, 0.335, 1);
+  transition: transform 0.25s cubic-bezier(0.694, 0.048, 0.335, 1);
+  transition: transform 0.25s cubic-bezier(0.694, 0.048, 0.335, 1),
+    -webkit-transform 0.25s cubic-bezier(0.694, 0.048, 0.335, 1);
+  z-index: 2;
+}
+
+.next-work .next-work-arrow svg {
+  width: 150px;
+  height: 70px;
+}
+
+.next-work .next-work-arrow svg path {
+  fill: #fff;
+  transition: all 0.3s ease;
+}
+
+.next-work:focus .next-work-lead,
+.next-work:focus .next-work-title,
+.next-work:hover .next-work-lead,
+.next-work:hover .next-work-title {
+  color: #fff;
+}
+
+.next-work:focus:after,
+.next-work:focus:before,
+.next-work:hover:after,
+.next-work:hover:before {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.next-work:focus .next-work-arrow,
+.next-work:hover .next-work-arrow {
+  transition-delay: 0.3s;
+  -webkit-transform: translate(20%, -50%);
+  transform: translate(20%, -50%);
+}
+
+.next-work:focus .next-work-arrow svg path,
+.next-work:hover .next-work-arrow svg path {
+  fill: #fff;
+} */

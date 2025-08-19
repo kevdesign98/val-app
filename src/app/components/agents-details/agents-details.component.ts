@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
 import { CommonModule } from "@angular/common";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, } from "@angular/router";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { BackgroundsAgentsService } from "../../service/backgrounds-agents/backgrounds-agents.service";
 import { FooterComponent } from "../footer/footer.component";
 import { sanitize } from 'sanitize-filename-ts';
- 
+
 @Component({
   selector: "app-agents-details",
   standalone: true,
@@ -40,8 +40,7 @@ export class AgentsDetailsComponent implements OnInit {
     this.listAgentsService.getAgentById(id ?? "").subscribe((data: any) => {
       this.agent = data;
 
-      const baseName = data.displayName.toLowerCase();
-
+      //rinominare video
       const makeVideoPath = (agentName: string, abilityName: string) => {
         const base = sanitize(agentName.toLowerCase()).replace(/\s+/g, '-');
         const ability = sanitize(abilityName.toLowerCase()).replace(/\s+/g, '-');
@@ -52,10 +51,8 @@ export class AgentsDetailsComponent implements OnInit {
         videoUrl: makeVideoPath(data.displayName, ab.displayName)
       }));
 
-
       const matched = this.agents.find((a) => a.name === data.displayName);
       this.agentBg = matched?.background ?? "";
-
       // Qui aggiorniamo l'indice corrente
       this.currentIndex = this.agents.findIndex(a => a.name === data.displayName);
     });

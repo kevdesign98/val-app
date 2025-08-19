@@ -29,6 +29,7 @@
     "primeng": "^18.0.2",
     "rxjs": "~7.8.0",
     "sanitize-filename-ts": "^1.0.2",
+    "swiper": "^11.2.10",
     "tailwindcss-primeui": "^0.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

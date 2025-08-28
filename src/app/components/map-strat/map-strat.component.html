@@ -1,112 +1,66 @@
 <app-navbar />
 
+<section *ngIf="map" class="relative h-screen w-full bg-cover bg-center"
+  [ngStyle]="{ 'background-image': 'url(' + map?.splash + ')' }">
+  <div class="absolute inset-0 bg-black/60"></div>
 
- <section class="relative min-h-screen text-white flex items-end bg-cover bg-center"
-  [ngStyle]="{ 'background-image': 'url(' + mapBg + ')' }" style="background-size: cover; background-position: center;">
-   <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
-
-   <div class="relative z-10 w-full px-8 py-16">
-    <div class="max-w-6xl mx-auto space-y-6">
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight uppercase">
-        {{map.name}}
-      </h1>
-
-      <div class="h-px bg-white bg-opacity-20 my-8"></div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm uppercase tracking-wide">
-        <div>
-          <div class="text-gray-400">Released</div>
-          <div> {{ map.releaseDate }}</div>
-        </div>
-        <div>
-          <div class="text-gray-400">Modality</div>
-          <div>Unrated / Comp</div>
-        </div>
+  <div class="relative z-10 flex flex-col justify-end h-full p-10 text-white">
+    <h1 class="text-5xl font-extrabold leading-tight max-w-4xl">
+      {{ map?.displayName }}
+    </h1>
+    <div class="grid grid-cols-3 gap-6 mt-12 text-gray-300 text-sm">
+      <div>
+        <h4 class="uppercase text-xs">Modality</h4>
+        <h4 class="font-semibold uppercase text-xs">Competitive</h4>
+      </div>
+      <div>
+        <h4 class="uppercase text-xs">Tactical Description</h4>
+        <h4 class="font-semibold">{{ map?.tacticalDescription || 'N/A' }}</h4>
+      </div>
+      <div>
+        <h4 class="uppercase text-xs">Coordinates</h4>
+        <h4 class="font-semibold">{{ map?.coordinates || 'Unknown' }}</h4>
       </div>
     </div>
   </div>
 </section>
 
+<div class="p-6 flex flex-col md:flex-row gap-8 justify-center items-start">
 
+  <!-- 📌 Piantina -->
+  <div class="relative w-[600px] h-[600px] bg-gray-900 rounded-lg overflow-hidden">
+    <img [src]="map?.displayIcon" alt="Piantina {{ map?.displayName }}" class="w-full h-full object-contain">
 
-<!-- <div class="min-h-screen bg-gray-900 text-white px-6 py-10">
-  <div class="  mx-auto bg-gray-100 text-black rounded-xl p-8 shadow-xl">
-    <div class="flex flex-col md:flex-row md:justify-between items-start gap-6">
-       <div class="flex-1">
-        <h1 class="text-4xl font-bold uppercase">{{ map.name }}</h1>
-        <p class="text-gray-700 mt-2">{{ map.description }}</p>
-
-        <div class="text-sm text-gray-600 mt-4 space-x-4">
-          <span>{{ map.sites }} SITE</span>
-          <span>Released {{ map.releaseDate }}</span>
-          <span>Unrated / Comp</span>
-        </div>
+    <!-- 📍 Callouts interattivi -->
+    <ng-container *ngFor="let callout of map?.callouts">
+      <div class="absolute bg-cyan-500 text-white text-xs px-2 py-1 rounded shadow cursor-pointer 
+               hover:bg-cyan-600 hover:scale-110 transition transform" [ngStyle]="{
+          top: (callout.location.y / 5) + 'px',
+          left: (callout.location.x / 5) + 'px'
+        }" pTooltip="{{ callout.superRegionName }}" tooltipPosition="top" (click)="selectCallout(callout)">
+        {{ callout.regionName }}
       </div>
+    </ng-container>
+  </div>
 
-       <div class="w-40 h-28 rounded overflow-hidden">
-        <img [src]="map.image" [alt]="map.name" class="w-full h-full object-cover" />
-      </div>
-    </div>
+  <!-- 📌 Lista + dettagli -->
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">Callouts</h2>
 
-     <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-       <div>
-        <h2 class="text-xl font-semibold mb-2">MAP OVERVIEW</h2>
-        <p>Map Overview</p>
-      </div>
+    <ul class="list-disc list-inside space-y-1">
+      <li *ngFor="let callout of map?.callouts" class="cursor-pointer hover:text-cyan-400 transition"
+        (click)="selectCallout(callout)">
+        {{ callout.regionName }} ({{ callout.superRegionName }})
+      </li>
+    </ul>
 
-       <div>
-        <h2 class="text-xl font-semibold mb-2">STRATEGIES & TIPS</h2>
-
-        <div>
-          <h3 class="font-bold text-sm">ATTACK</h3>
-          <ul class="list-disc list-inside text-sm text-gray-700">
-            <li *ngFor="let strat of map.attackStrategies">{{ strat }}</li>
-          </ul>
-        </div>
-
-        <div class="mt-4">
-          <h3 class="font-bold text-sm">DEFENSE</h3>
-          <ul class="list-disc list-inside text-sm text-gray-700">
-            <li *ngFor="let strat of map.defenseStrategies">{{ strat }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-     <div class="mt-10">
-      <h2 class="text-xl font-semibold mb-2">LINEUPS</h2>
-      <div *ngFor="let lineup of map.lineups">
-        <h4 class="font-semibold">{{ lineup.agent }}</h4>
-        <ul class="list-disc list-inside text-sm text-gray-700">
-          <li *ngFor="let tip of lineup.tips">{{ tip }}</li>
-        </ul>
-      </div>
-    </div>
-
-     <div class="mt-10">
-      <h2 class="text-xl font-semibold mb-2">KEY SPOTS</h2>
-      <div class="space-y-2">
-        <div *ngFor="let spot of map.keySpots" class="bg-white text-black px-4 py-2 rounded-md shadow-sm">
-          {{ spot }}
-        </div>
-      </div>
+    <!-- Dettagli callout selezionato -->
+    <div *ngIf="selectedCallout" class="p-4 bg-gray-800 text-white rounded-lg shadow mt-4">
+      <h3 class="text-lg font-bold">{{ selectedCallout.regionName }}</h3>
+      <p>Super regione: {{ selectedCallout.superRegionName }}</p>
+      <p>Coords: X {{ selectedCallout.location.x }}, Y {{ selectedCallout.location.y }}</p>
     </div>
   </div>
-</div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 <app-footer />

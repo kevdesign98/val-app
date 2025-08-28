@@ -1,14 +1,17 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  DomHandler,
   Ripple,
   SpinnerIcon
-} from "./chunk-GZ3NVHLC.js";
+} from "./chunk-3QHTZUYS.js";
+import {
+  DomHandler
+} from "./chunk-N6625Q5J.js";
 import {
   BaseComponent
-} from "./chunk-HINBWIA7.js";
+} from "./chunk-6LQYXHG6.js";
 import {
   BaseStyle
-} from "./chunk-5T3PTI3Q.js";
+} from "./chunk-7ESJXRVJ.js";
 import {
   PrimeTemplate,
   SharedModule,
@@ -19,7 +22,7 @@ import {
   isNotEmpty,
   removeClass,
   uuid
-} from "./chunk-7HFYEYQR.js";
+} from "./chunk-LUT5V6Q5.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -28,7 +31,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-PLTKM3A3.js";
+} from "./chunk-2Y7F4HLK.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -89,7 +92,7 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-OF4S26JV.js";
+} from "./chunk-XGQE27FZ.js";
 
 // node_modules/primeng/fesm2022/primeng-autofocus.mjs
 var AutoFocus = class _AutoFocus extends BaseComponent {
@@ -2618,4 +2621,4 @@ export {
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-XBJME3GF.js.map
+//# sourceMappingURL=chunk-JXGN3WZM.js.map

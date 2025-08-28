@@ -1,14 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  Button,
-  ButtonClasses,
-  ButtonDirective,
-  ButtonIcon,
-  ButtonLabel,
-  ButtonModule,
-  ButtonStyle
-} from "./chunk-JXGN3WZM.js";
-import "./chunk-3QHTZUYS.js";
+  Tooltip,
+  TooltipClasses,
+  TooltipModule,
+  TooltipStyle
+} from "./chunk-3ATL4PRS.js";
 import "./chunk-N6625Q5J.js";
 import "./chunk-6LQYXHG6.js";
 import "./chunk-7ESJXRVJ.js";
@@ -18,12 +14,9 @@ import "./chunk-XGQE27FZ.js";
 import "./chunk-7GF5BRHJ.js";
 import "./chunk-NQ4HTGF6.js";
 export {
-  Button,
-  ButtonClasses,
-  ButtonDirective,
-  ButtonIcon,
-  ButtonLabel,
-  ButtonModule,
-  ButtonStyle
+  Tooltip,
+  TooltipClasses,
+  TooltipModule,
+  TooltipStyle
 };
-//# sourceMappingURL=primeng_button.js.map
+//# sourceMappingURL=primeng_tooltip.js.map

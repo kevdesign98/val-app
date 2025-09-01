@@ -24,10 +24,13 @@ export class MapsComponent implements OnInit {
 
   ngOnInit(): void {
     this.mapsService.getAllMaps().subscribe({
-      next: (res) => {
-        this.maps = res.data.filter((map: any) => this.compMaps.includes(map.displayName));
+      next: (maps: any[]) => {
+        this.maps = maps.filter((map: any) =>
+          this.compMaps.includes(map.displayName)
+        );
       },
       error: (err) => console.error("Errore nel caricamento mappe:", err)
     });
   }
+
 }

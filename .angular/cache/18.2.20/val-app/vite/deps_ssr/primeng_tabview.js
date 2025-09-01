@@ -2,20 +2,20 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   Tooltip,
   TooltipModule
-} from "./chunk-3ATL4PRS.js";
+} from "./chunk-NHKL6CKN.js";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   Ripple,
   TimesIcon
-} from "./chunk-3QHTZUYS.js";
+} from "./chunk-HV63KO6W.js";
 import "./chunk-N6625Q5J.js";
 import {
   BaseComponent
-} from "./chunk-6LQYXHG6.js";
+} from "./chunk-ZOJABECS.js";
 import {
   BaseStyle
-} from "./chunk-7ESJXRVJ.js";
+} from "./chunk-F34PVLE5.js";
 import {
   PrimeTemplate,
   SharedModule,
@@ -27,7 +27,7 @@ import {
   getOuterWidth,
   getWidth,
   uuid
-} from "./chunk-LUT5V6Q5.js";
+} from "./chunk-GTSRJXV6.js";
 import {
   CommonModule,
   NgClass,
@@ -35,7 +35,7 @@ import {
   NgStyle,
   NgTemplateOutlet,
   isPlatformBrowser
-} from "./chunk-2Y7F4HLK.js";
+} from "./chunk-AJW2N2KR.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -97,8 +97,10 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-XGQE27FZ.js";
-import "./chunk-7GF5BRHJ.js";
+} from "./chunk-N427ZPVW.js";
+import "./chunk-5IW5ZEPE.js";
+import "./chunk-UOPINYA3.js";
+import "./chunk-RPWZ4CMX.js";
 import "./chunk-NQ4HTGF6.js";
 
 // node_modules/primeng/fesm2022/primeng-tabview.mjs

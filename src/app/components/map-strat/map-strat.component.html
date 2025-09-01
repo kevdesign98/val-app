@@ -1,13 +1,10 @@
 <app-navbar />
 
 <section *ngIf="map" class="relative h-screen w-full bg-cover bg-center"
-  [ngStyle]="{ 'background-image': 'url(' + map?.splash + ')' }">
+  [ngStyle]="{ 'background-image': 'url(' + map.splash + ')' }">
   <div class="absolute inset-0 bg-black/60"></div>
-
   <div class="relative z-10 flex flex-col justify-end h-full p-10 text-white">
-    <h1 class="text-5xl font-extrabold leading-tight max-w-4xl">
-      {{ map?.displayName }}
-    </h1>
+    <h1 class="text-5xl font-extrabold leading-tight max-w-4xl">{{ map.displayName }}</h1>
     <div class="grid grid-cols-3 gap-6 mt-12 text-gray-300 text-sm">
       <div>
         <h4 class="uppercase text-xs">Modality</h4>
@@ -15,52 +12,57 @@
       </div>
       <div>
         <h4 class="uppercase text-xs">Tactical Description</h4>
-        <h4 class="font-semibold">{{ map?.tacticalDescription || 'N/A' }}</h4>
+        <h4 class="font-semibold">{{ map.tacticalDescription || 'N/A' }}</h4>
       </div>
       <div>
         <h4 class="uppercase text-xs">Coordinates</h4>
-        <h4 class="font-semibold">{{ map?.coordinates || 'Unknown' }}</h4>
+        <h4 class="font-semibold">{{ map.coordinates || 'Unknown' }}</h4>
       </div>
     </div>
   </div>
 </section>
 
-<div class="p-6 flex flex-col md:flex-row gap-8 justify-center items-start">
 
-  <!-- 📌 Piantina -->
-  <div class="relative w-[600px] h-[600px] bg-gray-900 rounded-lg overflow-hidden">
-    <img [src]="map?.displayIcon" alt="Piantina {{ map?.displayName }}" class="w-full h-full object-contain">
+<div *ngIf="map" class="map-strat-container" style="padding: 100px 0 100px 0;">
+  <div class="flex gap-6">
+    <!-- Immagine della mappa con markers -->
+    <div class="relative">
+      <div class="relative w-[600px] h-[600px] bg-gray-900 rounded-lg overflow-hidden">
+        <img [src]="map.displayIcon" alt="Piantina {{ map.displayName }}" class="w-full h-full object-contain">
 
-    <!-- 📍 Callouts interattivi -->
-    <ng-container *ngFor="let callout of map?.callouts">
-      <div class="absolute bg-cyan-500 text-white text-xs px-2 py-1 rounded shadow cursor-pointer 
-               hover:bg-cyan-600 hover:scale-110 transition transform" [ngStyle]="{
-          top: (callout.location.y / 5) + 'px',
-          left: (callout.location.x / 5) + 'px'
-        }" pTooltip="{{ callout.superRegionName }}" tooltipPosition="top" (click)="selectCallout(callout)">
-        {{ callout.regionName }}
+        <!-- Marker sulla mappa (quando seleziono un callout) -->
+        <div *ngIf="selectedCallout" class="absolute w-4 h-4 bg-red-500 rounded-full border-2 border-white" [ngStyle]="{
+          top: normalizeY(selectedCallout.location.y) + 'px',
+          left: normalizeX(selectedCallout.location.x) + 'px'
+        }"></div>
       </div>
-    </ng-container>
-  </div>
+    </div>
 
-  <!-- 📌 Lista + dettagli -->
-  <div class="flex flex-col gap-4">
-    <h2 class="text-xl font-semibold">Callouts</h2>
+    <!-- Lista callouts -->
+    <div class="flex-1">
+      <h3 class="text-xl font-semibold mb-2">Callouts</h3>
+      <div *ngIf="map.callouts?.length > 0; else noCallouts" class="grid grid-cols-2 gap-2">
+        <div *ngFor="let callout of map.callouts" (click)="selectCallout(callout)"
+          class="p-2 rounded cursor-pointer hover:bg-gray-500 transition">
+          <strong>{{ callout.regionName }}</strong>
+          <span class="text-sm text-gray-600 block">{{ callout.superRegionName }}</span>
+        </div>
+      </div>
 
-    <ul class="list-disc list-inside space-y-1">
-      <li *ngFor="let callout of map?.callouts" class="cursor-pointer hover:text-cyan-400 transition"
-        (click)="selectCallout(callout)">
-        {{ callout.regionName }} ({{ callout.superRegionName }})
-      </li>
-    </ul>
-
-    <!-- Dettagli callout selezionato -->
-    <div *ngIf="selectedCallout" class="p-4 bg-gray-800 text-white rounded-lg shadow mt-4">
-      <h3 class="text-lg font-bold">{{ selectedCallout.regionName }}</h3>
-      <p>Super regione: {{ selectedCallout.superRegionName }}</p>
-      <p>Coords: X {{ selectedCallout.location.x }}, Y {{ selectedCallout.location.y }}</p>
+      <ng-template #noCallouts>
+        <p class="text-gray-500">Nessun callout disponibile per questa mappa.</p>
+      </ng-template>
     </div>
   </div>
+
+  <!-- Bottone mappa successiva -->
+  <!-- <div class="mt-6">
+    <button [routerLink]="['/maps-strat', nextMapUuid]" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+      Mappa successiva
+    </button>
+  </div>
+</div> -->
 </div>
+
 
 <app-footer />

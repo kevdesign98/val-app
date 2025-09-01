@@ -1,47 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-// import { RouterLink } from '@angular/router';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { FooterComponent } from '../../components/footer/footer.component';
+import { ActivatedRoute } from '@angular/router';
 import { MapsService } from '../../service/maps-services/maps.service';
-// import { MapsDetailsService } from '../../service/maps-details-services/maps-details.service';
-import { CardModule } from 'primeng/card';
-import { DividerModule } from 'primeng/divider';
-import { TooltipModule } from 'primeng/tooltip';
+import { CommonModule } from '@angular/common';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { FooterComponent } from '../footer/footer.component';
+// import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-map-strat',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, CommonModule, CardModule, DividerModule,TooltipModule],
+  imports: [CommonModule, NavbarComponent, FooterComponent],
   templateUrl: './map-strat.component.html',
-  styleUrl: './map-strat.component.css'
+  styleUrls: ['./map-strat.component.css'],
 })
-
-
 export class MapStratComponent implements OnInit {
-  map: any = null;
+  map: any;
   callouts: any[] = [];
+  mapUuid!: string;
   selectedCallout: any = null;
 
   constructor(
     private route: ActivatedRoute,
-    private mapsService: MapsService
+    private Mapsservice: MapsService
   ) { }
 
   ngOnInit(): void {
-    const uuid = this.route.snapshot.paramMap.get("uuid");
-    if (uuid) {
-      this.mapsService.getMapByUuid(uuid).subscribe({
-        next: (res) => {
-          this.map = res.data;
-          this.callouts = res.data.callouts || [];
-        },
-        error: (err) => console.error("Errore caricamento mappa:", err)
-      });
-    }
+    this.route.paramMap.subscribe((params) => {
+      this.mapUuid = params.get('uuid')!;
+      this.loadMapData(this.mapUuid);
+    });
   }
-  selectCallout(callout: any) {
+
+  loadMapData(uuid: string) {
+    this.Mapsservice.getMapByUuid(uuid).subscribe((data) => {
+      this.map = data;
+      this.callouts = data.callouts || [];
+    });
+  }
+
+  /** Normalizza Y perché nei CSS 0 è in alto */
+  normalizeY(y: number, imageWidth: number = 600): number {
+    return imageWidth - y / 5;
+  }
+
+  normalizeX(x: number, imageHeight: number = 600): number {
+    return imageHeight - x / 5;
+  }
+
+  selectCallout(callout: any): void {
     this.selectedCallout = callout;
+  }
+
+  isSelected(callout: any): boolean {
+    return false; // qui poi posso gestire la selezione
+  }
+
+  nextMap() {
+    console.log('TODO: Vai alla prossima mappa');
   }
 }

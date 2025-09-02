@@ -1,11 +1,9 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+  DomHandler,
   Ripple,
   SpinnerIcon
-} from "./chunk-HV63KO6W.js";
-import {
-  DomHandler
-} from "./chunk-N6625Q5J.js";
+} from "./chunk-HHPPVJK5.js";
 import {
   BaseComponent
 } from "./chunk-ZOJABECS.js";
@@ -2621,4 +2619,4 @@ export {
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-ZV43WCNV.js.map
+//# sourceMappingURL=chunk-UJWKSXQ4.js.map

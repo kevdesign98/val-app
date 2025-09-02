@@ -1,10 +1,8 @@
 import {
+  DomHandler,
   Ripple,
   SpinnerIcon
-} from "./chunk-VDITDSEM.js";
-import {
-  DomHandler
-} from "./chunk-5G7WYC4N.js";
+} from "./chunk-GHQM6IGE.js";
 import {
   BaseComponent
 } from "./chunk-XQUXQWSF.js";
@@ -2620,4 +2618,4 @@ export {
   Button,
   ButtonModule
 };
-//# sourceMappingURL=chunk-LBBJ3XAX.js.map
+//# sourceMappingURL=chunk-OQS5MEFH.js.map

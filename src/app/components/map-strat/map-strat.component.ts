@@ -39,12 +39,21 @@ export class MapStratComponent implements OnInit {
   }
 
   /** Normalizza Y perché nei CSS 0 è in alto */
-  normalizeY(y: number, imageWidth: number = 600): number {
-    return imageWidth - y / 5;
+
+  mapWidth = 600;  // larghezza immagine (in px)
+  mapHeight = 600; // altezza immagine (in px)
+
+  // qui devi mettere i valori estremi trovati nei dati API
+  minX = -20000;
+  maxX = 20000;
+  minY = -20000;
+  maxY = 20000;
+  normalizeX(x: number): number {
+    return ((x - this.minX) / (this.maxX - this.minX)) * this.mapWidth;
   }
 
-  normalizeX(x: number, imageHeight: number = 600): number {
-    return imageHeight - x / 5;
+  normalizeY(y: number): number {
+    return this.mapHeight - ((y - this.minY) / (this.maxY - this.minY)) * this.mapHeight;
   }
 
   selectCallout(callout: any): void {

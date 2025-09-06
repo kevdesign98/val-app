@@ -36,7 +36,7 @@ export class MapsCarouselComponent {
     { breakpoint: "560px", numVisible: 1, numScroll: 1 },
   ];
 
-  goToMaps(slug: string) {
-    this.router.navigate(["/maps-strat", slug]);
+  goToMaps() {
+    this.router.navigate(["/maps"]);
   }
 }

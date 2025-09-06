@@ -9,14 +9,14 @@
     >
       <ng-template pTemplate="item" let-maps>
         <div class="cursor-pointer p-3 text-center">
-          <a [routerLink]="['/maps-strat', maps.slug]">
+          <a [routerLink]="['/maps']">
             <img
               [src]="maps.image"
               alt="{{ maps.name }}"
               class="w-full max-h-[350px] object-contain mb-2"
             />
           </a>
-          <a [routerLink]="['/maps-strat', maps.slug]">
+          <a [routerLink]="['/maps']">
             <h3 class="text-lg font-semibold text-white">{{ maps.name }}</h3>
           </a>
         </div>

@@ -1,0 +1,61 @@
+<app-navbar />
+<div class="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
+  <!-- SIDEBAR CATEGORIE -->
+  <aside class="w-full md:w-56 bg-gray-800 p-4">
+    <h2 class="text-lg font-bold mb-4">Categorie</h2>
+    <ul class="space-y-2">
+      <li *ngFor="let cat of categories"
+          (click)="selectCategory(cat)"
+          [class.bg-blue-600]="selectedCategory === cat"
+          class="cursor-pointer p-2 rounded hover:bg-gray-700 transition">
+        {{ cat }}
+      </li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 p-4 md:p-6">
+    <h2 class="text-2xl font-bold mb-6">{{ selectedCategory }}</h2>
+
+    <!-- GRID DI ARMI -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let weapon of filteredWeapons"
+           class="bg-gray-800 rounded-lg p-4 shadow hover:shadow-lg transition flex flex-col">
+        
+        <!-- IMMAGINE ARMA -->
+        <img [src]="selectedSkins[weapon.uuid]?.displayIcon || weapon.displayIcon"
+             alt="{{ weapon.displayName }}"
+             class="w-full h-32 object-contain mb-3" />
+
+        <!-- NOME ARMA -->
+        <h3 class="text-lg font-semibold mb-2 text-center">{{ weapon.displayName }}</h3>
+
+        <!-- BOTTONE PER MOSTRARE/NASCONDERE SKIN -->
+        <button (click)="toggleSkins(weapon)"
+                class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm self-center">
+          {{ selectedWeapon === weapon ? 'Chiudi Skins' : 'Seleziona Skin' }}
+        </button>
+
+        <!-- LISTA SKIN SE ARMA SELEZIONATA -->
+        <div *ngIf="selectedWeapon === weapon" class="mt-4">
+          <h4 class="text-sm font-bold mb-2">Skins</h4>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-64 overflow-y-auto">
+            <div *ngFor="let skin of weapon.skins"
+                 (click)="equipSkin(weapon.uuid, skin)"
+                 [class.ring-4]="selectedSkins[weapon.uuid] === skin"
+                 class="cursor-pointer p-2 rounded bg-gray-700 hover:bg-gray-600 transition ring-yellow-400">
+              <img [src]="skin.displayIcon"
+                   alt="{{ skin.displayName }}"
+                   class="w-full h-20 object-contain mb-1" />
+              <p class="text-xs text-center">{{ skin.displayName }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+
+<app-footer />

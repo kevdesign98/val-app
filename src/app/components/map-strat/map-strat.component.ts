@@ -4,12 +4,12 @@ import { MapsService } from '../../service/maps-services/maps.service';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
-// import { Tooltip } from 'primeng/tooltip';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-map-strat',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent],
+  imports: [CommonModule, NavbarComponent, FooterComponent, RouterLink],
   templateUrl: './map-strat.component.html',
   styleUrls: ['./map-strat.component.css'],
 })
@@ -19,15 +19,38 @@ export class MapStratComponent implements OnInit {
   mapUuid!: string;
   selectedCallout: any = null;
 
+  // elenco mappe competitive (in ordine per prev/next)
+  competitiveMaps = [
+    "Abyss", "Ascent", "Breeze", "Bind", "Corrode",
+    "Fracture", "Haven", "Icebox", "Lotus", "Pearl",
+    "Split", "Sunset"
+  ];
+
+  maps: any[] = [];
+  currentIndex: number = 0;
+  prevMap: any = null;
+  nextMap: any = null;
+
   constructor(
     private route: ActivatedRoute,
     private Mapsservice: MapsService
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.mapUuid = params.get('uuid')!;
-      this.loadMapData(this.mapUuid);
+    this.Mapsservice.getAllMaps().subscribe((res) => {
+      // prendi solo le competitive
+      this.maps = res.filter((m: any) =>
+        this.competitiveMaps.includes(m.displayName)
+      );
+
+      this.route.paramMap.subscribe((params) => {
+        this.mapUuid = params.get('uuid')!;
+        this.loadMapData(this.mapUuid);
+
+        this.currentIndex = this.maps.findIndex(m => m.uuid === this.mapUuid);
+        this.prevMap = this.maps[this.currentIndex - 1] || null;
+        this.nextMap = this.maps[this.currentIndex + 1] || null;
+      });
     });
   }
 
@@ -39,15 +62,15 @@ export class MapStratComponent implements OnInit {
   }
 
   /** Normalizza Y perché nei CSS 0 è in alto */
-
   mapWidth = 600;  // larghezza immagine (in px)
   mapHeight = 600; // altezza immagine (in px)
 
-  // qui devi mettere i valori estremi trovati nei dati API
+  // valori estremi dei dati API (range coordinate)
   minX = -20000;
   maxX = 20000;
   minY = -20000;
   maxY = 20000;
+
   normalizeX(x: number): number {
     return ((x - this.minX) / (this.maxX - this.minX)) * this.mapWidth;
   }
@@ -61,10 +84,6 @@ export class MapStratComponent implements OnInit {
   }
 
   isSelected(callout: any): boolean {
-    return false; // qui poi posso gestire la selezione
-  }
-
-  nextMap() {
-    console.log('TODO: Vai alla prossima mappa');
+    return this.selectedCallout === callout;
   }
 }

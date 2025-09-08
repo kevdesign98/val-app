@@ -54,14 +54,20 @@
       </ng-template>
     </div>
   </div>
+</div>
 
-  <!-- Bottone mappa successiva -->
-  <!-- <div class="mt-6">
-    <button [routerLink]="['/maps-strat', nextMapUuid]" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-      Mappa successiva
-    </button>
-  </div>
-</div> -->
+<div class="flex justify-between mt-6">
+  <!-- Prev -->
+  <button *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
+    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
+    ← Prev
+  </button>
+
+  <!-- Next -->
+  <button *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
+    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded ml-auto">
+    Next →
+  </button>
 </div>
 
 

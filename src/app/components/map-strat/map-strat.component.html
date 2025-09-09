@@ -56,19 +56,70 @@
   </div>
 </div>
 
-<div class="flex justify-between mt-6">
-  <!-- Prev -->
+<!-- <div class="flex justify-between mt-6">
   <button *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
     class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
     ← Prev
   </button>
 
-  <!-- Next -->
   <button *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
     class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded ml-auto">
     Next →
   </button>
+</div> -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 w-full mt-8 text-white text-center font-bold text-xl">
+
+  <!-- PREV MAP -->
+  <a *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
+    class="relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
+
+    <!-- SOLO TESTO su desktop, immagine su hover -->
+    <span class="z-10 hidden md:block transition-opacity duration-300 group-hover:opacity-0">
+      ← PREV MAP
+    </span>
+
+    <!-- Immagine SEMPRE visibile su mobile, solo su hover su desktop -->
+    <img [src]="prevMap.splash" alt="{{ prevMap.displayName }}" class="absolute inset-0 w-full h-full object-cover 
+                opacity-100 md:opacity-0 md:group-hover:opacity-100 
+                transition duration-300" />
+
+    <!-- Nome mappa -->
+    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
+                 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition">
+                   
+      {{ prevMap.displayName }}
+    </span>
+  </a>
+
+  <!-- NEXT MAP -->
+  <a *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
+    class="relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
+
+    <!-- SOLO TESTO su desktop -->
+    <span class="z-10 hidden md:block transition-opacity duration-300 group-hover:opacity-0">
+      NEXT MAP →
+    </span>
+
+    <!-- Immagine sempre visibile su mobile -->
+    <img [src]="nextMap.splash" alt="{{ nextMap.displayName }}" class="absolute inset-0 w-full h-full object-cover 
+                opacity-100 md:opacity-0 md:group-hover:opacity-100 
+                transition duration-300" />
+
+    <!-- Nome mappa -->
+    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
+                 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition">
+                  
+      {{ nextMap.displayName }}
+    </span>
+  </a>
+
 </div>
+
+
+
+
+
 
 
 <app-footer />

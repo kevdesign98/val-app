@@ -1,24 +1,14 @@
 <div class="relative z-10 w-full">
-    <p-carousel
-      [value]="maps"
-      [numVisible]="1"
-      [numScroll]="1"
-      [circular]="true"
-      [autoplayInterval]="2500"
-      [responsiveOptions]="responsiveOptions"
-    >
-      <ng-template pTemplate="item" let-maps>
-        <div class="cursor-pointer p-3 text-center">
-          <a [routerLink]="['/maps']">
-            <img
-              [src]="maps.image"
-              alt="{{ maps.name }}"
-              class="w-full max-h-[350px] object-contain mb-2"
-            />
-          </a>
-          <a [routerLink]="['/maps']">
-            <h3 class="text-lg font-semibold text-white">{{ maps.name }}</h3>
-          </a>
-        </div>
-      </ng-template>
-    </p-carousel>
+  <p-carousel [value]="maps" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="2500"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="item" let-maps>
+      <div class="cursor-pointer p-3 text-center">
+        <a [routerLink]="['/maps']">
+          <img [src]="maps.image" alt="{{ maps.name }}" class="w-full max-h-[350px] object-contain mb-2" />
+        </a>
+        <a [routerLink]="['/maps']">
+          <h3 class="text-lg font-semibold text-white">{{ maps.name }}</h3>
+        </a>
+      </div>
+    </ng-template>
+  </p-carousel>

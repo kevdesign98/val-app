@@ -1,15 +1,12 @@
 <app-navbar />
 
-
-
-
-
-<div *ngIf="agent" class="section-hero bg-cover text-white px-4 h-screen md:px-8 py-8"
+<div *ngIf="agent" class="section-hero bg-cover text-white px-4 min-h-screen md:px-8 py-8"
   [ngStyle]="{ 'background-image': 'url(' + agentBg + ')' }" style="background-position: center;">
 
-  <div class="container mx-auto grid grid-cols-12 gap-8">
+  <div class="container mx-auto flex flex-col md:flex-row gap-8 items-start">
 
-    <div class="col-span-12 md:col-span-3">
+    <!-- INFO AGENTE -->
+    <div class="w-full md:w-3/12" style="padding-top: 6rem;">
       <h1 class="text-5xl font-bold">{{ agent.displayName }}</h1>
       <h2 class="text-xl text-gray-400 mb-6">{{ agent.role?.displayName }}</h2>
       <p class="text-sm leading-relaxed text-gray-300">
@@ -17,12 +14,14 @@
       </p>
     </div>
 
-    <div class="col-span-12 md:col-span-6 flex justify-center items-center">
+    <!-- PORTRAIT -->
+    <div class="w-full md:w-6/12 flex justify-center items-center">
       <img [src]="agent.fullPortrait" [alt]="agent.name?.displayName"
         class="max-w-[400px] w-full object-contain drop-shadow-[0_10px_25px_rgba(255,70,85,0.4)]" />
     </div>
 
-    <div class="col-span-12 md:col-span-3 space-y-4">
+    <!-- ABILITÀ -->
+    <div class="w-full md:w-3/12 space-y-4">
       <h3 class="text-cyan-400 tracking-wide text-2xl">Abilities</h3>
 
       <div class="flex flex-wrap gap-2">
@@ -33,10 +32,10 @@
       </div>
 
       <video *ngIf="agent?.abilities[selectedAbilityIndex]?.videoUrl"
-        [src]="agent.abilities[selectedAbilityIndex].videoUrl" autoplay [muted]="'muted'" loop
+        [src]="agent.abilities[selectedAbilityIndex].videoUrl" autoplay muted loop
         class="w-full mt-4 rounded-md"></video>
 
-      <div class="mt-2">
+      <div class="mt-2 pb-20">
         <h4 class="text-white font-semibold text-lg">
           {{ agent.abilities[selectedAbilityIndex]?.displayName }}
         </h4>
@@ -47,39 +46,66 @@
     </div>
 
   </div>
-
 </div>
 
-<!-- NAVIGAZIONE PREV/NEXT AGENTI (solo desktop/tablet) -->
-<div class="hidden md:grid grid-cols-2 w-full text-white text-center font-bold text-xl gap-4" style="background-color: #080a1e;">
-  <!-- PREV AGENTE -->
-  <!-- <a *ngIf="prevAgent" [routerLink]="['/agents', prevAgent.id]" class="...">
-    ← {{ prevAgent.name }}
-  </a> -->
 
+<div class="grid grid-cols-1 md:grid-cols-2 w-full text-white text-center font-bold text-xl">
+
+  <!-- PREV (desktop) -->
   <a *ngIf="prevAgent" [routerLink]="['/agents', prevAgent.id]"
-    class="group relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-28 rounded-lg transition">
-    <img [src]="prevAgent.fullPortrait" alt="{{ prevAgent.name }}"
-      class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    <span class="relative z-10 transition-opacity duration-300 group-hover:opacity-0">
-      ← {{ prevAgent.name }}
+    class="relative hidden md:flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
+
+    <!-- Testo desktop -->
+    <span class="z-10 transition-opacity duration-300 group-hover:opacity-0">
+      ← PREV AGENT
+    </span>
+
+    <!-- Immagine su hover -->
+    <img [src]="prevAgent.background" alt="{{ prevAgent.name }}" class="absolute inset-0 w-full h-full object-cover 
+                opacity-0 group-hover:opacity-100 transition duration-300" />
+
+    <!-- Nome agente -->
+    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
+                 opacity-0 group-hover:opacity-100 transition">
+      {{ prevAgent.name }}
     </span>
   </a>
 
-  <!-- NEXT AGENTE -->
-  <!-- <a *ngIf="nextAgent" [routerLink]="['/agents', nextAgent.id]" class="...">
-    {{ nextAgent.name }} →
-  </a> -->
-
+  <!-- NEXT (desktop) -->
   <a *ngIf="nextAgent" [routerLink]="['/agents', nextAgent.id]"
-    class="group relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-28 rounded-lg transition">
-    <img [src]="nextAgent.fullPortrait" alt="{{ nextAgent.name }}"
-      class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    <span class="relative z-10 transition-opacity duration-300 group-hover:opacity-0">
-      {{ nextAgent.name }} →
+    class="relative hidden md:flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
+
+    <!-- Testo desktop -->
+    <span class="z-10 transition-opacity duration-300 group-hover:opacity-0">
+      NEXT AGENT →
+    </span>
+
+    <!-- Immagine su hover -->
+    <img [src]="nextAgent.background" alt="{{ nextAgent.name }}" class="absolute inset-0 w-full h-full object-cover 
+                opacity-0 group-hover:opacity-100 transition duration-300" />
+
+    <!-- Nome agente -->
+    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
+                 opacity-0 group-hover:opacity-100 transition">
+      {{ nextAgent.name }}
     </span>
   </a>
+
 </div>
+
+<!-- VERSIONE MOBILE -->
+<div class="flex justify-between gap-4 md:hidden px-4" style="background-color: #080a1e;">
+  <button *ngIf="prevAgent" [routerLink]="['/agents', prevAgent.id]"
+    class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg w-1/2">
+    ← Prev Agent
+  </button>
+
+  <button *ngIf="nextAgent" [routerLink]="['/agents', nextAgent.id]"
+    class="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg w-1/2">
+    Next Agent →
+  </button>
+</div>
+
 
 
 

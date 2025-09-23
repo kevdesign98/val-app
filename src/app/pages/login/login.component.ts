@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthservicesService } from '../../service/authservices/authservices.service';
+import { HttpClient } from '@angular/common/http';
+// import { AuthservicesService } from '../../service/authservices/authservices.service';
 
 @Component({
   selector: 'app-login',
@@ -12,19 +13,34 @@ import { AuthservicesService } from '../../service/authservices/authservices.ser
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
-  })
+  loginForm: FormGroup;
+  loading = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthservicesService) { }
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
+    this.loginForm = this.fb.group({
+      riotId: ['', Validators.required],
+      tagline: ['', Validators.required]
+    });
+  }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
-      this.auth.login(email!, password!).subscribe(() => {
-        this.router.navigate(['/dashboard'])
-      })
-    }
+    if (this.loginForm.invalid) return;
+
+    const { riotId, tagline } = this.loginForm.value;
+    this.loading = true;
+
+    this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${riotId}/${tagline}`)
+      .subscribe({
+        next: (data) => {
+          this.loading = false;
+          // 👇 passiamo i dati al dashboard con state
+          this.router.navigate(['/dashboard'], { state: { playerData: data } });
+        },
+        error: (err) => {
+          this.loading = false;
+          this.errorMessage = 'Account non trovato. Riprova!';
+        }
+      });
   }
 }

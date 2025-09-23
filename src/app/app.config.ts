@@ -15,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
+    provideHttpClient(),
     providePrimeNG({
       theme: {
         preset: Aura,

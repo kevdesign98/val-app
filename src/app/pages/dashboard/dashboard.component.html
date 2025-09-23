@@ -1,2 +1,50 @@
-<h1>Welcome to the Dashboard</h1>
-<button (click)="logout()">Logout</button>
+<!-- <button (click)="logout()">Logout</button> -->
+<app-navbar />
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-white">
+
+    <!-- Account Info -->
+    <div class="bg-gray-900 p-4 rounded-xl shadow">
+        <h2 class="text-xl font-bold mb-2">Account</h2>
+        <ng-container *ngIf="account">
+            <p><strong>Player:</strong> {{ account.data.name }}#{{ account.data.tag }}</p>
+            <p><strong>Region:</strong> {{ account.data.region }}</p>
+        </ng-container>
+    </div>
+
+    <!-- Rank / MMR -->
+    <div class="bg-gray-900 p-4 rounded-xl shadow">
+        <h2 class="text-xl font-bold mb-2">Rank</h2>
+        <ng-container *ngIf="mmr">
+            <p><strong>Current:</strong> {{ mmr.data.currenttierpatched }}</p>
+            <p><strong>RR:</strong> {{ mmr.data.ranking_in_tier }} / 100</p>
+        </ng-container>
+    </div>
+
+    <!-- Lifetime Stats -->
+    <div class="bg-gray-900 p-4 rounded-xl shadow col-span-1 md:col-span-2">
+        <h2 class="text-xl font-bold mb-2">Lifetime Stats</h2>
+        <ng-container *ngIf="lifetime">
+            <p><strong>K/D:</strong> {{ lifetime.data.segments[0].stats.kd.value }}</p>
+            <p><strong>Win %:</strong> {{ lifetime.data.segments[0].stats.winPercentage.value }}%</p>
+            <p><strong>HS %:</strong> {{ lifetime.data.segments[0].stats.headshotPct.value }}%</p>
+        </ng-container>
+    </div>
+
+    <!-- Last Matches -->
+    <div class="bg-gray-900 p-4 rounded-xl shadow col-span-1 md:col-span-2">
+        <h2 class="text-xl font-bold mb-2">Last Matches</h2>
+        <ng-container *ngIf="matches">
+            <ul class="space-y-2">
+                <li *ngFor="let m of matches.data" class="border-b border-gray-700 pb-2">
+                    <p><strong>Map:</strong> {{ m.metadata.map }}</p>
+                    <p><strong>Mode:</strong> {{ m.metadata.mode }}</p>
+                    <p><strong>Agent:</strong> {{ m.stats.character.name }}</p>
+                    <p><strong>K/D/A:</strong> {{ m.stats.kills }}/{{ m.stats.deaths }}/{{ m.stats.assists }}</p>
+                </li>
+            </ul>
+        </ng-container>
+    </div>
+
+</div>
+
+<app-footer />

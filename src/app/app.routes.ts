@@ -21,7 +21,6 @@ export const routes: Routes = [
   { path: "stats", component: StatsComponent },
   { path: "agents/:id", component: AgentsDetailsComponent },
   { path: 'maps-strat/:uuid', component: MapStratComponent },
-  // { path: '**', redirectTo: 'maps' },
   { path: "signup", component: SignupComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },

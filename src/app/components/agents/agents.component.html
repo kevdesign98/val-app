@@ -19,7 +19,7 @@
 
         <div class="h-[20rem] flex items-center justify-center  z-10 relative">
           <a [routerLink]="['/agents', agent.uuid]">
-            <img [src]="agent.fullPortraitV2" [alt]="agent.displayName"
+            <img [src]="agent.fullPortraitV2" [alt]="agent.displayName" loading="lazy"
               class="h-full object-contain transition-transform duration-300 group-hover:scale-105 mt-8" />
           </a>
         </div>

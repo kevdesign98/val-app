@@ -1,27 +1,38 @@
-# ValApp
+ValApp 🎮
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+Val-App is a fan-made web application inspired by Valorant, built with Angular 18, PrimeNG, and TailwindCSS.
+The project is designed to improve frontend development skills while creating a modern and interactive user experience.
 
-## Development server
+Try now : https://val-app-dtuf.vercel.app/Home
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The project is constantly being updated, and the login feature is currently a work in progress!
 
-## Code scaffolding
+🚀 Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+🔹 Agents Section – Browse Valorant agents and explore their abilities.
 
-## Build
+🔹 Maps Section – Discover competitive maps with descriptions, strategies, and images.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+🔹 Modern UI/UX – Responsive design inspired by Valorant’s aesthetic.
 
-## Running unit tests
+🔹 PrimeNG Components – Interactive UI with cards, buttons, and tab menus.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+🔹 TailwindCSS – Utility-first CSS for fast and flexible styling.
 
-## Running end-to-end tests
+🛠️ Tech Stack
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Framework: Angular 18 (standalone components)
 
-## Further help
+UI Library: PrimeNG 18
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Styling: TailwindCSS
+
+🤝 Contributing
+
+This is a learning project, but contributions are welcome! Feel free to fork, open issues, or suggest new features.
+
+📜 Disclaimer
+
+This project is not affiliated with Riot Games. Valorant, its agents, and maps are properties of Riot Games.
+Val-App is made for educational purposes only.
+

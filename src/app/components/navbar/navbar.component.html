@@ -13,12 +13,7 @@
       <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
                focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"><a
           routerLink="/login">Login</a>
-
-
-        <button routerLink="/login" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
-               focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
-
-        </button>
+      </button>
 
         <!-- hamburger -->
         <button (click)="isOpen = !isOpen" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 
@@ -31,8 +26,7 @@
               d="M1 1h15M1 7h15M1 13h15" />
           </svg>
         </button>
-      </button>
-    </div>
+     </div>
     <!-- menu -->
     <div [ngClass]="{ 'hidden': !isOpen, 'flex': isOpen }"
       class="items-center justify-between w-full md:flex md:w-auto md:order-1" id="navbar-sticky">

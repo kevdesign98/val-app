@@ -1,10 +1,11 @@
 <div class="relative z-10 w-full md:w-2/3 mx-auto">
   <p-carousel [value]="agents" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
-    [responsiveOptions]="responsiveOptions">
+    [responsiveOptions]="responsiveOptions" loop="true">
     <ng-template pTemplate="item" let-agent>
       <div class="cursor-pointer p-3 text-center">
         <a [routerLink]="['/agents', agent.uuid]">
-          <img [src]="agent.fullPortrait" alt="{{ agent.displayName  }}" class="w-full max-h-[350px] object-contain mb-2" />
+          <img [src]="agent.fullPortrait" alt="{{ agent.displayName  }}"
+            class="mx-auto mb-2 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg" loading="lazy" />
         </a>
         <a [routerLink]="['/agents', agent.uuid]">
           <!-- <h3 class="text-lg font-semibold text-white">{{ agent.displayName  }}</h3> -->
@@ -13,5 +14,5 @@
     </ng-template>
   </p-carousel>
 
- 
+
 </div>

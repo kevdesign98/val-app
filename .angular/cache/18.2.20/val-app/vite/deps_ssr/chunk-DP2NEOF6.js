@@ -15,10 +15,10 @@ import {
   setAttributes,
   toKebabCase,
   toTokenKey
-} from "./chunk-GTSRJXV6.js";
+} from "./chunk-UKXIPTGO.js";
 import {
   DOCUMENT
-} from "./chunk-AJW2N2KR.js";
+} from "./chunk-T3ZROHC2.js";
 import {
   APP_INITIALIZER,
   Injectable,
@@ -32,7 +32,7 @@ import {
   untracked,
   ɵɵdefineInjectable,
   ɵɵgetInheritedFactory
-} from "./chunk-N427ZPVW.js";
+} from "./chunk-7HHZBRWG.js";
 import {
   require_cjs
 } from "./chunk-5IW5ZEPE.js";
@@ -1471,4 +1471,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-F34PVLE5.js.map
+//# sourceMappingURL=chunk-DP2NEOF6.js.map

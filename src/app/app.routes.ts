@@ -5,11 +5,12 @@ import { MapsComponent } from "./pages/maps/maps.component";
 import { StatsComponent } from "./pages/stats/stats.component";
 import { AgentsDetailsComponent } from "./components/agents-details/agents-details.component";
 import { MapStratComponent } from "./components/map-strat/map-strat.component";
-import { EsportsComponent } from "./components/esports/esports.component";
 import { WeaponsComponent } from "./pages/weapons/weapons.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { SignupComponent } from "./pages/signup/signup.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { EsportsComponent } from "./pages/esports/esports.component";
+
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },

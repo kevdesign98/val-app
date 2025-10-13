@@ -10,7 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "useCaseSensitiveFileNames": false,
+    // "useCaseSensitiveFileNames": false,
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,

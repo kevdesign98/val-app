@@ -1,18 +1,19 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseStyle,
   PrimeNG,
   base,
   config_default,
   service_default
-} from "./chunk-FWN2BNTF.js";
+} from "./chunk-YPKPMXM5.js";
 import {
   getKeyValue,
   uuid
-} from "./chunk-AU54OJZA.js";
+} from "./chunk-LPSJYJKG.js";
 import {
   DOCUMENT,
   isPlatformServer
-} from "./chunk-7O6B66I5.js";
+} from "./chunk-AJW2N2KR.js";
 import {
   ChangeDetectorRef,
   Directive,
@@ -29,10 +30,10 @@ import {
   ɵɵdefineDirective,
   ɵɵdefineInjectable,
   ɵɵgetInheritedFactory
-} from "./chunk-ZSDUEJY2.js";
+} from "./chunk-N427ZPVW.js";
 import {
   __spreadValues
-} from "./chunk-3OV72XIM.js";
+} from "./chunk-NQ4HTGF6.js";
 
 // node_modules/primeng/fesm2022/primeng-basecomponent.mjs
 var BaseComponentStyle = class _BaseComponentStyle extends BaseStyle {
@@ -256,4 +257,4 @@ var BaseComponent = class _BaseComponent {
 export {
   BaseComponent
 };
-//# sourceMappingURL=chunk-XQUXQWSF.js.map
+//# sourceMappingURL=chunk-K3LJ222J.js.map

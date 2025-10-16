@@ -1,3 +1,4 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   EventBus,
   FilterMatchMode,
@@ -14,10 +15,10 @@ import {
   setAttributes,
   toKebabCase,
   toTokenKey
-} from "./chunk-AU54OJZA.js";
+} from "./chunk-LPSJYJKG.js";
 import {
   DOCUMENT
-} from "./chunk-7O6B66I5.js";
+} from "./chunk-AJW2N2KR.js";
 import {
   APP_INITIALIZER,
   Injectable,
@@ -31,13 +32,17 @@ import {
   untracked,
   ɵɵdefineInjectable,
   ɵɵgetInheritedFactory
-} from "./chunk-ZSDUEJY2.js";
+} from "./chunk-N427ZPVW.js";
 import {
-  Subject
-} from "./chunk-FHTVLBLO.js";
+  require_cjs
+} from "./chunk-5IW5ZEPE.js";
 import {
-  __spreadValues
-} from "./chunk-3OV72XIM.js";
+  __spreadValues,
+  __toESM
+} from "./chunk-NQ4HTGF6.js";
+
+// node_modules/primeng/fesm2022/primeng-config.mjs
+var import_rxjs = __toESM(require_cjs(), 1);
 
 // node_modules/@primeuix/styled/index.mjs
 var __defProp = Object.defineProperty;
@@ -1393,7 +1398,7 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
     menu: 1e3,
     tooltip: 1100
   };
-  translationSource = new Subject();
+  translationSource = new import_rxjs.Subject();
   translationObserver = this.translationSource.asObservable();
   getTranslation(key) {
     return this.translation[key];
@@ -1466,4 +1471,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-//# sourceMappingURL=chunk-FWN2BNTF.js.map
+//# sourceMappingURL=chunk-YPKPMXM5.js.map

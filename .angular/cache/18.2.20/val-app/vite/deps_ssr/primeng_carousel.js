@@ -1,13 +1,18 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
+<<<<<<< HEAD
   Button
 } from "./chunk-IFJHZQ66.js";
 import {
+=======
+  Button,
+>>>>>>> a6a89e23a08d2813e9a17e569ebbb94b9e29233a
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
   Ripple
+<<<<<<< HEAD
 } from "./chunk-TLJKYK6H.js";
 import {
   BaseComponent
@@ -15,6 +20,15 @@ import {
 import {
   BaseStyle
 } from "./chunk-DP2NEOF6.js";
+=======
+} from "./chunk-VIE3V2UO.js";
+import {
+  BaseComponent
+} from "./chunk-K3LJ222J.js";
+import {
+  BaseStyle
+} from "./chunk-YPKPMXM5.js";
+>>>>>>> a6a89e23a08d2813e9a17e569ebbb94b9e29233a
 import {
   Footer,
   Header,
@@ -25,7 +39,11 @@ import {
   getAttribute,
   setAttribute,
   uuid
+<<<<<<< HEAD
 } from "./chunk-UKXIPTGO.js";
+=======
+} from "./chunk-LPSJYJKG.js";
+>>>>>>> a6a89e23a08d2813e9a17e569ebbb94b9e29233a
 import {
   CommonModule,
   NgClass,

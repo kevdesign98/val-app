@@ -1,8 +1,8 @@
 {
-  "hash": "4d1c2b66",
-  "configHash": "81ca0db2",
-  "lockfileHash": "87275f69",
-  "browserHash": "67be3eaa",
+  "hash": "5a9572b9",
+  "configHash": "e6a1246e",
+  "lockfileHash": "04824cc6",
+  "browserHash": "b72c0094",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
@@ -108,8 +108,8 @@
     }
   },
   "chunks": {
-    "browser-6D4TG2PC": {
-      "file": "browser-6D4TG2PC.js"
+    "browser-NCPJMNO3": {
+      "file": "browser-NCPJMNO3.js"
     },
     "chunk-TFRCQ4QW": {
       "file": "chunk-TFRCQ4QW.js"
@@ -120,14 +120,11 @@
     "chunk-OQS5MEFH": {
       "file": "chunk-OQS5MEFH.js"
     },
-    "chunk-GHQM6IGE": {
-      "file": "chunk-GHQM6IGE.js"
+    "chunk-K3SADNK6": {
+      "file": "chunk-K3SADNK6.js"
     },
-    "chunk-XQUXQWSF": {
-      "file": "chunk-XQUXQWSF.js"
-    },
-    "chunk-FWN2BNTF": {
-      "file": "chunk-FWN2BNTF.js"
+    "chunk-IUAO7BV5": {
+      "file": "chunk-IUAO7BV5.js"
     },
     "chunk-AU54OJZA": {
       "file": "chunk-AU54OJZA.js"
@@ -138,11 +135,11 @@
     "chunk-ZSDUEJY2": {
       "file": "chunk-ZSDUEJY2.js"
     },
-    "chunk-4N4GOYJH": {
-      "file": "chunk-4N4GOYJH.js"
-    },
     "chunk-5OPE3T2R": {
       "file": "chunk-5OPE3T2R.js"
+    },
+    "chunk-4N4GOYJH": {
+      "file": "chunk-4N4GOYJH.js"
     },
     "chunk-FHTVLBLO": {
       "file": "chunk-FHTVLBLO.js"

@@ -1,4 +1,3 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   EventBus,
   FilterMatchMode,
@@ -15,14 +14,10 @@ import {
   setAttributes,
   toKebabCase,
   toTokenKey
-<<<<<<<< HEAD:.angular/cache/18.2.20/val-app/vite/deps_ssr/chunk-DP2NEOF6.js
-} from "./chunk-UKXIPTGO.js";
-========
-} from "./chunk-LPSJYJKG.js";
->>>>>>>> a6a89e23a08d2813e9a17e569ebbb94b9e29233a:.angular/cache/18.2.20/val-app/vite/deps_ssr/chunk-YPKPMXM5.js
+} from "./chunk-6X5Y2MYX.js";
 import {
   DOCUMENT
-} from "./chunk-T3ZROHC2.js";
+} from "./chunk-7O6B66I5.js";
 import {
   APP_INITIALIZER,
   Injectable,
@@ -36,17 +31,13 @@ import {
   untracked,
   ɵɵdefineInjectable,
   ɵɵgetInheritedFactory
-} from "./chunk-7HHZBRWG.js";
+} from "./chunk-ZSDUEJY2.js";
 import {
-  require_cjs
-} from "./chunk-5IW5ZEPE.js";
+  Subject
+} from "./chunk-FHTVLBLO.js";
 import {
-  __spreadValues,
-  __toESM
-} from "./chunk-NQ4HTGF6.js";
-
-// node_modules/primeng/fesm2022/primeng-config.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
+  __spreadValues
+} from "./chunk-3OV72XIM.js";
 
 // node_modules/@primeuix/styled/index.mjs
 var __defProp = Object.defineProperty;
@@ -1402,7 +1393,7 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
     menu: 1e3,
     tooltip: 1100
   };
-  translationSource = new import_rxjs.Subject();
+  translationSource = new Subject();
   translationObserver = this.translationSource.asObservable();
   getTranslation(key) {
     return this.translation[key];
@@ -1475,8 +1466,4 @@ export {
   PRIME_NG_CONFIG,
   providePrimeNG
 };
-<<<<<<<< HEAD:.angular/cache/18.2.20/val-app/vite/deps_ssr/chunk-DP2NEOF6.js
-//# sourceMappingURL=chunk-DP2NEOF6.js.map
-========
-//# sourceMappingURL=chunk-YPKPMXM5.js.map
->>>>>>>> a6a89e23a08d2813e9a17e569ebbb94b9e29233a:.angular/cache/18.2.20/val-app/vite/deps_ssr/chunk-YPKPMXM5.js
+//# sourceMappingURL=chunk-IUAO7BV5.js.map

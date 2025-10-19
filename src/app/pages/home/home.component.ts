@@ -7,6 +7,7 @@ import { AgentsCarouselComponent } from "../../components/agents-carousel/agents
 import { MapsCarouselComponent } from "../../components/maps-carousel/maps-carousel.component";
 import { ListSchedulesService } from '../../service/esports-services/schedules-services/list-schedules.service';
 import { Match } from "../../models/match.results";
+
 @Component({
   selector: "app-home",
   standalone: true,

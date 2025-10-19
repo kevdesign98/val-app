@@ -52,21 +52,6 @@ function removeClass(element, className) {
     [className].flat().filter(Boolean).forEach((_classNames) => _classNames.split(" ").forEach(fn));
   }
 }
-function getViewport() {
-  let win = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], w = win.innerWidth || e.clientWidth || g.clientWidth, h = win.innerHeight || e.clientHeight || g.clientHeight;
-  return {
-    width: w,
-    height: h
-  };
-}
-function getWindowScrollLeft() {
-  let doc = document.documentElement;
-  return (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-}
-function getWindowScrollTop() {
-  let doc = document.documentElement;
-  return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-}
 function getOuterWidth(element, margin) {
   if (element instanceof HTMLElement) {
     let width = element.offsetWidth;
@@ -80,26 +65,6 @@ function getOuterWidth(element, margin) {
 }
 function isElement(element) {
   return typeof HTMLElement === "object" ? element instanceof HTMLElement : element && typeof element === "object" && element !== null && element.nodeType === 1 && typeof element.nodeName === "string";
-}
-function toElement(element) {
-  let target = element;
-  if (element && typeof element === "object") {
-    if (element.hasOwnProperty("current")) {
-      target = element.current;
-    } else if (element.hasOwnProperty("el")) {
-      if (element.el.hasOwnProperty("nativeElement")) {
-        target = element.el.nativeElement;
-      } else {
-        target = element.el;
-      }
-    }
-  }
-  return isElement(target) ? target : void 0;
-}
-function appendChild(element, child) {
-  const target = toElement(element);
-  if (target) target.appendChild(child);
-  else throw new Error("Cannot append " + child + " to " + element);
 }
 function setAttributes(element, attributes = {}) {
   if (isElement(element)) {
@@ -135,30 +100,11 @@ function setAttributes(element, attributes = {}) {
     });
   }
 }
-function fadeIn(element, duration) {
-  if (element) {
-    element.style.opacity = "0";
-    let last = +/* @__PURE__ */ new Date();
-    let opacity = "0";
-    let tick = function() {
-      opacity = `${+element.style.opacity + ((/* @__PURE__ */ new Date()).getTime() - last) / duration}`;
-      element.style.opacity = opacity;
-      last = +/* @__PURE__ */ new Date();
-      if (+opacity < 1) {
-        !!window.requestAnimationFrame && requestAnimationFrame(tick) || setTimeout(tick, 16);
-      }
-    };
-    tick();
-  }
-}
 function find(element, selector) {
   return isElement(element) ? Array.from(element.querySelectorAll(selector)) : [];
 }
 function findSingle(element, selector) {
   return isElement(element) ? element.matches(selector) ? element : element.querySelector(selector) : null;
-}
-function focus(element, options) {
-  element && document.activeElement !== element && element.focus(options);
 }
 function getAttribute(element, name) {
   if (isElement(element)) {
@@ -221,11 +167,6 @@ function remove(element) {
     if (!("remove" in Element.prototype)) (_a = element.parentNode) == null ? void 0 : _a.removeChild(element);
     else element.remove();
   }
-}
-function removeChild(element, child) {
-  const target = toElement(element);
-  if (target) target.removeChild(child);
-  else throw new Error("Cannot remove " + child + " from " + element);
 }
 function setAttribute(element, attribute = "", value) {
   if (isElement(element) && value !== null && value !== void 0) {
@@ -1406,23 +1347,16 @@ export {
   hasClass,
   addClass,
   removeClass,
-  getViewport,
-  getWindowScrollLeft,
-  getWindowScrollTop,
   getOuterWidth,
-  appendChild,
   setAttributes,
-  fadeIn,
   find,
   findSingle,
-  focus,
   getAttribute,
   getHeight,
   getOffset,
   getOuterHeight,
   getWidth,
   remove,
-  removeChild,
   setAttribute,
   EventBus,
   isEmpty,
@@ -1455,4 +1389,4 @@ export {
   TranslationKeys,
   TreeDragDropService
 };
-//# sourceMappingURL=chunk-AU54OJZA.js.map
+//# sourceMappingURL=chunk-6X5Y2MYX.js.map

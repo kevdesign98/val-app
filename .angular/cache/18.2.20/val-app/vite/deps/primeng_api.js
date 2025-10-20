@@ -14,7 +14,7 @@ import {
   SharedModule,
   TranslationKeys,
   TreeDragDropService
-} from "./chunk-6X5Y2MYX.js";
+} from "./chunk-5KGOOPFV.js";
 import "./chunk-7O6B66I5.js";
 import "./chunk-ZSDUEJY2.js";
 import "./chunk-4N4GOYJH.js";

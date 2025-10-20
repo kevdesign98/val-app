@@ -1,16 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
 import { CommonModule } from "@angular/common";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { BackgroundsAgentsService } from "../../service/backgrounds-agents/backgrounds-agents.service";
 import { FooterComponent } from "../footer/footer.component";
 import { sanitize } from "sanitize-filename-ts";
+import { GalleriaModule } from "primeng/galleria";
 
 @Component({
   selector: "app-agents-details",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, RouterLink],
+  imports: [
+    CommonModule,
+    NavbarComponent,
+    FooterComponent,
+    GalleriaModule,
+  ],
   templateUrl: "./agents-details.component.html",
   styleUrl: "./agents-details.component.css",
 })
@@ -27,9 +33,10 @@ export class AgentsDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private listAgentsService: ListAgentsService,
     private backgroundsAgentsService: BackgroundsAgentsService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.agents = this.backgroundsAgentsService.getBgAgents();
@@ -44,7 +51,10 @@ export class AgentsDetailsComponent implements OnInit {
           // genera i video
           const makeVideoPath = (agentName: string, abilityName: string) => {
             const base = sanitize(agentName.toLowerCase()).replace(/\s+/g, "-");
-            const ability = sanitize(abilityName.toLowerCase()).replace(/\s+/g, "-");
+            const ability = sanitize(abilityName.toLowerCase()).replace(
+              /\s+/g,
+              "-"
+            );
             return `assets/videos/${base}-${ability}.mp4`;
           };
 
@@ -62,7 +72,6 @@ export class AgentsDetailsComponent implements OnInit {
 
           this.updatePrevNextAgents();
         });
-
       }
     });
   }
@@ -76,5 +85,21 @@ export class AgentsDetailsComponent implements OnInit {
     const len = this.agents.length;
     this.prevAgent = this.agents[(this.currentIndex - 1 + len) % len];
     this.nextAgent = this.agents[(this.currentIndex + 1) % len];
+  }
+
+  goToPrevAgent() {
+    if (!this.agents.length) return;
+    const len = this.agents.length;
+    this.currentIndex = (this.currentIndex - 1 + len) % len;
+    const prev = this.agents[this.currentIndex];
+    this.router.navigate(["/agents", prev.id]);
+  }
+
+  goToNextAgent() {
+    if (!this.agents.length) return;
+    const len = this.agents.length;
+    this.currentIndex = (this.currentIndex + 1) % len;
+    const next = this.agents[this.currentIndex];
+    this.router.navigate(["/agents", next.id]);
   }
 }

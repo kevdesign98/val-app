@@ -1,7 +1,6 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   CommonModule
-} from "./chunk-AJW2N2KR.js";
+} from "./chunk-7O6B66I5.js";
 import {
   Component,
   Directive,
@@ -20,16 +19,10 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵsetNgModuleScope
-} from "./chunk-N427ZPVW.js";
+} from "./chunk-ZSDUEJY2.js";
 import {
-  require_cjs
-} from "./chunk-5IW5ZEPE.js";
-import {
-  __toESM
-} from "./chunk-NQ4HTGF6.js";
-
-// node_modules/primeng/fesm2022/primeng-api.mjs
-var import_rxjs = __toESM(require_cjs(), 1);
+  Subject
+} from "./chunk-FHTVLBLO.js";
 
 // node_modules/@primeuix/utils/dom/index.mjs
 function hasClass(element, className) {
@@ -50,6 +43,32 @@ function addClass(element, className) {
     [className].flat().filter(Boolean).forEach((_classNames) => _classNames.split(" ").forEach(fn));
   }
 }
+function calculateBodyScrollbarWidth() {
+  return window.innerWidth - document.documentElement.offsetWidth;
+}
+function getCSSVariableByRegex(variableRegex) {
+  for (const sheet of document == null ? void 0 : document.styleSheets) {
+    try {
+      for (const rule of sheet == null ? void 0 : sheet.cssRules) {
+        for (const property of rule == null ? void 0 : rule.style) {
+          if (variableRegex.test(property)) {
+            return {
+              name: property,
+              value: rule.style.getPropertyValue(property).trim()
+            };
+          }
+        }
+      }
+    } catch (e) {
+    }
+  }
+  return null;
+}
+function blockBodyScroll(className = "p-overflow-hidden") {
+  const variableData = getCSSVariableByRegex(/-scrollbar-width$/);
+  (variableData == null ? void 0 : variableData.name) && document.body.style.setProperty(variableData.name, calculateBodyScrollbarWidth() + "px");
+  addClass(document.body, className);
+}
 function removeClass(element, className) {
   if (element && className) {
     const fn = (_className) => {
@@ -58,6 +77,11 @@ function removeClass(element, className) {
     };
     [className].flat().filter(Boolean).forEach((_classNames) => _classNames.split(" ").forEach(fn));
   }
+}
+function unblockBodyScroll(className = "p-overflow-hidden") {
+  const variableData = getCSSVariableByRegex(/-scrollbar-width$/);
+  (variableData == null ? void 0 : variableData.name) && document.body.style.removeProperty(variableData.name);
+  removeClass(document.body, className);
 }
 function getOuterWidth(element, margin) {
   if (element instanceof HTMLElement) {
@@ -107,11 +131,23 @@ function setAttributes(element, attributes = {}) {
     });
   }
 }
+function createElement(type, attributes = {}, ...children) {
+  if (type) {
+    const element = document.createElement(type);
+    setAttributes(element, attributes);
+    element.append(...children);
+    return element;
+  }
+  return void 0;
+}
 function find(element, selector) {
   return isElement(element) ? Array.from(element.querySelectorAll(selector)) : [];
 }
 function findSingle(element, selector) {
   return isElement(element) ? element.matches(selector) ? element : element.querySelector(selector) : null;
+}
+function focus(element, options) {
+  element && document.activeElement !== element && element.focus(options);
 }
 function getAttribute(element, name) {
   if (isElement(element)) {
@@ -126,6 +162,24 @@ function getAttribute(element, name) {
   }
   return void 0;
 }
+function getFocusableElements(element, selector = "") {
+  let focusableElements = find(element, `button:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [href][clientHeight][clientWidth]:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            input:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            select:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            textarea:not([tabindex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [tabIndex]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector},
+            [contenteditable]:not([tabIndex = "-1"]):not([disabled]):not([style*="display:none"]):not([hidden])${selector}`);
+  let visibleFocusableElements = [];
+  for (let focusableElement of focusableElements) {
+    if (getComputedStyle(focusableElement).display != "none" && getComputedStyle(focusableElement).visibility != "hidden") visibleFocusableElements.push(focusableElement);
+  }
+  return visibleFocusableElements;
+}
+function getFirstFocusableElement(element, selector) {
+  const focusableElements = getFocusableElements(element, selector);
+  return focusableElements.length > 0 ? focusableElements[0] : null;
+}
 function getHeight(element) {
   if (element) {
     let height = element.offsetHeight;
@@ -134,6 +188,10 @@ function getHeight(element) {
     return height;
   }
   return 0;
+}
+function getLastFocusableElement(element, selector) {
+  const focusableElements = getFocusableElements(element, selector);
+  return focusableElements.length > 0 ? focusableElements[focusableElements.length - 1] : null;
 }
 function getOffset(element) {
   if (element) {
@@ -446,8 +504,8 @@ var ConfirmEventType;
   ConfirmEventType2[ConfirmEventType2["CANCEL"] = 2] = "CANCEL";
 })(ConfirmEventType || (ConfirmEventType = {}));
 var ConfirmationService = class _ConfirmationService {
-  requireConfirmationSource = new import_rxjs.Subject();
-  acceptConfirmationSource = new import_rxjs.Subject();
+  requireConfirmationSource = new Subject();
+  acceptConfirmationSource = new Subject();
   requireConfirmation$ = this.requireConfirmationSource.asObservable();
   accept = this.acceptConfirmationSource.asObservable();
   /**
@@ -488,7 +546,7 @@ var ConfirmationService = class _ConfirmationService {
   }], null, null);
 })();
 var ContextMenuService = class _ContextMenuService {
-  activeItemKeyChange = new import_rxjs.Subject();
+  activeItemKeyChange = new Subject();
   activeItemKeyChange$ = this.activeItemKeyChange.asObservable();
   activeItemKey;
   changeKey(key) {
@@ -753,8 +811,8 @@ var FilterService = class _FilterService {
   }], null, null);
 })();
 var MessageService = class _MessageService {
-  messageSource = new import_rxjs.Subject();
-  clearSource = new import_rxjs.Subject();
+  messageSource = new Subject();
+  clearSource = new Subject();
   messageObserver = this.messageSource.asObservable();
   clearObserver = this.clearSource.asObservable();
   /**
@@ -799,7 +857,7 @@ var MessageService = class _MessageService {
   }], null, null);
 })();
 var OverlayService = class _OverlayService {
-  clickSource = new import_rxjs.Subject();
+  clickSource = new Subject();
   clickObservable = this.clickSource.asObservable();
   add(event) {
     if (event) {
@@ -1326,8 +1384,8 @@ var TranslationKeys = class {
   static BROWSE_FILES = "browseFiles";
 };
 var TreeDragDropService = class _TreeDragDropService {
-  dragStartSource = new import_rxjs.Subject();
-  dragStopSource = new import_rxjs.Subject();
+  dragStartSource = new Subject();
+  dragStopSource = new Subject();
   dragStart$ = this.dragStartSource.asObservable();
   dragStop$ = this.dragStopSource.asObservable();
   startDrag(event) {
@@ -1353,13 +1411,19 @@ var TreeDragDropService = class _TreeDragDropService {
 export {
   hasClass,
   addClass,
+  blockBodyScroll,
   removeClass,
+  unblockBodyScroll,
   getOuterWidth,
   setAttributes,
+  createElement,
   find,
   findSingle,
+  focus,
   getAttribute,
+  getFirstFocusableElement,
   getHeight,
+  getLastFocusableElement,
   getOffset,
   getOuterHeight,
   getWidth,
@@ -1396,4 +1460,4 @@ export {
   TranslationKeys,
   TreeDragDropService
 };
-//# sourceMappingURL=chunk-LPSJYJKG.js.map
+//# sourceMappingURL=chunk-5KGOOPFV.js.map

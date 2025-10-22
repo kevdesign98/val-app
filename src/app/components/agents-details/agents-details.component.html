@@ -65,7 +65,7 @@
         *ngIf="agent?.abilities[selectedAbilityIndex]?.videoUrl"
         [src]="agent.abilities[selectedAbilityIndex].videoUrl"
         autoplay
-        muted
+        muted = "true"
         loop
         class="w-full mt-4 rounded-md"
       ></video>

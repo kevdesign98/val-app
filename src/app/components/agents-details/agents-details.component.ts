@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
 import { CommonModule } from "@angular/common";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Route, Router } from "@angular/router";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { BackgroundsAgentsService } from "../../service/backgrounds-agents/backgrounds-agents.service";
 import { FooterComponent } from "../footer/footer.component";

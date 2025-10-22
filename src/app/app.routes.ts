@@ -10,7 +10,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { SignupComponent } from "./pages/signup/signup.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { EsportsComponent } from "./pages/esports/esports.component";
-
+import { NotFoundComponent } from "./pages/not-found/not-found.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
@@ -21,9 +21,10 @@ export const routes: Routes = [
   { path: "esports", component: EsportsComponent },
   { path: "stats", component: StatsComponent },
   { path: "agents/:id", component: AgentsDetailsComponent },
-  { path: 'maps-strat/:uuid', component: MapStratComponent },
+  { path: "maps-strat/:uuid", component: MapStratComponent },
   { path: "signup", component: SignupComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: "dashboard", component: DashboardComponent },
+  { path: "login", component: LoginComponent },
+  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "**", component: NotFoundComponent },
 ];

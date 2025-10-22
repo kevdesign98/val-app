@@ -31,6 +31,7 @@ export class BackgroundsAgentsService {
       { name: "Skye", id: "6f2a04ca-43e0-be17-7f36-b3908627744d", background: 'assets/bg-agents/Skye.png' },
       { name: "Sova", id: "320b2a48-4d9b-a075-30f1-1f93a9b638fa", background: 'assets/bg-agents/Sova.png' },
       { name: "Tejo", id: "b444168c-4e35-8076-db47-ef9bf368f384", background: 'assets/bg-agents/Tejo.png' },
+      { name: "Veto", id: "92eeef5d-43b5-1d4a-8d03-b3927a09034b", background: 'assets/bg-agents/Veto.png' },
       { name: "Viper", id: "707eab51-4836-f488-046a-cda6bf494859", background: 'assets/bg-agents/Viper.png' },
       { name: "Vyse", id: "efba5359-4016-a1e5-7626-b1ae76895940", background: 'assets/bg-agents/Vyse.png' },
       { name: "Waylay", id: "df1cb487-4902-002e-5c17-d28e83e78588", background: 'assets/bg-agents/Waylay.png' },

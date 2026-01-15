@@ -9,8 +9,8 @@ import { WeaponsComponent } from "./pages/weapons/weapons.component";
 import { LoginComponent } from "./pages/login/login.component";
 import { SignupComponent } from "./pages/signup/signup.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { EsportsComponent } from "./pages/esports/esports.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
+import { ListMatchesComponent } from "./components/list-matches/list-matches.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: "agents", component: AgentsComponent },
   { path: "weapons", component: WeaponsComponent },
   { path: "maps", component: MapsComponent },
-  { path: "esports", component: EsportsComponent },
+  { path: "list-matches", component: ListMatchesComponent },
   { path: "stats", component: StatsComponent },
   { path: "agents/:id", component: AgentsDetailsComponent },
   { path: "maps-strat/:uuid", component: MapStratComponent },

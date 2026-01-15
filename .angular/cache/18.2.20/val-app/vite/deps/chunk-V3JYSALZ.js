@@ -4,11 +4,11 @@ import {
   base,
   config_default,
   service_default
-} from "./chunk-LBJQ6VMN.js";
+} from "./chunk-UAP623K4.js";
 import {
   getKeyValue,
   uuid
-} from "./chunk-5KGOOPFV.js";
+} from "./chunk-GN4RXEF3.js";
 import {
   DOCUMENT,
   isPlatformServer
@@ -256,4 +256,4 @@ var BaseComponent = class _BaseComponent {
 export {
   BaseComponent
 };
-//# sourceMappingURL=chunk-VFZFAQEC.js.map
+//# sourceMappingURL=chunk-V3JYSALZ.js.map

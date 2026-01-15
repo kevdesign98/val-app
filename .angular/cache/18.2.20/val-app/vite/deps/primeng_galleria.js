@@ -5,6 +5,9 @@ import {
   trigger
 } from "./chunk-LJ7UH6FX.js";
 import {
+  zindexutils
+} from "./chunk-6EUKM3X6.js";
+import {
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -13,13 +16,13 @@ import {
   TimesIcon,
   WindowMaximizeIcon,
   WindowMinimizeIcon
-} from "./chunk-52FFR3YT.js";
+} from "./chunk-E5JV7QEO.js";
 import {
   BaseComponent
-} from "./chunk-VFZFAQEC.js";
+} from "./chunk-V3JYSALZ.js";
 import {
   BaseStyle
-} from "./chunk-LBJQ6VMN.js";
+} from "./chunk-UAP623K4.js";
 import {
   PrimeTemplate,
   SharedModule,
@@ -36,7 +39,7 @@ import {
   setAttribute,
   unblockBodyScroll,
   uuid
-} from "./chunk-5KGOOPFV.js";
+} from "./chunk-GN4RXEF3.js";
 import {
   CommonModule,
   DOCUMENT,
@@ -112,8 +115,8 @@ import {
   ɵɵtemplateRefExtractor,
   ɵɵviewQuery
 } from "./chunk-ZSDUEJY2.js";
-import "./chunk-5OPE3T2R.js";
 import "./chunk-4N4GOYJH.js";
+import "./chunk-5OPE3T2R.js";
 import "./chunk-FHTVLBLO.js";
 import "./chunk-3OV72XIM.js";
 
@@ -247,48 +250,6 @@ var FocusTrapModule = class _FocusTrapModule {
     exports: [FocusTrap]
   });
 })();
-
-// node_modules/primeng/fesm2022/primeng-utils.mjs
-function ZIndexUtils() {
-  let zIndexes = [];
-  const generateZIndex = (key, baseZIndex) => {
-    let lastZIndex = zIndexes.length > 0 ? zIndexes[zIndexes.length - 1] : {
-      key,
-      value: baseZIndex
-    };
-    let newZIndex = lastZIndex.value + (lastZIndex.key === key ? 0 : baseZIndex) + 2;
-    zIndexes.push({
-      key,
-      value: newZIndex
-    });
-    return newZIndex;
-  };
-  const revertZIndex = (zIndex) => {
-    zIndexes = zIndexes.filter((obj) => obj.value !== zIndex);
-  };
-  const getCurrentZIndex = () => {
-    return zIndexes.length > 0 ? zIndexes[zIndexes.length - 1].value : 0;
-  };
-  const getZIndex = (el) => {
-    return el ? parseInt(el.style.zIndex, 10) || 0 : 0;
-  };
-  return {
-    get: getZIndex,
-    set: (key, el, baseZIndex) => {
-      if (el) {
-        el.style.zIndex = String(generateZIndex(key, baseZIndex));
-      }
-    },
-    clear: (el) => {
-      if (el) {
-        revertZIndex(getZIndex(el));
-        el.style.zIndex = "";
-      }
-    },
-    getCurrent: () => getCurrentZIndex()
-  };
-}
-var zindexutils = ZIndexUtils();
 
 // node_modules/primeng/fesm2022/primeng-galleria.mjs
 var theme = ({

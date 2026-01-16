@@ -1,125 +1,104 @@
 <app-navbar />
 
-<section *ngIf="map" class="relative h-screen w-full bg-cover bg-center"
-  [ngStyle]="{ 'background-image': 'url(' + map.splash + ')' }">
-  <div class="absolute inset-0 bg-black/60"></div>
-  <div class="relative z-10 flex flex-col justify-end h-full p-10 text-white">
-    <h1 class="text-5xl font-extrabold leading-tight max-w-4xl">{{ map.displayName }}</h1>
-    <div class="grid grid-cols-3 gap-6 mt-12 text-gray-300 text-sm">
-      <div>
-        <h4 class="uppercase text-xs">Modality</h4>
-        <h4 class="font-semibold uppercase text-xs">Competitive</h4>
-      </div>
-      <div>
-        <h4 class="uppercase text-xs">Tactical Description</h4>
-        <h4 class="font-semibold">{{ map.tacticalDescription || 'N/A' }}</h4>
-      </div>
-      <div>
-        <h4 class="uppercase text-xs">Coordinates</h4>
-        <h4 class="font-semibold">{{ map.coordinates || 'Unknown' }}</h4>
+
+
+<div *ngIf="map" class="min-h-screen bg-[#050505] text-white">
+  
+  <div class="relative h-[50vh] overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent z-10"></div>
+    <img [src]="map.splash" class="w-full h-full object-cover opacity-40 blur-sm" />
+    <div class="absolute inset-0 flex flex-col justify-center items-center z-20 text-center px-6">
+      <span class="text-indigo-500 font-mono tracking-[0.5em] text-xs uppercase mb-4">// Map_Strategy_Intel</span>
+      <h1 class="text-7xl font-black uppercase italic tracking-tighter">{{ map.displayName }}</h1>
+      <div class="flex gap-8 mt-6 font-mono text-[10px] text-white/50 uppercase tracking-widest">
+        <span>Coords: {{ map.coordinates || 'Unknown' }}</span>
+        <span class="text-indigo-500">//</span>
+        <span>Modality: Competitive</span>
       </div>
     </div>
   </div>
-</section>
 
+  <div class="container mx-auto px-6 py-20 relative z-20">
+    <h1 class="text-center text-3xl font-black uppercase italic tracking-tighter" style="padding-bottom: 3.25rem;">Working in progress per il bug della mappa interattiva</h1>
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-12">
+      
+      <div class="xl:col-span-7 flex justify-center">
+        <div class="relative w-full max-w-[700px] aspect-square bg-white/[0.02] border border-white/10 rounded-[3rem] p-8 backdrop-blur-3xl shadow-2xl">
+          
+          <div class="relative w-full h-full">
+            <img [src]="map.displayIcon" alt="Minimap" class="w-full h-full object-contain brightness-90 contrast-125">
 
-<div *ngIf="map" class="map-strat-container" style="padding: 100px 0 100px 0;">
-  <div class="flex gap-6">
-    <!-- Immagine della mappa con markers -->
-    <div class="relative">
-      <div class="relative w-[600px] h-[600px] bg-gray-900 rounded-lg overflow-hidden">
-        <img [src]="map.displayIcon" alt="Piantina {{ map.displayName }}" class="w-full h-full object-contain">
+            <div *ngIf="selectedCallout" 
+                 class="absolute w-6 h-6 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none"
+                 [style.top.%]="normalizeY(selectedCallout.location.y)"
+                 [style.left.%]="normalizeX(selectedCallout.location.x)">
+                <div class="absolute inset-0 bg-indigo-500 rounded-full animate-ping opacity-75"></div>
+                <div class="absolute inset-1 bg-indigo-600 rounded-full border-2 border-white shadow-[0_0_15px_#6366f1]"></div>
+            </div>
 
-        <!-- Marker sulla mappa (quando seleziono un callout) -->
-        <div *ngIf="selectedCallout" class="absolute w-4 h-4 bg-red-500 rounded-full border-2 border-white" [ngStyle]="{
-          top: normalizeY(selectedCallout.location.y) + 'px',
-          left: normalizeX(selectedCallout.location.x) + 'px'
-        }"></div>
-      </div>
-    </div>
+            <div class="absolute inset-0 pointer-events-none opacity-10 map-overlay-tech"></div>
+          </div>
 
-    <!-- Lista callouts -->
-    <div class="flex-1">
-      <h3 class="text-xl font-semibold mb-2">Callouts</h3>
-      <div *ngIf="map.callouts?.length > 0; else noCallouts" class="grid grid-cols-2 gap-2">
-        <div *ngFor="let callout of map.callouts" (click)="selectCallout(callout)"
-          class="p-2 rounded cursor-pointer hover:bg-gray-500 transition">
-          <strong>{{ callout.regionName }}</strong>
-          <span class="text-sm text-gray-600 block">{{ callout.superRegionName }}</span>
+          <div class="absolute top-6 left-10 flex items-center gap-2">
+            <div class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+            <span class="text-[10px] font-mono text-white/40 uppercase tracking-widest">Live_Tactical_View</span>
+          </div>
         </div>
       </div>
 
-      <ng-template #noCallouts>
-        <p class="text-gray-500">Nessun callout disponibile per questa mappa.</p>
-      </ng-template>
+      <div class="xl:col-span-5 flex flex-col">
+        <div class="mb-6">
+          <h3 class="text-2xl font-black uppercase italic tracking-tighter">Region Callouts</h3>
+          <p class="text-gray-500 text-xs font-mono uppercase tracking-widest mt-1">Select a sector to locate on map</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto pr-2 max-h-[600px] custom-scrollbar">
+          <div *ngFor="let callout of map.callouts" 
+               (click)="selectCallout(callout)"
+               [class.selected-card]="selectedCallout === callout"
+               class="group p-4 bg-white/5 border border-white/10 rounded-2xl cursor-pointer transition-all hover:bg-white/10 hover:border-indigo-500/50">
+            <div class="flex flex-col">
+              <span class="text-xs font-black uppercase text-white group-hover:text-indigo-400 transition-colors">
+                {{ callout.regionName }}
+              </span>
+              <span class="text-[9px] font-mono text-white/30 uppercase tracking-tighter mt-1">
+                Sector: {{ callout.superRegionName }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="selectedCallout" class="mt-8 p-6 bg-indigo-600/10 border border-indigo-600/30 rounded-[2rem] animate-fade-in">
+           <span class="text-[9px] font-mono text-indigo-400 block mb-1 uppercase tracking-[0.3em]">Sector_Details</span>
+           <h4 class="text-2xl font-black uppercase italic">{{selectedCallout.regionName}}</h4>
+           <div class="mt-4 grid grid-cols-2 gap-4 text-[10px] font-mono opacity-60 uppercase">
+             <span>PosX: {{selectedCallout.location.x.toFixed(0)}}</span>
+             <span>PosY: {{selectedCallout.location.y.toFixed(0)}}</span>
+           </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 w-full mt-20 border-t border-white/5">
+    <a *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
+       class="relative group h-40 overflow-hidden flex items-center justify-center border-r border-white/5">
+      <img [src]="prevMap.splash" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+      <div class="relative z-10 text-center">
+        <span class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Previous_Battlefield</span>
+        <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{prevMap.displayName}}</h5>
+      </div>
+    </a>
+
+    <a *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
+       class="relative group h-40 overflow-hidden flex items-center justify-center">
+      <img [src]="nextMap.splash" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+      <div class="relative z-10 text-center">
+        <span class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Next_Battlefield</span>
+        <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{nextMap.displayName}}</h5>
+      </div>
+    </a>
+  </div>
 </div>
-
-<!-- <div class="flex justify-between mt-6">
-  <button *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
-    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">
-    ← Prev
-  </button>
-
-  <button *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
-    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded ml-auto">
-    Next →
-  </button>
-</div> -->
-
-<div class="grid grid-cols-1 md:grid-cols-2 w-full mt-8 text-white text-center font-bold text-xl">
-
-  <!-- PREV MAP -->
-  <a *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
-    class="relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
-
-    <!-- SOLO TESTO su desktop, immagine su hover -->
-    <span class="z-10 hidden md:block transition-opacity duration-300 group-hover:opacity-0">
-      ← PREV MAP
-    </span>
-
-    <!-- Immagine SEMPRE visibile su mobile, solo su hover su desktop -->
-    <img [src]="prevMap.splash" alt="{{ prevMap.displayName }}" class="absolute inset-0 w-full h-full object-cover 
-                opacity-100 md:opacity-0 md:group-hover:opacity-100 
-                transition duration-300" />
-
-    <!-- Nome mappa -->
-    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
-                 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition">
-                   
-      {{ prevMap.displayName }}
-    </span>
-  </a>
-
-  <!-- NEXT MAP -->
-  <a *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
-    class="relative flex items-center justify-center bg-gray-800 hover:bg-gray-700 overflow-hidden h-32 transition group">
-
-    <!-- SOLO TESTO su desktop -->
-    <span class="z-10 hidden md:block transition-opacity duration-300 group-hover:opacity-0">
-      NEXT MAP →
-    </span>
-
-    <!-- Immagine sempre visibile su mobile -->
-    <img [src]="nextMap.splash" alt="{{ nextMap.displayName }}" class="absolute inset-0 w-full h-full object-cover 
-                opacity-100 md:opacity-0 md:group-hover:opacity-100 
-                transition duration-300" />
-
-    <!-- Nome mappa -->
-    <span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm bg-black bg-opacity-70 px-2 py-1 rounded 
-                 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition">
-                  
-      {{ nextMap.displayName }}
-    </span>
-  </a>
-
-</div>
-
-
-
-
-
-
 
 <app-footer />

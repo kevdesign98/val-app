@@ -31,6 +31,4 @@ export class ListMatchesComponent {
       this.resultMatches = res.data;
     });
   }
-
-
 }

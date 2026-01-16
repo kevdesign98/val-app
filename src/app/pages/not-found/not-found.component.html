@@ -1,11 +1,55 @@
 <app-navbar />
 
-<div class="flex flex-col items-center justify-center h-screen text-center">
-  <h1 class="text-6xl font-bold text-red-500 mb-4">404</h1>
-  <p class="text-xl text-gray-300 mb-6">Pagina non trovata</p>
-  <a routerLink="/home" class="text-blue-400 underline hover:text-blue-300">
-    Torna alla Home
-  </a>
+<div class="relative min-h-screen bg-[#050505] text-white flex items-center justify-center overflow-hidden">
+  
+  <div class="absolute inset-0 z-0">
+    <div class="blob blob-indigo opacity-20"></div>
+    <div class="blob blob-red opacity-10"></div>
+    <div class="map-overlay-tech opacity-30"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10 text-center">
+    
+    <div class="relative inline-block mb-8">
+      <h1 class="text-[12rem] md:text-[18rem] font-black italic leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/10 to-transparent">
+        404
+      </h1>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span class="text-2xl md:text-4xl font-black uppercase italic tracking-[0.2em] text-indigo-500 drop-shadow-[0_0_15px_rgba(99,102,241,0.8)]">
+          Area Restricted
+        </span>
+      </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto space-y-6">
+      <h2 class="text-3xl md:text-4xl font-black uppercase italic tracking-tight">
+        Mission <span class="text-red-500">Failed</span>. Agent Lost.
+      </h2>
+      <p class="text-gray-400 font-medium italic text-lg">
+        The tactical data you are looking for has been encrypted or moved to another sector. 
+        Re-route your connection to the main hub.
+      </p>
+
+      <div class="pt-8">
+        <button routerLink="/Home" 
+                class="group relative px-12 py-4 bg-indigo-600 rounded-xl font-black uppercase italic tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(99,102,241,0.4)]">
+          <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          <span class="relative flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+            </svg>
+            Back to Base
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-16 flex justify-center gap-4 opacity-20">
+        <div class="h-1 w-12 bg-white rounded-full"></div>
+        <div class="h-1 w-4 bg-indigo-500 rounded-full"></div>
+        <div class="h-1 w-1 bg-white rounded-full"></div>
+    </div>
+  </div>
 </div>
 
 <app-footer />

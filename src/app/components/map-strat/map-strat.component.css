@@ -1,4 +1,4 @@
-.map-strat-container {
+/* .map-strat-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,4 +46,47 @@
   padding: 2px 5px;
   border-radius: 4px;
   cursor: pointer;
+} */
+
+:host {
+  display: block;
+  background-color: #050505;
+}
+
+.map-overlay-tech {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1e1e1e;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }

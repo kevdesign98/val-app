@@ -4,13 +4,11 @@ import { ListAgentsService } from "../../service/list-agents.service";
 import { RouterLink } from "@angular/router";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
-//  import { Agents } from '../../models/agents';
-import { ButtonModule } from "primeng/button";
 
 @Component({
   selector: "app-agents",
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent, ButtonModule, FooterComponent],
+  imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
   templateUrl: "./agents.component.html",
   styleUrl: "./agents.component.css",
 })
@@ -24,15 +22,18 @@ export class AgentsComponent implements OnInit {
 
   ngOnInit() {
     this.listAgentsService.getAgents().subscribe((data) => {
+      // 1. Ordinamento alfabetico
       const sortedAgents = data.data.sort((a: any, b: any) =>
         a.displayName.localeCompare(b.displayName)
       );
 
+      // 2. Rimozione duplicati
       const uniqueAgents = sortedAgents.filter(
         (agent: any, index: number, self: any[]) =>
           index === self.findIndex((a) => a.displayName === agent.displayName)
       );
 
+      // 3. Mapping dei dati
       this.agents = uniqueAgents.map((agent: any) => ({
         ...agent,
         imageName:
@@ -42,6 +43,7 @@ export class AgentsComponent implements OnInit {
       this.filteredAgents = this.agents;
     });
   }
+
   filterByRole(role: string) {
     this.selectedRole = role;
     if (role === "All") {

@@ -4,6 +4,7 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { MapsService } from "../../service/maps-services/maps.service";
 import { CommonModule } from "@angular/common";
+
 @Component({
   selector: "app-maps",
   standalone: true,
@@ -14,23 +15,31 @@ import { CommonModule } from "@angular/common";
 export class MapsComponent implements OnInit {
   maps: any[] = [];
 
+  // Mappe competitive
+  compMaps = [
+    "Abyss",
+    "Ascent",
+    "Bind",
+    "Breeze",
+    "Fracture",
+    "Haven",
+    "Icebox",
+    "Lotus",
+    "Pearl",
+    "Split",
+    "Sunset",
+  ];
 
-  compMaps = ["Abyss", "Ascent", "Bind", "Breeze", "Fracture",
-    "Haven", "Icebox", "Lotus", "Pearl", "Split", "Sunset"];
-
-
-
-  constructor(private mapsService: MapsService) { }
+  constructor(private mapsService: MapsService) {}
 
   ngOnInit(): void {
     this.mapsService.getAllMaps().subscribe({
       next: (maps: any[]) => {
-        this.maps = maps.filter((map: any) =>
-          this.compMaps.includes(map.displayName)
-        );
+        this.maps = maps
+          .filter((map: any) => this.compMaps.includes(map.displayName))
+          .sort((a, b) => a.displayName.localeCompare(b.displayName)); // Opzionale: ordine alfabetico
       },
-      error: (err) => console.error("Errore nel caricamento mappe:", err)
+      error: (err) => console.error("Errore nel caricamento mappe:", err),
     });
   }
-
 }

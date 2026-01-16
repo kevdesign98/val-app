@@ -1,14 +1,47 @@
-<div class="relative z-10 w-full">
-  <p-carousel [value]="maps" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="2500"
-    [responsiveOptions]="responsiveOptions">
-    <ng-template pTemplate="item" let-maps>
-      <div class="cursor-pointer p-3 text-center">
-        <a [routerLink]="['/maps']">
-          <img [src]="maps.image" alt="{{ maps.name }}" class="w-full max-h-[350px] object-contain mb-2" />
-        </a>
-        <a [routerLink]="['/maps']">
-          <h3 class="text-lg font-semibold text-white">{{ maps.name }}</h3>
-        </a>
-      </div>
-    </ng-template>
-  </p-carousel>
+<section class="relative min-h-[600px] flex items-center justify-center overflow-hidden bg-black">
+    
+    <div class="absolute inset-0 z-0 transition-all duration-1000">
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20 z-10"></div>
+        
+        <img [src]="activeMapImage || maps[0]?.image" 
+             class="w-full h-full object-cover animate-ken-burns" 
+             alt="Map Background">
+    </div>
+
+    <div class="container mx-auto px-6 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            
+            <div class="order-2 md:order-1">
+                <p-carousel [value]="maps" [numVisible]="1" [numScroll]="1" [circular]="true" 
+                            (onPageChange)="onMapChange($event)" class="custom-map-selector">
+                    <ng-template pTemplate="item" let-map>
+                        <div class="py-10 outline-none">
+                            <span class="text-indigo-500 font-mono tracking-[0.5em] text-xs">LOCATION_FOUND //</span>
+                            <h2 class="text-8xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+                                {{ map.name }}
+                            </h2>
+                            <div class="flex items-center gap-6">
+                                <button [routerLink]="['/maps']" 
+                                        class="px-8 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all rounded-full">
+                                    Explore Map
+                                </button>
+                                <span class="text-white/40 font-mono text-sm tracking-widest hidden md:block">
+                                    COORD: {{map.coordinates || '45.46° N // 9.19° E'}}
+                                </span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+
+            <div class="order-1 md:order-2 text-right hidden md:block">
+                 <h3 class="text-indigo-600 text-xl font-bold mb-2 uppercase tracking-widest">Discover Maps</h3>
+                 <p class="text-white/60 text-lg max-w-sm ml-auto">
+                    Impara i lineup e domina le rotazioni tattiche in ogni settore operativo.
+                 </p>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,42 @@
+/* Rimuoviamo i bottoni e i puntini standard di PrimeNG se necessario, o rendiamoli minimali */
+::ng-deep .p-carousel-indicators {
+    padding: 0;
+    gap: 8px;
+}
+
+::ng-deep .p-carousel-indicator button {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    width: 20px !important;
+    height: 4px !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease;
+}
+
+::ng-deep .p-carousel-indicator.p-highlight button {
+    background-color: #6366f1 !important;
+    width: 40px !important;
+}
+
+/* Animazione del ritratto */
+.agent-portrait {
+    transition: filter 0.5s ease, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.agent-stage:hover .agent-portrait {
+    filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.4)) brightness(1.1);
+}
+
+/* Rende il carousel trasparente */
+::ng-deep .p-carousel-content {
+    background: transparent !important;
+}
+
+::ng-deep .p-carousel-prev, ::ng-deep .p-carousel-next {
+    background: rgba(255,255,255,0.05) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    backdrop-filter: blur(10px);
+}

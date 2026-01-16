@@ -1,16 +1,40 @@
-<div class="relative z-10 w-full md:w-2/3 mx-auto">
-  <p-carousel [value]="agents" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
-    [responsiveOptions]="responsiveOptions" loop="true">
+<div class="relative z-10 w-full md:w-4/5 mx-auto overflow-visible">
+  <p-carousel [value]="agents" [numVisible]="1" [numScroll]="1" [circular]="true" 
+              [autoplayInterval]="4000" [responsiveOptions]="responsiveOptions">
     <ng-template pTemplate="item" let-agent>
-      <div class="cursor-pointer p-3 text-center">
-        <a [routerLink]="['/agents', agent.uuid]">
-          <img [src]="agent.fullPortrait" alt="{{ agent.displayName  }}"
-            class="mx-auto mb-2 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg" loading="lazy" />
-        </a>
-        <a [routerLink]="['/agents', agent.uuid]">
-          <!-- <h3 class="text-lg font-semibold text-white">{{ agent.displayName  }}</h3> -->
-        </a>
+      
+      <div class="agent-stage relative h-[500px] flex items-center justify-center cursor-pointer" 
+           [routerLink]="['/agents', agent.uuid]">
+        
+        <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
+          <h2 class="text-[12rem] font-black uppercase text-white/[0.03] tracking-tighter leading-none">
+            {{ agent.displayName }}
+          </h2>
+        </div>
+
+        <div class="absolute bottom-10 w-64 h-12 bg-indigo-600/20 blur-2xl rounded-[100%] z-1"></div>
+
+        <div class="relative z-10 transform transition-all duration-700 hover:scale-110">
+          <img [src]="agent.fullPortrait" 
+               alt="{{ agent.displayName }}"
+               class="mx-auto h-[450px] object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] agent-portrait"
+               loading="lazy" />
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-center z-20">
+          <div class="flex items-center justify-center space-x-2 mb-2">
+            <img [src]="agent.role?.displayIcon" class="w-5 h-5 opacity-50">
+            <span class="text-[10px] font-bold tracking-[0.4em] text-indigo-400 uppercase">
+              {{ agent.role?.displayName }}
+            </span>
+          </div>
+          <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
+            {{ agent.displayName }}
+          </h3>
+        </div>
+
       </div>
+
     </ng-template>
   </p-carousel>
 </div>

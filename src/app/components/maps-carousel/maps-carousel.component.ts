@@ -39,4 +39,12 @@ export class MapsCarouselComponent {
   goToMaps() {
     this.router.navigate(["/maps"]);
   }
+
+  activeMapImage: string = '';
+
+  onMapChange(event: any) {
+    // Supponendo che 'maps' sia il tuo array di mappe
+    const index = event.page;
+    this.activeMapImage = this.maps[index].image;
+  }
 }

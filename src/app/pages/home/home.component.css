@@ -1,61 +1,123 @@
+/* --- CONFIGURAZIONE BASE & RESET --- */
+:host {
+    display: block;
+    background-color: #050505; /* Colore base che unifica tutto il sito */
+}
+
+/* --- HERO & BACKGROUND SECTIONS --- */
+.hero-bg-mask {
+    /* Crea una sfumatura che "mangia" il fondo dell'immagine della Hero */
+    /* Fondamentale per eliminare lo stacco netto tra Hero e Card */
+    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+}
+
 .bg-fade-cover {
     background-position: 50%;
     background-size: cover;
-    border-bottom-left-radius: 10rem;
+    /* Rimosso border-radius per evitare buchi bianchi con lo sfondo nero */
 }
 
-.cover-up {
-    background: #ff4656;
- }
+/* --- BENTO CARDS (ESPORTS, LINEUPS, INSIGHTS) --- */
+.bg-card-esports { background-image: url('/assets/champions.png'); background-position: center; background-size: cover; }
+.bg-card-lineups { background-image: url('/assets/banner.png'); background-position: center; background-size: cover; }
+.bg-card-insights { background-image: url('/assets/omen-home.png'); background-position: top; background-size: cover; }
 
-.bg-card-esports {
-    background-image: url('/assets/champions.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+/* --- MAPS SECTION (LOOK IMMERSIVO) --- */
+.mesh-gradient-bg {
+    position: absolute;
+    inset: 0;
+    background-color: #050505;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(244, 63, 94, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+    filter: blur(80px);
+    animation: mesh-move 20s ease infinite alternate;
 }
 
-.bg-card-lineups {
-    background-image: url('/assets/banner.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover
+.map-overlay-tech {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 32px 32px;
+    z-index: 5;
+    pointer-events: none;
 }
 
-.bg-card-insights {
-    background-image: url('/assets/omen-home.png');
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover
+/* --- CAROUSEL CUSTOMIZATION (PRIMENG) --- */
+::ng-deep .custom-map-selector .p-carousel-content,
+::ng-deep .custom-map-selector .p-carousel-container {
+    background: transparent !important;
+    border: none !important;
 }
 
-.bg-gradient {
-    background: rgb(2, 0, 36);
-    background: -moz-linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
-    background: -webkit-linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
-    background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 65%, rgba(0, 212, 255, 0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024", endColorstr="#00d4ff", GradientType=1);
+::ng-deep .custom-map-selector .p-carousel-indicators {
+    justify-content: flex-start !important;
+    padding: 0 !important;
 }
 
-.bg-maps-home {
-    background-image: url('/assets/maps-home.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+::ng-deep .custom-map-selector .p-carousel-indicator button {
+    background-color: rgba(255,255,255,0.2) !important;
+    width: 25px !important;
+    height: 2px !important;
+    border-radius: 0px !important;
+    transition: all 0.3s ease;
 }
 
-.clip-diagonal {
-    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+::ng-deep .custom-map-selector .p-carousel-indicator.p-highlight button {
+    background-color: #6366f1 !important;
+    width: 45px !important; /* Allunga l'indicatore attivo */
 }
 
-.clip-diagonal-reverse {
-    clip-path: polygon(100% 0, 40% 0, 60% 100%, 100% 100%);
+/* --- TYPOGRAPHY EFFECTS (MAPS) --- */
+.custom-map-selector h2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+    transition: all 0.5s ease;
+    position: relative;
+    display: inline-block;
 }
 
-.bg-red-val {
-    background-color: #FF4656;
+/* Effetto di luce/alone dietro il titolo attivo */
+.custom-map-selector h2::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 5px;
+    z-index: -1;
+    color: rgba(99, 102, 241, 0.3);
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-.bg-white-maps {
-    background-color: #ece7e1
+::ng-deep .p-carousel-item-active h2 {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    color: white; /* Il testo attivo diventa solido */
 }
+
+::ng-deep .p-carousel-item-active h2::before {
+    opacity: 1;
+}
+
+/* --- ANIMAZIONI --- */
+.animate-ken-burns {
+    animation: kenburns 20s infinite alternate linear;
+}
+
+@keyframes kenburns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.15) translate(-1%, -1%); }
+}
+
+@keyframes mesh-move {
+    0% { transform: scale(1) translate(0px, 0px); }
+    100% { transform: scale(1.2) translate(20px, 10px); }
+}
+
+/* --- UTILITY CLASSES --- */
+.bg-red-val { background-color: #FF4656; }
+.bg-white-maps { background-color: #ece7e1; }

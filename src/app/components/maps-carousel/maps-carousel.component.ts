@@ -22,7 +22,7 @@ import { RouterLink } from "@angular/router";
   host: { ngSkipHydration: "true" },
 })
 export class MapsCarouselComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
   maps = [
     { name: "Ascent", slug: "ascent", image: "assets/maps/ascent.png" },
     { name: "Bind", slug: "bind", image: "assets/maps/bind.png" },
@@ -40,11 +40,21 @@ export class MapsCarouselComponent {
     this.router.navigate(["/maps"]);
   }
 
-  activeMapImage: string = '';
+  // All'interno della classe HomeComponent
+  activeMapImage: string = "";
 
+  // Nel ngOnInit, inizializza con la prima mappa
+  ngOnInit() {
+    if (this.maps && this.maps.length > 0) {
+      this.activeMapImage = this.maps[0].image;
+    }
+  }
+
+  // Funzione chiamata dal (onPageChange) del carousel
   onMapChange(event: any) {
-    // Supponendo che 'maps' sia il tuo array di mappe
-    const index = event.page;
-    this.activeMapImage = this.maps[index].image;
+    const currentIndex = event.page; // Prende l'indice della slide attiva
+    if (this.maps[currentIndex]) {
+      this.activeMapImage = this.maps[currentIndex].image;
+    }
   }
 }

@@ -1,18 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { WeaponsService } from '../../service/weapons-services/weapons.service';
+import { Component, OnInit } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { FooterComponent } from "../../components/footer/footer.component";
+import { WeaponsService } from "../../service/weapons-services/weapons.service";
+import { RouterModule } from "@angular/router";
 
 @Component({
-  selector: 'app-weapons',
+  selector: "app-weapons",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent],
-  templateUrl: './weapons.component.html',
-  styleUrl: './weapons.component.css'
+  imports: [CommonModule, NavbarComponent, FooterComponent, RouterModule],
+  templateUrl: "./weapons.component.html",
+  styleUrl: "./weapons.component.css",
 })
 export class WeaponsComponent implements OnInit {
-  categories = ["Sidearms", "SMGs", "Rifles", "Shotguns", "Sniper Rifles", "Machine Guns"];
+  activeWeaponBg: string = "";
+  categories = [
+    "Sidearms",
+    "SMGs",
+    "Rifles",
+    "Shotguns",
+    "Sniper Rifles",
+    "Machine Guns",
+  ];
   weapons: any[] = [];
   selectedCategory: string = "Sidearms";
   filteredWeapons: any[] = [];
@@ -21,7 +30,7 @@ export class WeaponsComponent implements OnInit {
   // salva la skin equipaggiata per ogni arma
   selectedSkins: { [weaponUuid: string]: any } = {};
 
-  constructor(private weaponsService: WeaponsService) { }
+  constructor(private weaponsService: WeaponsService) {}
 
   ngOnInit(): void {
     this.weaponsService.getWeapons().subscribe((res) => {
@@ -37,16 +46,18 @@ export class WeaponsComponent implements OnInit {
 
   filterByCategory(cat: string) {
     const map: Record<string, string> = {
-      "Sidearms": "EEquippableCategory::Sidearm",
-      "SMGs": "EEquippableCategory::SMG",
-      "Rifles": "EEquippableCategory::Rifle",
-      "Shotguns": "EEquippableCategory::Shotgun",
+      Sidearms: "EEquippableCategory::Sidearm",
+      SMGs: "EEquippableCategory::SMG",
+      Rifles: "EEquippableCategory::Rifle",
+      Shotguns: "EEquippableCategory::Shotgun",
       "Sniper Rifles": "EEquippableCategory::Sniper",
-      "Machine Guns": "EEquippableCategory::Heavy"
+      "Machine Guns": "EEquippableCategory::Heavy",
     };
 
     const apiCategory = map[cat];
-    this.filteredWeapons = this.weapons.filter((w: any) => w.category === apiCategory);
+    this.filteredWeapons = this.weapons.filter(
+      (w: any) => w.category === apiCategory
+    );
   }
 
   // apre/chiude la lista delle skin per un’arma

@@ -1,0 +1,31 @@
+/* Custom Scrollbar per le skin (orizzontale) */
+.scrollbar-hide::-webkit-scrollbar {
+    height: 4px;
+}
+.scrollbar-hide::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+.scrollbar-hide::-webkit-scrollbar-thumb {
+    background: #6366f1;
+    border-radius: 10px;
+}
+
+/* Animazione di entrata per la sezione skin */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+    animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Effetto glow al passaggio sulle armi */
+.group:hover img {
+    filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.3));
+}
+
+/* Stile per i dati HUD */
+.font-mono {
+    font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+}

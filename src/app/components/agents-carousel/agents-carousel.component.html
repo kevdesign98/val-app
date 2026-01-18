@@ -7,7 +7,7 @@
            [routerLink]="['/agents', agent.uuid]">
         
         <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
-          <h2 class="text-[12rem] font-black uppercase text-white/[0.03] tracking-tighter leading-none">
+          <h2 class="text-[5.5rem] md:text-[12rem] font-black uppercase text-white/[0.03] tracking-tighter leading-none italic">
             {{ agent.displayName }}
           </h2>
         </div>
@@ -28,11 +28,10 @@
               {{ agent.role?.displayName }}
             </span>
           </div>
-          <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
+          <!-- <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
             {{ agent.displayName }}
-          </h3>
+          </h3> -->
         </div>
-
       </div>
 
     </ng-template>

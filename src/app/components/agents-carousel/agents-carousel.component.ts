@@ -23,15 +23,38 @@ import { HttpClient } from "@angular/common/http";
 export class AgentsCarouselComponent implements OnInit {
   agents: any = [];
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {}
 
   ngOnInit() {
-    this.http.get<any>("https://valorant-api.com/v1/agents").subscribe((res) => {
-      const allAgents = res.data;
-      this.agents = allAgents
-        .filter((agent: any) => agent.isPlayableCharacter)
-        .slice(0, 4); // mostra solo 4 agenti
-    });
+    this.http
+      .get<any>("https://valorant-api.com/v1/agents")
+      .subscribe((res) => {
+        const allAgents = res.data;
+
+        // Nomi degli agenti che vogliamo mostrare (nomi brevi = layout perfetto)
+        const shortNameAgents = [
+          "Omen",
+          "Gekko",
+          "Fade",
+          "Raze",
+          "Reyna",
+          "Vyse",
+        ];
+
+        this.agents = allAgents
+          .filter(
+            (agent: any) =>
+              agent.isPlayableCharacter &&
+              shortNameAgents.includes(agent.displayName),
+          )
+          // Ordina i nomi per lunghezza per un feedback visivo costante
+          .sort(
+            (a: any, b: any) => a.displayName.length - b.displayName.length,
+          );
+      });
   }
   responsiveOptions = [
     { breakpoint: "1024px", numVisible: 1, numScroll: 1 },

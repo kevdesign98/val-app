@@ -1,7 +1,8 @@
 /* --- CONFIGURAZIONE BASE & RESET --- */
 :host {
     display: block;
-    background-color: #050505; /* Colore base che unifica tutto il sito */
+    background-color: #050505;
+    /* Colore base che unifica tutto il sito */
 }
 
 /* --- HERO & BACKGROUND SECTIONS --- */
@@ -19,9 +20,23 @@
 }
 
 /* --- BENTO CARDS (ESPORTS, LINEUPS, INSIGHTS) --- */
-.bg-card-esports { background-image: url('/assets/champions.png'); background-position: center; background-size: cover; }
-.bg-card-lineups { background-image: url('/assets/banner.png'); background-position: center; background-size: cover; }
-.bg-card-insights { background-image: url('/assets/omen-home.png'); background-position: top; background-size: cover; }
+.bg-card-esports {
+    background-image: url('/assets/champions.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.bg-card-lineups {
+    background-image: url('/assets/banner.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.bg-card-insights {
+    background-image: url('/assets/omen-home.png');
+    background-position: top;
+    background-size: cover;
+}
 
 /* --- MAPS SECTION (LOOK IMMERSIVO) --- */
 .mesh-gradient-bg {
@@ -59,7 +74,7 @@
 }
 
 ::ng-deep .custom-map-selector .p-carousel-indicator button {
-    background-color: rgba(255,255,255,0.2) !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
     width: 25px !important;
     height: 2px !important;
     border-radius: 0px !important;
@@ -68,7 +83,8 @@
 
 ::ng-deep .custom-map-selector .p-carousel-indicator.p-highlight button {
     background-color: #6366f1 !important;
-    width: 45px !important; /* Allunga l'indicatore attivo */
+    width: 45px !important;
+    /* Allunga l'indicatore attivo */
 }
 
 /* --- TYPOGRAPHY EFFECTS (MAPS) --- */
@@ -96,7 +112,8 @@
 ::ng-deep .p-carousel-item-active h2 {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
     text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
-    color: white; /* Il testo attivo diventa solido */
+    color: white;
+    /* Il testo attivo diventa solido */
 }
 
 ::ng-deep .p-carousel-item-active h2::before {
@@ -109,15 +126,31 @@
 }
 
 @keyframes kenburns {
-    0% { transform: scale(1) translate(0, 0); }
-    100% { transform: scale(1.15) translate(-1%, -1%); }
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+        transform: scale(1.15) translate(-1%, -1%);
+    }
 }
 
 @keyframes mesh-move {
-    0% { transform: scale(1) translate(0px, 0px); }
-    100% { transform: scale(1.2) translate(20px, 10px); }
+    0% {
+        transform: scale(1) translate(0px, 0px);
+    }
+
+    100% {
+        transform: scale(1.2) translate(20px, 10px);
+    }
 }
 
 /* --- UTILITY CLASSES --- */
-.bg-red-val { background-color: #FF4656; }
-.bg-white-maps { background-color: #ece7e1; }
+.bg-red-val {
+    background-color: #FF4656;
+}
+
+.bg-white-maps {
+    background-color: #ece7e1;
+}
+ 

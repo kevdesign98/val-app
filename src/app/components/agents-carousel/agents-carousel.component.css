@@ -1,20 +1,24 @@
-/* Rimuoviamo i bottoni e i puntini standard di PrimeNG se necessario, o rendiamoli minimali */
-::ng-deep .p-carousel-indicators {
-    padding: 0;
-    gap: 8px;
-}
-
-::ng-deep .p-carousel-indicator button {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    width: 20px !important;
+/* Stile dei bullet non attivi (grigio scuro/semi-trasparente) */
+:host ::ng-deep .p-carousel-indicators .p-carousel-indicator button {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    width: 30px !important; /* Li rendiamo un po' più lunghi e moderni */
     height: 4px !important;
     border-radius: 2px !important;
     transition: all 0.3s ease;
+    border: none !important;
 }
 
-::ng-deep .p-carousel-indicator.p-highlight button {
-    background-color: #6366f1 !important;
-    width: 40px !important;
+/* Stile del bullet ATTIVO (Indaco acceso con bagliore) */
+:host ::ng-deep .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: #6366f1 !important; /* Indigo-500 */
+    width: 50px !important; /* Si allunga quando è selezionato */
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.8); /* Effetto neon */
+}
+
+/* Posizionamento dei bullet (per evitare che finiscano sopra i testi) */
+:host ::ng-deep .p-carousel-indicators {
+    padding: 1rem 0;
+    gap: 8px;
 }
 
 /* Animazione del ritratto */

@@ -1,6 +1,6 @@
 <app-navbar />
 
-<div class="relative min-h-screen bg-[#050505] text-white pt-24 pb-20 overflow-hidden">
+<!-- <div class="relative min-h-screen bg-[#050505] text-white pt-24 pb-20 overflow-hidden">
 
     <div class="absolute inset-0 z-0">
         <div class="blob blob-indigo opacity-10"></div>
@@ -164,6 +164,44 @@
             </div>
         </div>
     </div>
+</div> -->
+
+<div class="relative w-full h-[100vh] flex items-center justify-center overflow-hidden rounded-[3rem] border border-white/10 bg-black/40 backdrop-blur-md">
+  
+  <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-20"></div>
+
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/20 blur-[100px] rounded-full animate-pulse"></div>
+  </div>
+
+  <div class="relative z-10 text-center space-y-6 p-8">
+    <div class="relative inline-block">
+      <div class="absolute inset-0 bg-indigo-500 blur-xl opacity-20 animate-ping"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500 mx-auto relative z-10">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+        <path d="M12 8v4"/><path d="M12 16h.01"/>
+      </svg>
+    </div>
+
+    <div class="space-y-2">
+      <h2 class="text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-white">
+        Section_Under_Encryption
+      </h2>
+      <div class="flex items-center justify-center gap-3 font-mono text-[10px] tracking-[0.3em] text-indigo-400">
+        <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+        <span>DEVELOPMENT IN PROGRESS // BYPASSING FIREWALL...</span>
+      </div>
+    </div>
+
+    <div class="w-64 h-1 bg-white/5 mx-auto rounded-full overflow-hidden relative">
+      <div class="absolute inset-y-0 left-0 bg-indigo-600 animate-[loading_2s_infinite] w-1/3 shadow-[0_0_15px_rgba(79,70,229,1)]"></div>
+    </div>
+
+    <p class="max-w-xs mx-auto text-white text-[10px] uppercase font-bold leading-relaxed tracking-widest">
+      I dati relativi al blog e alle patch notes sono attualmente in fase di migrazione. 
+      Riprova dopo il prossimo aggiornamento del client.
+    </p>
+  </div>
 </div>
 
 <app-footer />

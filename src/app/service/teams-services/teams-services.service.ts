@@ -7,13 +7,16 @@ import { Observable } from "rxjs";
 })
 export class TeamsServicesService {
   private apiUrl = "https://vlr.orlandomm.net/api/v1";
+
   constructor(private http: HttpClient) {}
 
-  getTeams(region: string = "emea"): Observable<any> {
-    return this.http.get(`${this.apiUrl}/teams?region=${region}`);
-  }
+ getAllTeams(): Observable<any> {
+  // Usiamo l'endpoint che hai testato e che restituisce i 50 team
+  return this.http.get(`${this.apiUrl}/teams`);
+}
 
-  //dettagli di un singolo team (inclusi i player)
+  // Metodo per ottenere i dettagli di un team specifico (inclusi i player)
+  // L'ID lo prenderemo dalla lista generale
   getTeamDetail(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/teams/${id}`);
   }

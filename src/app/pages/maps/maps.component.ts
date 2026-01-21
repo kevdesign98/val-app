@@ -21,6 +21,7 @@ export class MapsComponent implements OnInit {
     "Ascent",
     "Bind",
     "Breeze",
+    "Corrode",
     "Fracture",
     "Haven",
     "Icebox",
@@ -43,3 +44,4 @@ export class MapsComponent implements OnInit {
     });
   }
 }
+ 

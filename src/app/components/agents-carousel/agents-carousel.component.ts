@@ -26,7 +26,7 @@ export class AgentsCarouselComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpClient,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.http
@@ -39,6 +39,7 @@ export class AgentsCarouselComponent implements OnInit {
           "Omen",
           "Gekko",
           "Fade",
+          "Miks",
           "Raze",
           "Reyna",
           "Vyse",

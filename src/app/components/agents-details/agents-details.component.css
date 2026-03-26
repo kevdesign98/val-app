@@ -16,38 +16,65 @@
 } */
 
 :host {
-    display: block;
-    background-color: #050505;
+  display: block;
+  background-color: #050505;
 }
 
 /* Animazione fluttuante per l'agente al centro */
 .animate-float {
-    animation: float 6s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 /* Semplice fade in per i testi */
 .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s ease-out forwards;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .map-overlay-tech {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
-    background-size: 32px 32px;
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+  background-size: 32px 32px;
 }
 
 /* Video shadow e rifinitura */
 video {
-    filter: saturate(1.2) contrast(1.1);
+  filter: saturate(1.2) contrast(1.1);
+}
+
+/* Forza il bottone a stare sopra a tutto nel viewport */
+button[aria-label="Scroll to top"] {
+  position: fixed !important;
+  isolation: isolate;
+  /* Crea un nuovo contesto di stacking */
+}
+
+/* Assicuriamoci che il footer non abbia z-index esagerati */
+app-footer {
+  position: relative;
+  z-index: 10;
 }

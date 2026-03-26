@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Route, Router } from "@angular/router";
@@ -36,7 +36,7 @@ export class AgentsDetailsComponent implements OnInit {
     private router: Router,
     private listAgentsService: ListAgentsService,
     private backgroundsAgentsService: BackgroundsAgentsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.agents = this.backgroundsAgentsService.getBgAgents();
@@ -101,5 +101,20 @@ export class AgentsDetailsComponent implements OnInit {
     this.currentIndex = (this.currentIndex + 1) % len;
     const next = this.agents[this.currentIndex];
     this.router.navigate(["/agents", next.id]);
+  }
+
+  showScrollBtn = false;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Appare dopo 300px di scroll
+    this.showScrollBtn = window.pageYOffset > 300;
+  }
+
+  scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 }

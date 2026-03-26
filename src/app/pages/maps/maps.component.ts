@@ -8,7 +8,7 @@ import { CommonModule } from "@angular/common";
 @Component({
   selector: "app-maps",
   standalone: true,
-  imports: [RouterLink, NavbarComponent, FooterComponent, CommonModule],
+  imports: [RouterLink, NavbarComponent, FooterComponent, CommonModule,],
   templateUrl: "./maps.component.html",
   styleUrl: "./maps.component.css",
 })
@@ -31,7 +31,7 @@ export class MapsComponent implements OnInit {
     "Sunset",
   ];
 
-  constructor(private mapsService: MapsService) {}
+  constructor(private mapsService: MapsService) { }
 
   ngOnInit(): void {
     this.mapsService.getAllMaps().subscribe({
@@ -44,4 +44,3 @@ export class MapsComponent implements OnInit {
     });
   }
 }
- 

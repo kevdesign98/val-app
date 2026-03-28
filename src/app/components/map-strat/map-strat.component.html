@@ -23,10 +23,11 @@
         <div
           class="relative w-full max-w-[700px] aspect-square bg-white/[0.02] border border-white/10 rounded-[3rem] p-8 backdrop-blur-3xl shadow-2xl overflow-hidden">
 
-          <div class="relative w-full h-full">
-            <img [src]="map.displayIcon" alt="Minimap" class="w-full h-full object-contain brightness-90 contrast-125">
+          <div class="relative w-full h-full overflow-hidden brightness-90 contrast-125"
+            [style.background-image]="'url(' + map.displayIcon + ')'"
+            style="background-size: 100% 100%; background-position: center; background-repeat: no-repeat;">
 
-            <div *ngFor="let callout of map.callouts" (click)="selectCallout(callout)"
+            <div *ngFor="let callout of mapCallouts" (click)="selectCallout(callout)"
               class="absolute w-2 h-2 -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer group"
               [style.left.%]="normalizeX(callout.location.y)" [style.top.%]="normalizeY(callout.location.x)">
 
@@ -40,7 +41,7 @@
               </span>
             </div>
 
-            <div *ngIf="selectedCallout"
+            <div *ngIf="selectedCallout && isCalloutOnMap(selectedCallout)"
               class="absolute w-6 h-6 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none transition-all duration-500 ease-out"
               [style.left.%]="normalizeX(selectedCallout.location.y)"
               [style.top.%]="normalizeY(selectedCallout.location.x)">
@@ -91,30 +92,29 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 w-full mt-20 border-t border-white/5">
+    <a *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
+      class="relative group h-40 overflow-hidden flex items-center justify-center border-r border-white/5">
+      <img [src]="prevMap.splash"
+        class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+      <div class="relative z-10 text-center">
+        <span
+          class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Previous_Battlefield</span>
+        <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{prevMap.displayName}}</h5>
+      </div>
+    </a>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 w-full mt-20 border-t border-white/5">
-      <a *ngIf="prevMap" [routerLink]="['/maps-strat', prevMap.uuid]"
-        class="relative group h-40 overflow-hidden flex items-center justify-center border-r border-white/5">
-        <img [src]="prevMap.splash"
-          class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
-        <div class="relative z-10 text-center">
-          <span
-            class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Previous_Battlefield</span>
-          <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{prevMap.displayName}}</h5>
-        </div>
-      </a>
-
-      <a *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
-        class="relative group h-40 overflow-hidden flex items-center justify-center">
-        <img [src]="nextMap.splash"
-          class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
-        <div class="relative z-10 text-center">
-          <span
-            class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Next_Battlefield</span>
-          <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{nextMap.displayName}}</h5>
-        </div>
-      </a>
-    </div>
+    <a *ngIf="nextMap" [routerLink]="['/maps-strat', nextMap.uuid]"
+      class="relative group h-40 overflow-hidden flex items-center justify-center">
+      <img [src]="nextMap.splash"
+        class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-50 group-hover:scale-110 transition-all duration-700">
+      <div class="relative z-10 text-center">
+        <span
+          class="text-[10px] font-mono text-indigo-500 block mb-1 uppercase tracking-[0.4em]">Next_Battlefield</span>
+        <h5 class="text-3xl font-black uppercase italic tracking-tighter">{{nextMap.displayName}}</h5>
+      </div>
+    </a>
   </div>
 </div>
 

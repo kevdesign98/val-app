@@ -67,23 +67,34 @@ export class MapStratComponent implements OnInit {
   }
 
 
-  // Correzione definitiva delle funzioni di normalizzazione
+  // Normalizzazione coordinate: l'API Valorant usa xScalarToAdd / yScalarToAdd
   normalizeX(y: number): number {
-    if (!this.map || !this.map.xMultiplier) return 0;
+    if (!this.map || this.map.xMultiplier == null || this.map.xScalarToAdd == null) return 0;
 
-    // Formula: (Coordinata_Y_API * Multiplier) + Offset
-    // Moltiplichiamo per 100 per ottenere la percentuale CSS 'left'
-    const leftPercent = (y * this.map.xMultiplier + this.map.xScalarOffset) * 100;
-    return leftPercent;
+    // Formula: (Coordinata_Y * xMultiplier + xScalarToAdd) * 100 → percentuale CSS 'left'
+    const pct = (y * this.map.xMultiplier + this.map.xScalarToAdd) * 100;
+    return Math.max(0, Math.min(100, pct));
   }
 
   normalizeY(x: number): number {
-    if (!this.map || !this.map.yMultiplier) return 0;
+    if (!this.map || this.map.yMultiplier == null || this.map.yScalarToAdd == null) return 0;
 
-    // Formula: (Coordinata_X_API * Multiplier) + Offset
-    // Moltiplichiamo per 100 per ottenere la percentuale CSS 'top'
-    const topPercent = (x * this.map.yMultiplier + this.map.yScalarOffset) * 100;
-    return topPercent;
+    // Formula: (Coordinata_X * yMultiplier + yScalarToAdd) * 100 → percentuale CSS 'top'
+    const pct = (x * this.map.yMultiplier + this.map.yScalarToAdd) * 100;
+    return Math.max(0, Math.min(100, pct));
+  }
+
+  // Controlla se il callout cade all'interno dell'area visibile della mappa (3%–97%)
+  isCalloutOnMap(callout: any): boolean {
+    const x = this.normalizeX(callout.location.y);
+    const y = this.normalizeY(callout.location.x);
+    return x > 3 && x < 97 && y > 3 && y < 97;
+  }
+
+  // Callouts filtrati per la visualizzazione sulla mappa (esclude quelli fuori area)
+  get mapCallouts(): any[] {
+    if (!this.map?.callouts) return [];
+    return this.map.callouts.filter((c: any) => this.isCalloutOnMap(c));
   }
 
   selectCallout(callout: any): void {

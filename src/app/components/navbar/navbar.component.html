@@ -12,45 +12,44 @@
     </a>
 
     <div class="flex md:order-2 space-x-2">
-      <a routerLink="/login" 
-         class="text-white bg-indigo-600 hover:bg-indigo-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] 
+      <a routerLink="/login" class="text-white bg-indigo-600 hover:bg-indigo-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] 
                 font-semibold rounded-xl text-sm px-5 py-2.5 transition-all duration-300">
         Login
       </a>
 
-      <button (click)="isOpen = !isOpen" 
-              class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden 
-                     hover:bg-white/10 focus:outline-none transition-colors"
-              [attr.aria-expanded]="isOpen">
+      <button (click)="isOpen = !isOpen" class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden 
+                     hover:bg-white/10 focus:outline-none transition-colors" [attr.aria-expanded]="isOpen">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path *ngIf="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-          <path *ngIf="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          <path *ngIf="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7" />
+          <path *ngIf="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
 
     <div [ngClass]="{ 'hidden': !isOpen, 'flex': isOpen }"
-         class="items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all">
+      class="items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
         <li>
-          <a routerLink="/Home" routerLinkActive="text-indigo-400" 
-             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Home</a>
+          <a routerLink="/Home" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Home</a>
         </li>
         <li>
-          <a routerLink="/weapons" routerLinkActive="text-indigo-400" 
-             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Weapons</a>
+          <a routerLink="/weapons" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Weapons</a>
         </li>
         <li>
-          <a routerLink="/agents" routerLinkActive="text-indigo-400" 
-             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Agents</a>
+          <a routerLink="/agents" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Agents</a>
         </li>
         <li>
-          <a routerLink="/maps" routerLinkActive="text-indigo-400" 
-             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Maps</a>
+          <a routerLink="/maps" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Maps</a>
         </li>
         <li>
-          <a routerLink="/esports" 
-             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Esports</a>
+          <a routerLink="#"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Esports</a>
         </li>
       </ul>
     </div>

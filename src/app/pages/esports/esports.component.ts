@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-esports',
   standalone: true,
-  imports: [NavbarComponent,FooterComponent,CommonModule,RouterLink],
+  imports: [NavbarComponent, FooterComponent, CommonModule, RouterLink],
   templateUrl: './esports.component.html',
   styleUrl: './esports.component.css'
 })

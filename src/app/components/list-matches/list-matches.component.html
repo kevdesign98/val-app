@@ -1,7 +1,7 @@
 <app-navbar />
 
 <div class="relative min-h-screen bg-[#050505] text-white pt-24 pb-20 overflow-hidden">
-  
+
   <div class="absolute inset-0 z-0">
     <div class="blob blob-indigo opacity-10"></div>
     <div class="blob blob-red opacity-5"></div>
@@ -9,62 +9,79 @@
   </div>
 
   <div class="container mx-auto px-4 relative z-10">
-    
+
     <div class="relative rounded-[2.5rem] overflow-hidden mb-12 border border-white/10 shadow-2xl">
-      <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105" 
-           style="background-image: url('assets/champions.png')"></div>
+      <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
+        style="background-image: url('assets/champions.png')"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
-      
+
       <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
-        <div class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.5)]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+        <div
+          class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.5)]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+            <path d="M4 22h16" />
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
           </svg>
         </div>
         <div class="text-center md:text-left">
-          <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">// Global_Circuit_Feed</span>
+          <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">//
+            Global_Circuit_Feed</span>
           <h1 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Match Center</h1>
-          <p class="text-gray-400 font-medium italic mt-2 text-sm md:text-base">Monitor upcoming battles and live results.</p>
+          <p class="text-gray-400 font-medium italic mt-2 text-sm md:text-base">Monitor upcoming battles and live
+            results.</p>
         </div>
       </div>
     </div>
 
     <div class="custom-tabs">
       <p-tabView>
-        
+
         <p-tabPanel header="Schedule">
           <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            <div *ngFor="let match of matches" 
-                 class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
-              
+            <div *ngFor="let match of matches"
+              class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
+
               <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">{{ match.utc | date: 'MMM d, y' }}</span>
+                <span class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">{{ match.utc |
+                  date: 'MMM d, y' }}</span>
                 <span class="text-2xl font-black italic tracking-tighter">{{ match.utc | date: 'shortTime' }}</span>
               </div>
 
-              <div class="flex items-center gap-8 md:gap-16 flex-1 justify-center py-4 md:py-0" *ngIf="match.teams && match.teams.length >= 2">
+              <div class="flex items-center gap-8 md:gap-16 flex-1 justify-center py-4 md:py-0"
+                *ngIf="match.teams && match.teams.length >= 2">
                 <div class="flex flex-col items-center min-w-[100px]">
-                  <span class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
+                  <span
+                    class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
                     {{ match.teams[0].name }}
                   </span>
                   <!-- <span class="text-[15px] text-gray-500 font-mono">{{ match.teams[0].country }}</span> -->
                 </div>
 
                 <div class="flex flex-col items-center">
-                    <span class="text-xs font-black italic text-indigo-500/50 group-hover:text-indigo-500 transition-colors">VS</span>
+                  <span
+                    class="text-xs font-black italic text-indigo-500/50 group-hover:text-indigo-500 transition-colors">VS</span>
                 </div>
 
                 <div class="flex flex-col items-center min-w-[100px]">
-                  <span class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
+                  <span
+                    class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
                     {{ match.teams[1].name }}
                   </span>
                   <!-- <span class="text-[9px] text-gray-500 font-mono">{{ match.teams[1].country }}</span> -->
                 </div>
               </div>
 
-              <div class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5 min-w-[220px] justify-center">
-                <img [src]="match.img" class="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all" *ngIf="match.img">
-                <span class="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white">{{ match.event }}</span>
+              <div
+                class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5 min-w-[220px] justify-center">
+                <img [src]="match.img" class="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all"
+                  *ngIf="match.img">
+                <span class="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white">{{
+                  match.event }}</span>
               </div>
             </div>
           </div>
@@ -72,18 +89,20 @@
 
         <p-tabPanel header="Results">
           <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            <div *ngFor="let result of resultMatches" 
-                 class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
-              
+            <div *ngFor="let result of resultMatches"
+              class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
+
               <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">Final_Result</span>
+                <span
+                  class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">Final_Result</span>
                 <span class="text-[11px] font-bold text-gray-500 uppercase italic">{{ result.ago }}</span>
               </div>
 
-              <div class="flex items-center gap-6 md:gap-16 flex-1 justify-center py-4 md:py-0" *ngIf="result.teams && result.teams.length >= 2">
+              <div class="flex items-center gap-6 md:gap-16 flex-1 justify-center py-4 md:py-0"
+                *ngIf="result.teams && result.teams.length >= 2">
                 <div class="flex items-center gap-4">
-                  <span class="text-sm md:text-lg font-black uppercase text-right w-24 md:w-32 transition-colors" 
-                        [class.text-indigo-400]="(result.teams[0].score || '0') > (result.teams[1].score || '0')">
+                  <span class="text-sm md:text-lg font-black uppercase text-right w-24 md:w-32 transition-colors"
+                    [class.text-indigo-400]="(result.teams[0].score || '0') > (result.teams[1].score || '0')">
                     {{ result.teams[0].name }}
                   </span>
                   <span class="text-3xl font-black w-10 text-center">{{ result.teams[0].score || '0' }}</span>
@@ -93,8 +112,8 @@
 
                 <div class="flex items-center gap-4">
                   <span class="text-3xl font-black w-10 text-center">{{ result.teams[1].score || '0' }}</span>
-                  <span class="text-sm md:text-lg font-black uppercase text-left w-24 md:w-32 transition-colors" 
-                        [class.text-indigo-400]="(result.teams[1].score || '0') > (result.teams[0].score || '0')">
+                  <span class="text-sm md:text-lg font-black uppercase text-left w-24 md:w-32 transition-colors"
+                    [class.text-indigo-400]="(result.teams[1].score || '0') > (result.teams[0].score || '0')">
                     {{ result.teams[1].name }}
                   </span>
                 </div>
@@ -102,8 +121,8 @@
 
               <div class="mt-4 md:mt-0 flex flex-col items-center md:items-end min-w-[150px]">
                 <div class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
-                    <img [src]="result.img" class="w-4 h-4 object-contain" *ngIf="result.img">
-                    <span class="text-[9px] font-mono font-bold uppercase tracking-tighter">{{ result.event }}</span>
+                  <img [src]="result.img" class="w-4 h-4 object-contain" *ngIf="result.img">
+                  <span class="text-[9px] font-mono font-bold uppercase tracking-tighter">{{ result.event }}</span>
                 </div>
               </div>
             </div>

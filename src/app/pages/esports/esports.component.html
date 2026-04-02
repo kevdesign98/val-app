@@ -52,10 +52,9 @@
                                 <h3 class="text-3xl font-black uppercase italic leading-none mb-6">Teams
                                     &<br>Rosters</h3>
                                 <div class="flex -space-x-3 mb-auto">
-                                    <div *ngFor="let i of [1,2,3,4]"
+                                    <div *ngFor="let team of teams"
                                         class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-white/5 flex items-center justify-center p-2 backdrop-blur-sm">
-                                        <img src="https://vctstats.com/images/teams/fnc.png"
-                                            class="w-full h-full object-contain shadow-white">
+                                        <img [src]="team.image" class="w-full h-full object-contain shadow-white">
                                     </div>
                                     <div
                                         class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-indigo-600 flex items-center justify-center text-[10px] font-black italic shadow-[0_0_15px_rgba(99,102,241,0.5)]">

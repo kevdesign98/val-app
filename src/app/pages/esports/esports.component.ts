@@ -13,5 +13,26 @@ import { RouterLink } from '@angular/router';
   styleUrl: './esports.component.css'
 })
 export class EsportsComponent {
-
+  teams = [
+    {
+      id: 1,
+      name: 'Fnatic',
+      image: 'https://vctstats.com/images/teams/fnc.png',
+    },
+    {
+      id: 2,
+      name: 'Sentinels',
+      image: 'https://vctstats.com/images/teams/sen.png',
+    },
+    {
+      id: 3,
+      name: 'Team Heretics',
+      image: 'https://vctstats.com/images/teams/th.png',
+    },
+    {
+      id: 4,
+      name: 'Team Vitality',
+      image: 'https://vctstats.com/images/teams/vit.png',
+    },
+  ]
 }

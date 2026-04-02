@@ -269,10 +269,10 @@
                                                 <img *ngIf="player?.img" [src]="player.img"
                                                     class="w-full h-full object-cover">
                                                 <span *ngIf="!player?.img" class="text-indigo-400 font-black italic">{{
-                                                    player?.ign ? player.ign[0] : '?' }}</span>
+                                                    player?.user ? player.user[0] : '?' }}</span>
                                             </div>
                                             <div>
-                                                <div class="font-black uppercase italic text-white">{{ player?.ign ||
+                                                <div class="font-black uppercase italic text-white">{{ player?.user ||
                                                     'Unknown Agent' }}</div>
                                                 <div class="text-[9px] text-gray-500 font-bold uppercase">Professional
                                                     Athlete</div>

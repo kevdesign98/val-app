@@ -6,14 +6,18 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class TeamsServicesService {
-  private apiUrl = "https://vlr.orlandomm.net/api/v1/teams";
+  // 1. RIMOSSO lo slash finale da qui
+  private apiUrl = "https://vlr.orlandomm.net/api/v1";
 
   constructor(private http: HttpClient) { }
 
-  getAllTeams(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/teams`);
-  }
+  getAllTeams(region: string): Observable<any> {
+    let apiRegion = 'europe';
+    if (region === 'AMERICAS') apiRegion = 'na';
+    if (region === 'PACIFIC') apiRegion = 'ap';
 
+    return this.http.get(`${this.apiUrl}/teams?region=${apiRegion}`);
+  }
 
   getTeamDetail(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/teams/${id}`);

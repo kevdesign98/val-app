@@ -96,50 +96,44 @@ import { TeamsServicesService } from "../../service/teams-services/teams-service
   templateUrl: "./teams-details.component.html",
   styleUrl: "./teams-details.component.css",
 })
+
 export class TeamsDetailsComponent implements OnInit {
-  allTeamsRaw: any[] = [];
   filteredTeams: any[] = [];
   activeTeam: any = null;
   activeRoster: any[] = [];
   currentRegion = "EMEA";
   isLoadingRoster = false;
+  isLoadingTeams = false; // Aggiunto per feedback visivo
 
   constructor(private teamserviceService: TeamsServicesService) { }
 
   ngOnInit() {
-    this.teamserviceService.getAllTeams().subscribe({
-      next: (res) => {
-        if (res.status === "OK") {
-          this.allTeamsRaw = res.data;
-          this.filterByRegion("EMEA");
-        }
-      },
-    });
+    this.filterByRegion("EMEA");
   }
 
   filterByRegion(region: string) {
     this.currentRegion = region;
+    this.filteredTeams = [];
+    this.activeTeam = null;
 
-    this.filteredTeams = this.allTeamsRaw.filter((team) => {
-      const country = team.country;
-      if (region === "EMEA") {
-        return ["Europe", "Turkey", "Czech Republic", "France", "Spain", "Germany"].includes(country);
+    this.teamserviceService.getAllTeams(region).subscribe({
+      next: (res) => {
+        // FIX: L'API usa la chiave "teams" e non "data"
+        if (res && res.teams) {
+          this.filteredTeams = res.teams;
+
+          if (this.filteredTeams.length > 0) {
+            this.selectTeam(this.filteredTeams[0]);
+          }
+        } else if (res && res.data) {
+          // Fallback nel caso alcune rotte usino ancora "data"
+          this.filteredTeams = res.data;
+        }
+      },
+      error: (err) => {
+        console.error(`Errore nel caricamento dei team:`, err);
       }
-      if (region === "AMERICAS") {
-        return ["United States", "Brazil", "Canada", "Argentina", "Chile"].includes(country);
-      }
-      if (region === "PACIFIC") {
-        return ["South Korea", "Singapore", "Thailand", "Indonesia", "Japan", "Philippines", "India"].includes(country);
-      }
-      return false;
     });
-
-    if (this.filteredTeams.length > 0) {
-      this.selectTeam(this.filteredTeams[0]);
-    } else {
-      this.activeTeam = null;
-      this.activeRoster = [];
-    }
   }
 
   selectTeam(team: any) {
@@ -151,8 +145,9 @@ export class TeamsDetailsComponent implements OnInit {
 
     this.teamserviceService.getTeamDetail(team.id).subscribe({
       next: (res) => {
-        if (res?.status === 'OK' && res?.data?.players) {
-          this.activeRoster = res.data.players;
+        // Alcuni team nell'API usano 'players', altri 'members'
+        if (res?.status === 'OK') {
+          this.activeRoster = res.data.players || res.data.members || [];
         }
         this.isLoadingRoster = false;
       },

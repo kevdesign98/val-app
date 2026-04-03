@@ -5,7 +5,9 @@ import { delay, map } from 'rxjs/operators';
 
 
 interface User {
-  email: string,
+  name: string;
+  tag: string;
+  region: string;
   token: string;
 }
 
@@ -13,25 +15,27 @@ interface User {
   providedIn: 'root'
 })
 export class AuthservicesService {
-
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private router: Router) {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) this.currentUserSubject.next(JSON.parse(storedUser));
+    const storedUser = localStorage.getItem('vlr_user');
+    if (storedUser) {
+      this.currentUserSubject.next(JSON.parse(storedUser));
+    }
   }
 
-  login(email: string, password: string): Observable<User> {
-    // qui potresti collegarti al Mockoon o simulare
-    return of({ email, token: 'fake-jwt-token' }).pipe(
-      delay(1000),
-      map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
-      })
-    );
+  // Modifichiamo il login per accettare i dati che arrivano dall'API di Henrik
+  loginWithValorant(playerData: any): void {
+    const user: User = {
+      name: playerData.data.name,
+      tag: playerData.data.tag,
+      region: 'eu', // default per ora
+      token: 'fake-jwt-token'
+    };
+
+    localStorage.setItem('vlr_user', JSON.stringify(user));
+    this.currentUserSubject.next(user);
   }
 
   logout() {
@@ -40,7 +44,12 @@ export class AuthservicesService {
     this.router.navigate(['/login']);
   }
 
+  // isLoggedIn(): boolean {
+  //   return !!this.currentUserSubject.value;
+  // }
+
   isLoggedIn(): boolean {
-    return !!this.currentUserSubject.value;
+    // Controlla se il valore attuale del BehaviorSubject non è null
+    return this.currentUserSubject.value !== null;
   }
 }

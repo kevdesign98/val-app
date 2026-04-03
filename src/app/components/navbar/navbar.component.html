@@ -12,13 +12,28 @@
     </a>
 
     <div class="flex md:order-2 space-x-2">
-      <a routerLink="/login" class="text-white bg-indigo-600 hover:bg-indigo-500 hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] 
-                font-semibold rounded-xl text-sm px-5 py-2.5 transition-all duration-300">
-        Login
-      </a>
+      <ng-container *ngIf="auth.currentUser$ | async as user; else loginBtn">
+        <div class="flex items-center space-x-3">
+          <div class="hidden sm:flex flex-col items-end mr-2">
+            <span class="text-white text-[10px] font-bold leading-none uppercase">{{ user.name }}</span>
+            <span class="text-indigo-400 text-[8px] font-mono leading-none">#{{ user.tag }}</span>
+          </div>
+          <button (click)="logout()"
+            class="text-white bg-red-600/20 hover:bg-red-600 border border-red-600/50 font-semibold rounded-xl text-sm px-4 py-2 transition-all duration-300">
+            Logout
+          </button>
+        </div>
+      </ng-container>
 
-      <button (click)="isOpen = !isOpen" class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden 
-                     hover:bg-white/10 focus:outline-none transition-colors" [attr.aria-expanded]="isOpen">
+      <ng-template #loginBtn>
+        <a routerLink="/login"
+          class="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-xl text-sm px-5 py-2.5 transition-all duration-300">
+          Login
+        </a>
+      </ng-template>
+
+      <button (click)="isOpen = !isOpen"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden hover:bg-white/10 focus:outline-none transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path *ngIf="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M4 6h16M4 12h16m-7 6h7" />
@@ -47,12 +62,13 @@
           <a routerLink="/maps" routerLinkActive="text-indigo-400"
             class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Maps</a>
         </li>
-        <li>
-          <a routerLink="/esports" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Esports</a>
+        <li *ngIf="auth.isLoggedIn()">
+          <a routerLink="/dashboard" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-indigo-400 font-bold hover:text-white transition-colors animate-pulse">
+            Dashboard
+          </a>
         </li>
       </ul>
     </div>
-
   </div>
 </nav>

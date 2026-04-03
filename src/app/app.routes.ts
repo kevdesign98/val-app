@@ -13,7 +13,7 @@ import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { ListMatchesComponent } from "./components/list-matches/list-matches.component";
 import { EsportsComponent } from "./pages/esports/esports.component";
 import { TeamsDetailsComponent } from "./components/teams-details/teams-details.component";
- 
+
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
   { path: "Home", component: HomeComponent },
@@ -28,7 +28,6 @@ export const routes: Routes = [
   { path: "dashboard", component: DashboardComponent },
   { path: "login", component: LoginComponent },
   { path: "esports", component: EsportsComponent },
-  { path: "teams-details", component: TeamsDetailsComponent},
-  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "teams-details", component: TeamsDetailsComponent },
   { path: "**", component: NotFoundComponent },
 ];

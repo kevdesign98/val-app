@@ -1,4 +1,4 @@
 node_modules
 # Environments
-src/enviroments/enviroments.ts
-src/enviroments/enviroments.prod.ts
+src/environments/environments.ts
+src/environments/environments.prod.ts

@@ -31,8 +31,9 @@
                     <h2 class="text-3xl font-black italic uppercase tracking-tighter mt-4">
                         {{ account?.data?.name }}<span class="text-indigo-400">#{{ account?.data?.tag }}</span>
                     </h2>
-                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mt-1">{{
-                        account?.data?.region }} // Servers_Active</p>
+                    <p class="text-gray-500 font-mono text-[10px] uppercase tracking-widest mt-1">
+                        {{ account?.data?.region }} // Servers_Active
+                    </p>
 
                     <hr class="w-full border-white/5 my-8">
 
@@ -40,8 +41,9 @@
                         <img [src]="mmr.data.images?.large"
                             class="w-32 h-32 mx-auto drop-shadow-[0_0_20px_rgba(99,102,241,0.3)] animate-float"
                             alt="Rank Icon">
-                        <h3 class="text-2xl font-black italic uppercase mt-4 tracking-tight">{{
-                            mmr.data.currenttierpatched }}</h3>
+                        <h3 class="text-2xl font-black italic uppercase mt-4 tracking-tight">
+                            {{ mmr.data.currenttierpatched }}
+                        </h3>
 
                         <div class="w-full bg-white/5 h-2 rounded-full mt-6 relative overflow-hidden">
                             <div class="bg-gradient-to-r from-indigo-600 to-blue-400 h-full shadow-[0_0_15px_#6366f1]"
@@ -58,12 +60,12 @@
             <div class="bg-white/[0.03] border border-white/10 rounded-[2rem] p-6 backdrop-blur-xl">
                 <div class="grid grid-cols-2 gap-4">
                     <div class="text-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Win Rate</p>
-                        <p class="text-xl font-black italic text-green-400">Stable</p>
+                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Avg K/D</p>
+                        <p class="text-xl font-black italic text-green-400">{{ avgKd | number:'1.2-2' }}</p>
                     </div>
                     <div class="text-center p-4 bg-white/5 rounded-2xl border border-white/5">
-                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Status</p>
-                        <p class="text-xl font-black italic text-indigo-400">Online</p>
+                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Win Rate</p>
+                        <p class="text-xl font-black italic text-indigo-400">{{ winRate }}%</p>
                     </div>
                 </div>
             </div>
@@ -88,7 +90,7 @@
                         class="group relative bg-black/40 border border-white/5 rounded-3xl p-5 hover:bg-white/[0.05] hover:border-indigo-500/40 transition-all cursor-pointer overflow-hidden">
 
                         <div class="absolute left-0 top-0 bottom-0 w-1.5"
-                            [class]="m.metadata.rounds_played > 12 ? 'bg-green-500 shadow-[0_0_15px_#22c55e]' : 'bg-red-500 shadow-[0_0_15px_#ef4444]'">
+                            [class]="m.teams[m.myStats?.team?.toLowerCase()]?.has_won ? 'bg-green-500 shadow-[0_0_15px_#22c55e]' : 'bg-red-500 shadow-[0_0_15px_#ef4444]'">
                         </div>
 
                         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -96,28 +98,35 @@
                             <div class="flex items-center gap-5">
                                 <div
                                     class="w-16 h-16 rounded-2xl bg-white/10 overflow-hidden border border-white/10 relative">
-                                    <div
+                                    <img *ngIf="m.myStats?.assets?.agent?.small" [src]="m.myStats.assets.agent.small"
+                                        class="absolute inset-0 w-full h-full object-cover">
+                                    <div *ngIf="!m.myStats?.assets?.agent?.small"
                                         class="absolute inset-0 bg-indigo-900/40 flex items-center justify-center font-black italic text-[10px]">
-                                        {{ m.metadata.map.charAt(0) }}</div>
+                                        {{ m.metadata.map.charAt(0) }}
+                                    </div>
                                 </div>
                                 <div>
                                     <h4 class="text-xl font-black italic uppercase tracking-tight">{{ m.metadata.map }}
                                     </h4>
-                                    <p class="text-[10px] font-mono text-gray-500 uppercase">{{ m.metadata.mode }} // {{
-                                        m.metadata.game_start_patched }}</p>
+                                    <p class="text-[10px] font-mono text-gray-500 uppercase">
+                                        {{ m.metadata.mode }} // {{ m.metadata.game_start_patched }}
+                                    </p>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-3 gap-6 md:gap-12">
                                 <div class="text-center">
                                     <p class="text-[9px] font-mono text-gray-500 uppercase">K.D.A</p>
-                                    <p class="text-sm font-black italic">-- / -- / --</p>
+                                    <p class="text-sm font-black italic">
+                                        {{ m.myStats?.stats?.kills }} / {{ m.myStats?.stats?.deaths }} / {{
+                                        m.myStats?.stats?.assists }}
+                                    </p>
                                 </div>
                                 <div class="text-center">
                                     <p class="text-[9px] font-mono text-gray-500 uppercase">Result</p>
                                     <p class="text-sm font-black italic"
-                                        [class]="m.metadata.rounds_played > 12 ? 'text-green-400' : 'text-red-400'">
-                                        {{ m.metadata.rounds_played > 12 ? 'WIN' : 'DEFEAT' }}
+                                        [class]="m.teams[m.myStats?.team?.toLowerCase()]?.has_won ? 'text-green-400' : 'text-red-400'">
+                                        {{ m.teams[m.myStats?.team?.toLowerCase()]?.has_won ? 'WIN' : 'LOSS' }}
                                     </p>
                                 </div>
                                 <div class="text-center">
@@ -151,5 +160,4 @@
         </div>
     </div>
 </div>
-
 <app-footer />

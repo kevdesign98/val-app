@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npx ng build",
+    "build:prod": "node set-env.ts && npx ng build --configuration production",
+    "build": "ts-node set-env.ts && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:val-app": "node dist/val-app/server/server.mjs"

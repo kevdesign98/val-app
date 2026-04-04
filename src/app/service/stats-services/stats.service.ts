@@ -35,8 +35,18 @@ export class StatsService {
   }
 
   /** MMR info */
-  getMMR(name: string, tag: string): Observable<any> {
+  // stats.service.ts
+
+  // Per il box del Rank attuale (Oggetto singolo)
+  getMMR(name: string, tag: string) {
     return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${name}/${tag}`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // Per il Grafico (Array di match)
+  getMMRHistory(name: string, tag: string) {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/${name}/${tag}`, {
       headers: this.getHeaders()
     });
   }

@@ -11,7 +11,16 @@
       </span>
     </a>
 
-    <div class="flex md:order-2 space-x-2">
+    <div class="flex md:order-2 items-center space-x-2">
+      <button *ngIf="showInstallBtn" (click)="installPWA()"
+        class="flex items-center space-x-2 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 font-bold rounded-xl text-[10px] px-3 py-2 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] uppercase tracking-widest mr-1 animate-pulse">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        <span class="hidden lg:inline">Install App</span>
+      </button>
+
       <ng-container *ngIf="auth.currentUser$ | async as user; else loginBtn">
         <div class="flex items-center space-x-3">
           <div class="hidden sm:flex flex-col items-end mr-2">
@@ -42,7 +51,6 @@
         </svg>
       </button>
     </div>
-
     <div [ngClass]="{ 'hidden': !isOpen, 'flex': isOpen }"
       class="items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all">
       <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">

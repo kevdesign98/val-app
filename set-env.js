@@ -6,7 +6,7 @@ const apiKey = process.env.VAL_API_KEY; // Cerca la variabile chiamata VAL_API_K
 const envConfigFile = `export const environment = {
   production: true,
   apiKey: '${apiKey}',
-  apiUrl: 'https://api.henrikdev.com/valorant'
+  apiUrl: 'https://api.henrikdev.xyz/valorant'
 };`;
 
 const envDir = path.join(__dirname, 'src', 'environment');

@@ -21,7 +21,7 @@ export class StatsService {
 
   /** Account info */
   getAccount(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.com/valorant/v1/account/${name}/${tag}`, {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`, {
       headers: this.getHeaders()
     });
   }
@@ -29,21 +29,21 @@ export class StatsService {
   /** Match history */
   getMatchHistory(name: string, tag: string): Observable<any> {
     // Pulito lo slash doppio se presente e aggiunto headers
-    return this.http.get(`https://api.henrikdev.com/valorant/v3/matches/eu/${name}/${tag}?size=10`, {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=10`, {
       headers: this.getHeaders()
     });
   }
 
   /** MMR info */
   getMMR(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.com/valorant/v1/mmr/eu/${name}/${tag}`, {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${name}/${tag}`, {
       headers: this.getHeaders()
     });
   }
 
   /** Lifetime stats */
   getLifetimeStats(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.com/valorant/v1/lifetime/matches/eu/${name}/${tag}`, {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/lifetime/matches/eu/${name}/${tag}`, {
       headers: this.getHeaders()
     });
   }

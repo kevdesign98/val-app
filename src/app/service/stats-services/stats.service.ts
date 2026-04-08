@@ -57,4 +57,14 @@ export class StatsService {
       headers: this.getHeaders()
     });
   }
+  // Aggiungi questo metodo nella classe StatsService
+  getAiCoachAnalysis(kd: number, hs: number, wr: number) {
+    // Puntiamo alla rotta relativa /api/coach che abbiamo configurato nel vercel.json
+    const url = '/api/coach';
+    const body = {
+      stats: { kd, hs, wr }
+    };
+
+    return this.http.post(url, body);
+  }
 }

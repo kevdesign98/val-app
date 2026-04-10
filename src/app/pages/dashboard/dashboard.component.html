@@ -4,30 +4,41 @@
     <div class="max-w-7xl mx-auto space-y-6">
 
         <div
-            class="bg-indigo-600/[0.07] border border-indigo-500/30 rounded-[2.5rem] p-8 backdrop-blur-2xl relative overflow-hidden shadow-[0_0_40px_rgba(99,102,241,0.1)]">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-indigo-600/10 blur-[80px]"></div>
+            class="bg-indigo-600/[0.07] border border-indigo-500/30 rounded-[2.5rem] p-8 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
             <div class="relative z-10 flex flex-col md:flex-row justify-between gap-6">
                 <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-4">
-                        <span
-                            class="text-[10px] text-indigo-300 font-mono tracking-[0.2em] uppercase bg-indigo-500/20 px-3 py-1 rounded-full border border-indigo-500/30">Tactical_Intelligence_System</span>
-                    </div>
                     <h2
                         class="text-4xl font-black italic uppercase tracking-tighter mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">
                         AI Coach Report</h2>
-                    <div *ngIf="aiAnalysis; else loadingAI">
-                        <p class="text-xl text-gray-200 font-medium italic leading-relaxed max-w-4xl line-clamp-2">"{{
+
+                    <div *ngIf="loadingAI" class="flex items-center gap-4 py-4">
+                        <div class="animate-spin w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full">
+                        </div>
+                        <p class="text-indigo-400 font-mono text-xs uppercase tracking-widest">Sincronizzazione dati
+                            Gemini...</p>
+                    </div>
+
+                    <div *ngIf="aiAnalysis && !loadingAI">
+                        <p class="text-xl text-gray-200 font-medium italic leading-relaxed line-clamp-2">"{{
                             aiAnalysis.summary }}"</p>
                         <button (click)="coachSidebar = true"
                             class="mt-4 text-indigo-400 text-xs font-bold uppercase tracking-widest hover:text-white transition-all">+
-                            Espandi Analisi Tattica</button>
+                            Espandi Dettagli</button>
+                    </div>
+
+                    <div *ngIf="!aiAnalysis && !loadingAI && currentReport" class="py-4">
+                        <button (click)="generateAIReport(currentReport)"
+                            class="bg-indigo-600 hover:bg-indigo-500 px-8 py-3 rounded-2xl font-black italic uppercase transition-all shadow-lg shadow-indigo-500/30 hover:scale-105">
+                            Genera Report Tattico
+                        </button>
                     </div>
                 </div>
-                <div *ngIf="aiAnalysis"
-                    class="bg-black/40 border border-white/10 rounded-3xl p-6 min-w-[280px] backdrop-blur-md self-center">
+
+                <div *ngIf="aiAnalysis && !loadingAI"
+                    class="bg-black/40 border border-white/10 rounded-3xl p-6 min-w-[280px]">
                     <p class="text-[10px] font-mono text-gray-500 uppercase mb-2">Priority_Focus</p>
                     <div class="flex items-center gap-3">
-                        <div class="p-3 bg-indigo-600 rounded-2xl shadow-[0_0_20px_rgba(99,102,241,0.4)]">
+                        <div class="p-3 bg-indigo-600 rounded-2xl">
                             <i class="pi pi-bolt text-white"></i>
                         </div>
                         <span class="text-sm font-black text-indigo-400 uppercase italic">{{ aiAnalysis.tip }}</span>
@@ -39,118 +50,100 @@
         <div class="grid grid-cols-12 gap-6">
 
             <div class="col-span-12 lg:col-span-4 space-y-6">
-
-                <div
-                    class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-xl text-center relative overflow-hidden group">
-                    <div class="relative z-10">
-                        <div class="w-24 h-24 mx-auto rounded-full border-2 border-indigo-500/30 p-1 mb-4">
-                            <div
-                                class="w-full h-full bg-black/40 rounded-full flex items-center justify-center border border-white/10 overflow-hidden font-black text-2xl italic">
-                                {{ account?.data?.name?.charAt(0) }}
-                            </div>
-                        </div>
-                        <h2 class="text-2xl font-black italic uppercase tracking-tighter">{{ account?.data?.name }}<span
-                                class="text-indigo-400">#{{ account?.data?.tag }}</span></h2>
-                        <div *ngIf="mmr?.data" class="mt-4">
-                            <img [src]="mmr.data.images?.large"
-                                class="w-20 h-20 mx-auto drop-shadow-[0_0_15px_rgba(99,102,241,0.5)]" alt="Rank">
-                            <p class="text-sm font-bold uppercase text-gray-400 mt-2">{{ mmr.data.currenttierpatched }}
-                            </p>
-                        </div>
+                <div class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-xl text-center">
+                    <div
+                        class="w-20 h-20 mx-auto rounded-full bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30 mb-4">
+                        <span class="text-3xl font-black italic">{{ name.charAt(0) }}</span>
+                    </div>
+                    <h2 class="text-2xl font-black italic uppercase">{{ name }}<span class="text-indigo-400">#{{ tag
+                            }}</span></h2>
+                    <div *ngIf="mmr?.data" class="mt-4">
+                        <img [src]="mmr.data.images?.small" class="w-16 h-16 mx-auto drop-shadow-lg">
+                        <p class="text-xs font-mono text-gray-500 mt-2 uppercase">{{ mmr.data.currenttierpatched }}</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-green-500/10 border border-green-500/20 rounded-[2rem] p-5">
-                        <p class="text-[9px] font-mono text-green-400 uppercase mb-2">Best Map</p>
-                        <h4 class="text-lg font-black italic uppercase">{{ bestMap.name }}</h4>
-                        <p class="text-2xl font-black text-green-400">{{ bestMap.rate }}% <span
-                                class="text-[10px] text-gray-500 italic">Win</span></p>
+                        <p class="text-[9px] font-mono text-green-400 uppercase mb-1">Best Map</p>
+                        <p class="text-lg font-black italic truncate uppercase">{{ bestMap.name }}</p>
+                        <p class="text-xl font-black text-green-400">{{ bestMap.rate }}%</p>
                     </div>
                     <div class="bg-red-500/10 border border-red-500/20 rounded-[2rem] p-5">
-                        <p class="text-[9px] font-mono text-red-400 uppercase mb-2">Worst Map</p>
-                        <h4 class="text-lg font-black italic uppercase">{{ worstMap.name }}</h4>
-                        <p class="text-2xl font-black text-red-400">{{ worstMap.rate }}% <span
-                                class="text-[10px] text-gray-500 italic">Win</span></p>
+                        <p class="text-[9px] font-mono text-red-400 uppercase mb-1">Worst Map</p>
+                        <p class="text-lg font-black italic truncate uppercase">{{ worstMap.name }}</p>
+                        <p class="text-xl font-black text-red-400">{{ worstMap.rate }}%</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-span-12 lg:col-span-8 space-y-6">
-
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 backdrop-blur-xl">
+                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6">
                         <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Top Agent</p>
-                        <p class="text-2xl font-black italic text-indigo-400">{{ topAgent }}</p>
+                        <p class="text-2xl font-black italic text-indigo-400 uppercase">{{ topAgent }}</p>
                     </div>
-                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 backdrop-blur-xl">
-                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Performance Peak</p>
-                        <p class="text-2xl font-black italic text-green-400">{{ bestHour }}</p>
+                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6">
+                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Best Hour</p>
+                        <p class="text-2xl font-black italic text-green-400 uppercase">{{ bestHour }}</p>
                     </div>
-                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6 backdrop-blur-xl">
-                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Win Rate (50 matches)</p>
+                    <div class="bg-white/[0.03] border border-white/10 rounded-3xl p-6">
+                        <p class="text-[10px] font-mono text-gray-500 uppercase mb-1">Win Rate</p>
                         <p class="text-2xl font-black italic text-white">{{ winRate }}%</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-12 gap-6">
                     <div
-                        class="col-span-12 md:col-span-7 bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-xl h-[350px]">
-                        <h3 class="text-lg font-black italic uppercase tracking-tighter mb-6">// Rank_Evolution</h3>
+                        class="col-span-12 md:col-span-7 bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 h-[350px]">
+                        <h3 class="text-xs font-mono text-indigo-400 uppercase mb-6 tracking-widest">//
+                            RR_Trend_Analysis</h3>
                         <div class="h-56">
                             <canvas baseChart [data]="lineChartData" [options]="lineChartOptions"
                                 [type]="'line'"></canvas>
                         </div>
                     </div>
 
-                    <div
-                        class="col-span-12 md:col-span-5 bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-xl">
-                        <h3 class="text-lg font-black italic uppercase mb-6">// Roles</h3>
+                    <div class="col-span-12 md:col-span-5 bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8">
+                        <h3 class="text-xs font-mono text-indigo-400 uppercase mb-6 tracking-widest">// Roles</h3>
                         <div class="space-y-4">
                             <div *ngFor="let role of roleStats | keyvalue" class="space-y-1">
-                                <div class="flex justify-between text-[10px] font-mono uppercase">
+                                <div class="flex justify-between text-[9px] font-mono uppercase">
                                     <span>{{ role.key }}</span>
                                     <span class="text-indigo-400">{{ role.value }} Matches</span>
                                 </div>
-                                <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
-                                    <div class="bg-indigo-500 h-full shadow-[0_0_10px_#6366f1]"
-                                        [style.width.%]="(role.value / 50) * 100"></div>
+                                <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                    <div class="bg-indigo-500 h-full shadow-[0_0_8px_#6366f1]"
+                                        [style.width.%]="(asNumber(role.value) / (matches?.data?.length || 1)) * 100">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-span-12 bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8 backdrop-blur-xl">
-                <div class="flex justify-between items-end mb-10">
-                    <div>
-                        <span class="text-indigo-500 font-mono text-[10px] tracking-[0.4em] uppercase">//
-                            Combat_Logs</span>
-                        <h2 class="text-4xl font-black italic uppercase tracking-tighter">Recent Sessions</h2>
+        <div class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-8">
+            <h2 class="text-3xl font-black italic uppercase mb-8 tracking-tighter">Recent Sessions</h2>
+            <div *ngIf="matches?.data; else loadingMatches"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div *ngFor="let m of matches.data" (click)="openMatchDetails(m)"
+                    class="group bg-black/40 border border-white/5 rounded-3xl p-4 hover:border-indigo-500/40 transition-all cursor-pointer flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img [src]="m.myStats?.assets?.agent?.small"
+                            class="w-10 h-10 rounded-xl bg-white/5 border border-white/10">
+                        <div>
+                            <h4 class="font-black italic uppercase text-sm">{{ m.metadata.map }}</h4>
+                            <p class="text-[8px] text-gray-500 uppercase">{{ m.metadata.game_start_patched |
+                                date:'short' }}</p>
+                        </div>
                     </div>
-                </div>
-
-                <div *ngIf="matches && matches.data; else loadingMatchesBlock"
-                    class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div *ngFor="let m of matches.data" (click)="openMatchDetails(m)"
-                        class="group bg-black/40 border border-white/5 rounded-3xl p-5 hover:border-indigo-500/40 transition-all cursor-pointer flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <img [src]="m.myStats?.assets?.agent?.small"
-                                class="w-12 h-12 rounded-xl border border-white/10 bg-white/5">
-                            <div>
-                                <h4 class="font-black italic uppercase">{{ m.metadata.map }}</h4>
-                                <p class="text-[9px] text-gray-500 font-mono uppercase">{{ m.metadata.mode }} • {{
-                                    m.metadata.game_start_patched | date:'shortTime' }}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-lg font-black italic"
-                                [class]="m.teams[m.myStats?.team?.toLowerCase()]?.has_won ? 'text-green-400' : 'text-red-400'">
-                                {{ m.myStats?.stats?.kills }}/{{ m.myStats?.stats?.deaths }}
-                            </p>
-                            <span class="text-[9px] font-mono text-gray-600 uppercase">K/D RATIO</span>
-                        </div>
+                    <div class="text-right">
+                        <p class="font-black italic text-lg"
+                            [class]="m.teams[m.myStats?.team?.toLowerCase()]?.has_won ? 'text-green-400' : 'text-red-400'">
+                            {{ m.myStats?.stats?.kills }}/{{ m.myStats?.stats?.deaths }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -161,27 +154,18 @@
 <p-sidebar [(visible)]="coachSidebar" position="right"
     styleClass="w-full md:w-[500px] bg-[#050505] border-l border-indigo-500/30 text-white">
     <div class="p-8 space-y-8">
-        <h2 class="text-4xl font-black italic uppercase text-indigo-400 tracking-tighter">Tactical Intelligence</h2>
-        <div class="prose prose-invert">
-            <p class="text-xl leading-relaxed italic text-gray-300">"{{ aiAnalysis?.summary }}"</p>
-        </div>
+        <h2 class="text-4xl font-black italic uppercase text-indigo-400 tracking-tighter">Coach Intelligence</h2>
+        <p class="text-xl leading-relaxed italic text-gray-300">"{{ aiAnalysis?.summary }}"</p>
         <div class="bg-indigo-600/20 p-6 rounded-[2rem] border border-indigo-500/30">
-            <h4 class="text-xs font-mono text-indigo-300 uppercase mb-2">// Pro_Recommendation</h4>
-            <p class="font-bold text-white uppercase italic text-lg">{{ aiAnalysis?.tip }}</p>
+            <p class="text-[10px] font-mono text-indigo-300 uppercase mb-2">// Tactical_Tip</p>
+            <p class="font-black text-white uppercase italic text-lg">{{ aiAnalysis?.tip }}</p>
         </div>
     </div>
 </p-sidebar>
 
-<ng-template #loadingAI>
-    <div class="animate-pulse flex flex-col gap-4">
-        <div class="h-10 bg-white/10 rounded-2xl w-1/2"></div>
-        <div class="h-4 bg-white/5 rounded-full w-full"></div>
-    </div>
-</ng-template>
-
-<ng-template #loadingMatchesBlock>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div *ngFor="let i of [1,2,3,4]" class="h-24 bg-white/5 rounded-3xl animate-pulse"></div>
+<ng-template #loadingMatches>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 animate-pulse">
+        <div *ngFor="let i of [1,2,3]" class="h-20 bg-white/5 rounded-3xl"></div>
     </div>
 </ng-template>
 

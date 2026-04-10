@@ -1,41 +1,24 @@
 export default async function handler(req, res) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(200).json({ summary: "Errore Configurazione", tip: "Manca la chiave API." });
-
-    // 1. Recuperiamo i dati complessi inviati dal Frontend
-    const { recent_50_matches } = req.body || {};
-
-    if (!recent_50_matches) {
-        return res.status(200).json({ summary: "Dati insufficienti", tip: "Il coach ha bisogno di più match per un'analisi elite." });
+    // 1. Controllo Metodo
+    if (req.method !== 'POST') {
+        return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    // 2. Costruiamo un prompt super dettagliato usando i nuovi dati
-    const prompt = `
-    Agisci come un Coach Professionista di Valorant (livello VCT). 
-    Analizza queste statistiche avanzate delle ultime 50 partite dell'utente:
-    - K/D Ratio: ${recent_50_matches.kd}
-    - Headshot %: ${recent_50_matches.hs}%
-    - Orario Migliore: ${recent_50_matches.best_hours}
-    - Distribuzione Ruoli: ${JSON.stringify(recent_50_matches.role_distribution)}
-    - Performance Server: ${recent_50_matches.server_performance}
-    - Arma Principale: ${recent_50_matches.top_weapons[0]?.name} (Kills: ${recent_50_matches.top_weapons[0]?.kills}, Deaths: ${recent_50_matches.top_weapons[0]?.deaths})
-
-    REGOLE DI RISPOSTA:
-    1. Analizza lo stile di gioco (es. se gioca molto duelist ed è efficace o meno).
-    2. Commenta l'orario e il server per suggerire quando giocare.
-    3. Dai un consiglio tecnico sull'arma usata.
-    4. Rispondi ESCLUSIVAMENTE in formato JSON con questa struttura: 
-    {"summary": "riassunto dettagliato stile e performance", "tip": "consiglio tecnico specifico"}
-    5. Usa un tono professionale e motivante. Lingua: ITALIANO.
-  `;
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        return res.status(500).json({ summary: "Errore Configurazione", tip: "Manca la chiave API su Vercel" });
+    }
 
     try {
-        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", {
+        const { recent_50_matches } = req.body;
+
+        const prompt = `Agisci come un coach pro di Valorant. Analizza questi dati: 
+    KD: ${recent_50_matches.kd}, HS: ${recent_50_matches.hs}%, Winrate: ${recent_50_matches.winrate}%. 
+    Rispondi SOLO con un oggetto JSON valido: {"summary": "breve analisi", "tip": "consiglio tecnico"}`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-goog-api-key': apiKey
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }]
             })
@@ -43,17 +26,23 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            let aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
-            res.status(200).json(JSON.parse(aiText));
-        } else {
-            throw new Error("Risposta AI non valida");
+        if (!response.ok) {
+            return res.status(response.status).json({ summary: "Gemini Error", tip: data.error?.message });
         }
 
-    } catch (err) {
-        res.status(200).json({
-            summary: "Analisi Elite in pausa",
-            tip: "Il coach sta ricalcolando le traiettorie. Riprova tra un attimo."
+        let textResponse = data.candidates[0].content.parts[0].text;
+
+        // Pulizia da eventuali blocchi di codice markdown ```json
+        const cleanJson = textResponse.replace(/```json|```/g, "").trim();
+        const result = JSON.parse(cleanJson);
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+        console.error("Crash API Coach:", error);
+        return res.status(500).json({
+            summary: "Analisi Temporaneamente Offline",
+            tip: "Riprova tra qualche istante"
         });
     }
 }

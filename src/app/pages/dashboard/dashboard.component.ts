@@ -32,21 +32,20 @@ export class DashboardComponent implements OnInit {
   avgHs: number = 0;
   winRate: number = 0;
 
-  // Nuove stats per Valapp Elite
+  // Dati per la Bento Grid
   bestMap: { name: string, rate: number } = { name: 'N/A', rate: 0 };
   worstMap: { name: string, rate: number } = { name: 'N/A', rate: 0 };
   topAgent: string = '';
-  // Sostituisci roleStats: any = {}; con:
-  roleStats: { [key: string]: number } = {};
+  roleStats: { [key: string]: number } = {}; // Tipizzato per evitare errori nell'HTML
   bestHour: string = 'N/A';
+  currentReport: any = null; // Salviamo qui i dati per il Coach
 
   // Variabili UI
   aiAnalysis: any = null;
+  loadingAI: boolean = false;
   coachSidebar: boolean = false;
-  statsDialog: boolean = false;
   matchDialog: boolean = false;
   selectedMatch: any = null;
-
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     labels: [],
@@ -57,8 +56,7 @@ export class DashboardComponent implements OnInit {
       tension: 0.4,
       borderColor: '#6366f1',
       backgroundColor: 'rgba(99, 102, 241, 0.1)',
-      pointBackgroundColor: '#6366f1',
-      pointBorderColor: '#fff'
+      pointBackgroundColor: '#6366f1'
     }]
   };
 
@@ -72,11 +70,7 @@ export class DashboardComponent implements OnInit {
     plugins: { legend: { display: false } }
   };
 
-  constructor(
-    private auth: AuthservicesService,
-    private stats: StatsService,
-    private router: Router
-  ) { }
+  constructor(private stats: StatsService, private router: Router) { }
 
   ngOnInit() {
     const savedUser = localStorage.getItem('vlr_user');
@@ -91,9 +85,7 @@ export class DashboardComponent implements OnInit {
 
       this.stats.getMatchHistory(this.name, this.tag).subscribe(res => {
         this.matches = res;
-        if (this.matches?.data) {
-          this.calculateLiveStats(this.matches.data);
-        }
+        if (this.matches?.data) { this.calculateLiveStats(this.matches.data); }
       });
     } else {
       this.router.navigate(['/login']);
@@ -115,7 +107,7 @@ export class DashboardComponent implements OnInit {
   }
 
   calculateLiveStats(matchData: any[]) {
-    let totalKills = 0, totalDeaths = 0, totalShots = 0, totalHeadshots = 0, wins = 0;
+    let tk = 0, td = 0, ts = 0, th = 0, wins = 0;
     const mapStats: any = {}, roles: any = {}, hours: any = {}, agents: any = {};
 
     matchData.forEach(match => {
@@ -125,36 +117,30 @@ export class DashboardComponent implements OnInit {
 
       if (me) {
         match.myStats = me;
-        totalKills += me.stats.kills;
-        totalDeaths += me.stats.deaths;
-        totalHeadshots += (me.stats.headshots || 0);
-        totalShots += ((me.stats.headshots || 0) + (me.stats.bodyshots || 0) + (me.stats.legshots || 0));
+        tk += me.stats.kills; td += me.stats.deaths;
+        th += (me.stats.headshots || 0);
+        ts += ((me.stats.headshots || 0) + (me.stats.bodyshots || 0) + (me.stats.legshots || 0));
 
         const isWin = match.teams[me.team.toLowerCase()]?.has_won;
         if (isWin) wins++;
 
-        // Maps
         const mapName = match.metadata.map;
         if (!mapStats[mapName]) mapStats[mapName] = { wins: 0, total: 0 };
-        mapStats[mapName].total++;
-        if (isWin) mapStats[mapName].wins++;
+        mapStats[mapName].total++; if (isWin) mapStats[mapName].wins++;
 
-        // Roles & Agents
         const agentName = me.character;
         agents[agentName] = (agents[agentName] || 0) + 1;
         const role = this.getRoleFromAgent(agentName);
         roles[role] = (roles[role] || 0) + 1;
 
-        // Hours
         const hour = new Date(match.metadata.game_start_patched).getHours();
         if (!hours[hour]) hours[hour] = { wins: 0, total: 0 };
-        hours[hour].total++;
-        if (isWin) hours[hour].wins++;
+        hours[hour].total++; if (isWin) hours[hour].wins++;
       }
     });
 
-    this.avgKd = totalDeaths > 0 ? totalKills / totalDeaths : totalKills;
-    this.avgHs = totalShots > 0 ? (totalHeadshots / totalShots) * 100 : 0;
+    this.avgKd = td > 0 ? tk / td : tk;
+    this.avgHs = ts > 0 ? (th / ts) * 100 : 0;
     this.winRate = Math.round((wins / matchData.length) * 100);
     this.roleStats = roles;
     this.topAgent = Object.keys(agents).reduce((a, b) => agents[a] > agents[b] ? a : b, 'N/A');
@@ -170,8 +156,7 @@ export class DashboardComponent implements OnInit {
       this.worstMap = sortedMaps[sortedMaps.length - 1];
     }
 
-    // Report per AI
-    const superReport = {
+    this.currentReport = {
       kd: this.avgKd.toFixed(2),
       hs: this.avgHs.toFixed(1),
       winrate: this.winRate,
@@ -179,11 +164,17 @@ export class DashboardComponent implements OnInit {
       worst_map: this.worstMap,
       roles: this.roleStats,
       top_agent: this.topAgent,
-      best_hours: this.bestHour,
-      server: matchData[0]?.metadata?.cluster || 'EU'
+      best_hours: this.bestHour
     };
+  }
 
-    this.generateAIReport(superReport);
+  generateAIReport(reportData: any) {
+    this.loadingAI = true;
+    this.aiAnalysis = null;
+    this.stats.getAiCoachAnalysis(reportData).subscribe({
+      next: (res: any) => { this.aiAnalysis = res; this.loadingAI = false; },
+      error: () => { this.aiAnalysis = { summary: "Errore API", tip: "RETRY" }; this.loadingAI = false; }
+    });
   }
 
   getRoleFromAgent(agent: string): string {
@@ -205,15 +196,6 @@ export class DashboardComponent implements OnInit {
     return `${bestH}:00 - ${bestH + 1}:00`;
   }
 
-  generateAIReport(reportData: any) {
-    this.aiAnalysis = null;
-    this.stats.getAiCoachAnalysis(reportData).subscribe({
-      next: (res: any) => this.aiAnalysis = res,
-      error: () => this.aiAnalysis = { summary: "Offline", tip: "REBOOT" }
-    });
-  }
-
+  asNumber(val: any): number { return Number(val) || 0; }
   openMatchDetails(m: any) { this.selectedMatch = m; this.matchDialog = true; }
-
-
 }

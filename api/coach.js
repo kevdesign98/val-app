@@ -13,13 +13,14 @@ export default async function handler(req, res) {
         const { stats } = req.body || {};
         const kd = stats?.kd || 0;
         const hs = stats?.hs || 0;
-
+        const prompt = `Sei un coach di Valorant. Analizza KD: ${kd} e HS: ${hs}%. Rispondi in italiano con un JSON: {"summary": "...", "tip": "..."}`;
         // TEST 2: Chiamata a Google
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        // Cambia l'URL del fetch in questo:
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: `Sei un coach di Valorant. Analizza KD: ${kd} e HS: ${hs}%. Rispondi in italiano con un JSON: {"summary": "...", "tip": "..."}` }] }]
+                contents: [{ parts: [{ text: prompt }] }]
             })
         });
 

@@ -58,13 +58,17 @@ export class StatsService {
     });
   }
   // Aggiungi questo metodo nella classe StatsService
-  getAiCoachAnalysis(kd: number, hs: number, wr: number) {
-    // Puntiamo alla rotta relativa /api/coach che abbiamo configurato nel vercel.json
-    const url = '/api/coach';
-    const body = {
-      stats: { kd, hs, wr }
-    };
+  // getAiCoachAnalysis(kd: number, hs: number, wr: number) {
+  //    const url = '/api/coach';
+  //   const body = {
+  //     stats: { kd, hs, wr }
+  //   };
 
-    return this.http.post(url, body);
+  //   return this.http.post(url, body);
+  // }
+  getAiCoachAnalysis(reportData: any): Observable<any> {
+    // Invia tutto l'oggetto complesso alla tua API serverless
+    return this.http.post('/api/coach', { recent_50_matches: reportData });
   }
+
 }

@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         const prompt = `Agisci come un coach esperto di Valorant. Analizza queste stats: KD ${kd}, Headshot ${hs}%, Win Rate ${wr}%. Rispondi SOLO in formato JSON con questo schema: {"summary": "un riassunto breve", "tip": "un consiglio tecnico"}`;
 
         // URL preso dalla tua guida rapida
-        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent", {
+        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

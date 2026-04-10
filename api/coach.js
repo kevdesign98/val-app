@@ -1,11 +1,10 @@
 export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
 
-    // TEST 1: La chiave c'è?
     if (!apiKey) {
         return res.status(200).json({
-            summary: "Errore di configurazione",
-            tip: "Manca la GEMINI_API_KEY su Vercel. Aggiungila e fai Redeploy."
+            summary: "Configurazione incompleta",
+            tip: "Manca la chiave GEMINI_API_KEY su Vercel."
         });
     }
 
@@ -13,12 +12,17 @@ export default async function handler(req, res) {
         const { stats } = req.body || {};
         const kd = stats?.kd || 0;
         const hs = stats?.hs || 0;
-        const prompt = `Sei un coach di Valorant. Analizza KD: ${kd} e HS: ${hs}%. Rispondi in italiano con un JSON: {"summary": "...", "tip": "..."}`;
-        // TEST 2: Chiamata a Google
-        // Cambia l'URL del fetch in questo:
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const wr = stats?.wr || 0;
+
+        const prompt = `Agisci come un coach esperto di Valorant. Analizza queste stats: KD ${kd}, Headshot ${hs}%, Win Rate ${wr}%. Rispondi SOLO in formato JSON con questo schema: {"summary": "un riassunto breve", "tip": "un consiglio tecnico"}`;
+
+        // URL preso dalla tua guida rapida
+        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent", {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-goog-api-key': apiKey // Usiamo l'header come nel curl!
+            },
             body: JSON.stringify({
                 contents: [{ parts: [{ text: prompt }] }]
             })
@@ -26,21 +30,25 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // TEST 3: Google ha dato errore?
         if (data.error) {
             return res.status(200).json({
-                summary: "Errore da Google AI",
+                summary: "Errore API Google",
                 tip: data.error.message
             });
         }
 
-        const aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
-        res.status(200).json(JSON.parse(aiText));
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            let aiText = data.candidates[0].content.parts[0].text;
+            // Rimuoviamo eventuali blocchi di codice markdown che Gemini a volte aggiunge
+            aiText = aiText.replace(/```json|```/g, "").trim();
+            res.status(200).json(JSON.parse(aiText));
+        } else {
+            res.status(200).json({ summary: "Analisi non disponibile", tip: "L'AI non ha generato una risposta valida." });
+        }
 
     } catch (err) {
-        // Se tutto fallisce, mandiamo l'errore tecnico come risposta
         res.status(200).json({
-            summary: "Errore tecnico nel backend",
+            summary: "Errore tecnico backend",
             tip: err.message
         });
     }

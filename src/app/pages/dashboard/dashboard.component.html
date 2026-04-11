@@ -8,20 +8,20 @@
             <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="text-center md:text-left">
                     <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-4 text-white">AI COACH</h2>
-                    <p class="text-gray-400 max-w-xl text-lg italic" *ngIf="!aiAnalysis">We’ll analyse your
+                    <p class="text-gray-400 max-w-xl text-lg italic" *ngIf="!aiAnalysis">I will analyse your
                         playing style to provide you with recommendations on agents, maps and timing.</p>
 
                     <div *ngIf="aiAnalysis" class="mt-4 p-6 bg-black/40 rounded-3xl border border-white/5">
                         <p class="text-xl text-indigo-100 italic leading-relaxed">"{{ aiAnalysis.summary }}"</p>
                         <div class="mt-4 flex items-center gap-2 text-indigo-400 font-black uppercase text-xs">
-                            <i class="pi pi-bolt"></i> <span>Suggerimento: {{ aiAnalysis.tip }}</span>
+                            <i class="pi pi-bolt"></i> <span>Tip: {{ aiAnalysis.tip }}</span>
                         </div>
                     </div>
                 </div>
 
                 <button *ngIf="!aiAnalysis && !loadingAI && currentReport" (click)="generateAIReport(currentReport)"
                     class="bg-indigo-600 hover:bg-indigo-400 px-12 py-5 rounded-full font-black italic uppercase transition-all shadow-[0_0_40px_rgba(99,102,241,0.3)] hover:scale-105 active:scale-95">
-                    Genera Report Tattico
+                    Generate Tactical Report
                 </button>
 
                 <div *ngIf="loadingAI" class="flex flex-col items-center gap-4">

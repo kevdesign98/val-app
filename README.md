@@ -1,4 +1,4 @@
-ValApp 🎮
+Val-App 🎮
 
 ![alt text](/Valapp-Home.png)
 

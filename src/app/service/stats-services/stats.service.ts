@@ -3,72 +3,37 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class StatsService {
-  // Ripristiniamo l'URL corretto dell'API esterna
-  private apiKey = environment.apiKey; // Prende la chiave dal file env
+  private vlrApiKey = environment.apiKey;
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders() {
+  private getVlrHeaders() {
     return new HttpHeaders({
-      'Authorization': this.apiKey.trim(), // Rimuove eventuali spazi invisibili
+      'Authorization': this.vlrApiKey,
       'Accept': 'application/json'
     });
   }
 
-  /** Account info */
-  getAccount(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`, {
-      headers: this.getHeaders()
-    });
-  }
-
-  /** Match history */
+  // Chiamate a HenrikDev
   getMatchHistory(name: string, tag: string): Observable<any> {
-    // Pulito lo slash doppio se presente e aggiunto headers
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=10`, {
-      headers: this.getHeaders()
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=20`, {
+      headers: this.getVlrHeaders()
     });
   }
 
-  /** MMR info */
-  // stats.service.ts
+  getAccount(name: string, tag: string) {
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`, { headers: this.getVlrHeaders() });
+  }
 
-  // Per il box del Rank attuale (Oggetto singolo)
   getMMR(name: string, tag: string) {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${name}/${tag}`, {
-      headers: this.getHeaders()
-    });
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${name}/${tag}`, { headers: this.getVlrHeaders() });
   }
 
-  // Per il Grafico (Array di match)
-  getMMRHistory(name: string, tag: string) {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr-history/eu/${name}/${tag}`, {
-      headers: this.getHeaders()
-    });
-  }
-
-  /** Lifetime stats */
-  getLifetimeStats(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/lifetime/matches/eu/${name}/${tag}`, {
-      headers: this.getHeaders()
-    });
-  }
-  // Aggiungi questo metodo nella classe StatsService
-  // getAiCoachAnalysis(kd: number, hs: number, wr: number) {
-  //    const url = '/api/coach';
-  //   const body = {
-  //     stats: { kd, hs, wr }
-  //   };
-
-  //   return this.http.post(url, body);
-  // }
+  // Chiamata al tuo Coach su Vercel
   getAiCoachAnalysis(reportData: any): Observable<any> {
-    // Invia tutto l'oggetto complesso alla tua API serverless
-    return this.http.post('/api/coach', { recent_50_matches: reportData });
+    const url = 'https://val-app-three.vercel.app/api/coach';
+    return this.http.post(url, { stats: reportData });
   }
-
 }

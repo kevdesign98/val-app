@@ -147,13 +147,23 @@ export class DashboardComponent implements OnInit {
     return roles[agent] || 'Unknown';
   }
 
+  // dashboard.component.ts
   generateAIReport(data: any) {
+    if (!data) {
+      console.error("Dati mancanti per il report");
+      return;
+    }
     this.loadingAI = true;
     this.aiAnalysis = null;
+
     this.stats.getAiCoachAnalysis(data).subscribe({
-      next: (res: any) => { this.aiAnalysis = res; this.loadingAI = false; },
-      error: () => {
-        this.aiAnalysis = { summary: "Errore di connessione al server tattico.", tip: "REBOOT" };
+      next: (res: any) => {
+        this.aiAnalysis = res;
+        this.loadingAI = false;
+      },
+      error: (err) => {
+        console.error("Errore ricevuto:", err);
+        this.aiAnalysis = { summary: "Servizio momentaneamente lento.", tip: "Riprova tra 10 secondi." };
         this.loadingAI = false;
       }
     });

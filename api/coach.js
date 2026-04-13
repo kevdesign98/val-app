@@ -7,13 +7,13 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(500).json({ error: "Chiave mancante" });
+    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca la chiave API su Vercel" });
 
     try {
         const { stats } = req.body;
 
-        // CORREZIONE QUI: Usiamo v1 invece di v1beta
-        const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // PROVA QUESTO URL: È il più compatibile in assoluto al momento
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `Analizza KD:${stats.kd}, HS:${stats.hs}%. Rispondi SOLO JSON: {"summary": "Analisi", "tip": "Consiglio"}`
+                        text: `Analizza KD:${stats.kd}, HS:${stats.hs}%. Rispondi SOLO in JSON: {"summary": "Analisi", "tip": "Consiglio"}`
                     }]
                 }]
             })
@@ -29,22 +29,19 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // Se Google risponde con un errore (anche con 200 a livello di rete), lo gestiamo
+        // Se Google continua a fare i capricci col nome modello, qui catturiamo il messaggio
         if (data.error) {
             return res.status(200).json({
-                summary: "Configurazione Google Errata",
-                tip: data.error.message
+                summary: "Google non accetta il modello",
+                tip: "Prova a cambiare il nome del modello in gemini-1.5-flash-latest nel codice."
             });
         }
 
-        // Estrazione sicura del testo
-        const aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
+        // Estrazione pulita
+        let aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
         return res.status(200).json(JSON.parse(aiText));
 
     } catch (error) {
-        return res.status(200).json({
-            summary: "Errore durante l'analisi",
-            tip: "Riprova tra poco."
-        });
+        return res.status(200).json({ summary: "Errore tecnico", tip: "Verifica la sintassi del JSON" });
     }
 }

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const { stats } = req.body;
 
         // CAMBIO CRUCIALE: Usiamo v1beta e il modello con il suffisso -latest
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-flash-latest:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',

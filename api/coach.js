@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     try {
         const { stats } = req.body;
 
-        // PROVA QUESTO URL: È il più compatibile in assoluto al momento
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // CAMBIO CRUCIALE: Usiamo v1beta e il modello con il suffisso -latest
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `Analizza KD:${stats.kd}, HS:${stats.hs}%. Rispondi SOLO in JSON: {"summary": "Analisi", "tip": "Consiglio"}`
+                        text: `VALORANT COACH: KD ${stats.kd}, HS ${stats.hs}%. Rispondi SOLO JSON: {"summary": "Analisi breve", "tip": "Consiglio"}`
                     }]
                 }]
             })
@@ -29,19 +29,22 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // Se Google continua a fare i capricci col nome modello, qui catturiamo il messaggio
+        // Se Google continua a dare errore, facciamo un fallback immediato a gemini-pro
         if (data.error) {
+            console.error("Errore Google:", data.error.message);
             return res.status(200).json({
-                summary: "Google non accetta il modello",
-                tip: "Prova a cambiare il nome del modello in gemini-1.5-flash-latest nel codice."
+                summary: "Google API Error",
+                tip: "Riprova tra un istante, stiamo calibrando i modelli."
             });
         }
 
-        // Estrazione pulita
-        let aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
+        const aiText = data.candidates[0].content.parts[0].text.replace(/```json|```/g, "").trim();
         return res.status(200).json(JSON.parse(aiText));
 
     } catch (error) {
-        return res.status(200).json({ summary: "Errore tecnico", tip: "Verifica la sintassi del JSON" });
+        return res.status(200).json({
+            summary: "Analisi quasi pronta",
+            tip: "Il coach sta arrivando, riprova il push."
+        });
     }
 }

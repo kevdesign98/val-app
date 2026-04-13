@@ -1,4 +1,6 @@
-ValApp 🎮
+Val-App 🎮
+
+![alt text](/Valapp-Home.png)
 
 Val-App is a fan-made web application inspired by Valorant, built with Angular 18, PrimeNG, and TailwindCSS.
 The project is designed to improve frontend development skills while creating a modern and interactive user experience.

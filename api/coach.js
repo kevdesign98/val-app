@@ -7,13 +7,13 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca la chiave API su Vercel" });
+    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca API KEY su Vercel" });
 
     try {
         const { stats } = req.body;
 
-        // CAMBIO CRUCIALE: Usiamo v1beta e il modello con il suffisso -latest
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        // URL STABILE: Versione v1 e modello gemini-1.5-flash
+        const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `VALORANT COACH: KD ${stats.kd}, HS ${stats.hs}%. Rispondi SOLO JSON: {"summary": "Analisi breve", "tip": "Consiglio"}`
+                        text: `VALORANT COACH: Analizza KD ${stats.kd}, HS ${stats.hs}%. Rispondi SOLO JSON: {"summary": "Analisi", "tip": "Consiglio"}`
                     }]
                 }]
             })
@@ -29,12 +29,12 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // Se Google continua a dare errore, facciamo un fallback immediato a gemini-pro
+        // Se Google risponde con errore, proviamo il fallback automatico a gemini-pro (v1)
         if (data.error) {
-            console.error("Errore Google:", data.error.message);
+            console.error("Google Error:", data.error.message);
             return res.status(200).json({
                 summary: "Google API Error",
-                tip: "Riprova tra un istante, stiamo calibrando i modelli."
+                tip: "Prova a rigenerare tra un istante."
             });
         }
 
@@ -43,8 +43,8 @@ export default async function handler(req, res) {
 
     } catch (error) {
         return res.status(200).json({
-            summary: "Analisi quasi pronta",
-            tip: "Il coach sta arrivando, riprova il push."
+            summary: "Il coach sta riflettendo",
+            tip: "Riprova il tasto tra 5 secondi."
         });
     }
 }

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const { stats } = req.body;
 
         // URL STABILE: Versione v1 e modello gemini-1.5-flash
-        const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-3.1-pro-preview:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',

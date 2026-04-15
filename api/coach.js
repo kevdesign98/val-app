@@ -12,8 +12,10 @@ export default async function handler(req, res) {
     try {
         const { stats } = req.body;
 
-        // URL TESTATO: v1beta + gemini-1.5-flash
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        // Prova 'gemini-1.5-flash-latest' invece di solo 'gemini-1.5-flash'
+        // Se continua a fallire, usa 'gemini-pro' (che è il fallback universale)
+        const model = "gemini-1.5-flash";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -23,32 +25,48 @@ export default async function handler(req, res) {
                     parts: [{
                         text: `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
                         Fornisci un'analisi brevissima e un consiglio tecnico. 
-                        Rispondi ESCLUSIVAMENTE con questo formato JSON: {"summary": "string", "tip": "string"}`
+                        Rispondi ESCLUSIVAMENTE con un oggetto JSON valido. 
+                        Esempio: {"summary": "Ottima mira", "tip": "Migliora il posizionamento"}`
                     }]
-                }]
+                }],
+                // Aggiungiamo parametri per forzare una risposta pulita
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 1,
+                    topP: 1,
+                    maxOutputTokens: 200,
+                    responseMimeType: "application/json" // Questo forza Gemini a rispondere in JSON (se supportato dal modello)
+                }
             })
         });
 
         const data = await response.json();
 
         if (data.error) {
-            // Se vedi ancora "Not Found", prova a cambiare il nome modello in 'gemini-pro' qui sotto
             return res.status(200).json({
-                summary: "Google API Error",
+                summary: `Errore Modello: ${model}`,
                 tip: data.error.message
             });
         }
 
-        // Estrazione sicura: Gemini a volte mette il JSON dentro i ```
-        let aiText = data.candidates[0].content.parts[0].text;
-        const cleanJson = aiText.replace(/```json|```/g, "").trim();
+        if (!data.candidates || !data.candidates[0]) {
+            throw new Error("Nessuna risposta dal coach");
+        }
 
-        return res.status(200).json(JSON.parse(cleanJson));
+        let aiText = data.candidates[0].content.parts[0].text;
+
+        // Pulizia avanzata per estrarre solo il JSON
+        const jsonMatch = aiText.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error("Risposta AI non valida");
+
+        const finalJson = JSON.parse(jsonMatch[0]);
+        return res.status(200).json(finalJson);
 
     } catch (error) {
+        console.error("Coach Error:", error);
         return res.status(200).json({
-            summary: "Il coach sta analizzando i replay",
-            tip: "Riprova tra un istante."
+            summary: "Il coach è in pausa tattica",
+            tip: "Controlla la console o prova a cambiare modello in gemini-pro."
         });
     }
 }

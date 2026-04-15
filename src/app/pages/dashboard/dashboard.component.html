@@ -37,11 +37,12 @@
                     </div>
 
                     <div *ngIf="!aiAnalysis && !loadingAI" class="space-y-6">
-                        <p class="text-gray-400 text-lg leading-relaxed max-w-md">Pronto per il debriefing. Analizzerò i
-                            tuoi ultimi {{ matches?.data?.length }} match per trovare falle nel tuo gioco.</p>
+                        <p class="text-gray-400 text-lg leading-relaxed max-w-md">Ready for the debriefing. I will
+                            analyze
+                            your last {{ matches?.data?.length }} matches to find flaws in your game.</p>
                         <button (click)="generateAIReport(currentReport)"
                             class="group bg-indigo-600 hover:bg-indigo-500 px-8 py-4 rounded-2xl font-black italic uppercase transition-all flex items-center gap-3">
-                            <span>Genera Report</span>
+                            <span>Generate Report</span>
                             <i class="pi pi-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </div>
@@ -62,12 +63,12 @@
                         <div
                             class="flex items-center gap-3 bg-indigo-500/10 w-fit px-4 py-2 rounded-full border border-indigo-500/20">
                             <i class="pi pi-bolt text-indigo-400"></i>
-                            <span class="text-xs font-bold uppercase tracking-tight">Consiglio: <span
-                                    class="text-white">{{ aiAnalysis.tip }}</span></span>
+                            <span class="text-xs font-bold uppercase tracking-tight">Tip: <span class="text-white">{{
+                                    aiAnalysis.tip }}</span></span>
                         </div>
                         <button (click)="generateAIReport(currentReport)"
                             class="mt-6 text-[10px] uppercase font-bold text-gray-500 hover:text-white transition-colors">
-                            <i class="pi pi-refresh mr-1"></i> Ricalcola Analisi
+                            <i class="pi pi-refresh mr-1"></i> Recalculate Analysis
                         </button>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
-import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req, res) {
-    // CORS Headers
+    // Configurazione Headers CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -9,47 +9,43 @@ export default async function handler(req, res) {
 
     if (req.method === 'OPTIONS') return res.status(200).end();
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca API KEY" });
+    // Il client prende automaticamente GEMINI_API_KEY dalle variabili d'ambiente
+    const ai = new GoogleGenAI({
+        apiKey: process.env.GEMINI_API_KEY
+    });
 
     try {
         const { stats } = req.body;
-        const genAI = new GoogleGenerativeAI(apiKey);
 
-        // Definiamo lo schema della risposta per non avere errori di parsing
-        const schema = {
-            description: "Valorant Coach Analysis",
-            type: SchemaType.OBJECT,
-            properties: {
-                summary: { type: SchemaType.STRING, description: "Breve analisi delle prestazioni" },
-                tip: { type: SchemaType.STRING, description: "Consiglio tecnico specifico" },
-            },
-            required: ["summary", "tip"],
-        };
+        if (!stats) {
+            return res.status(400).json({ summary: "Errore", tip: "Dati statistiche mancanti." });
+        }
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash", // Nome esatto come da documentazione
-            generationConfig: {
-                responseMimeType: "application/json",
-                responseSchema: schema,
-            },
+        // Utilizziamo il modello indicato nella tua guida
+        // Nota: se "gemini-3-flash-preview" desse errore, usa "gemini-1.5-flash"
+        const response = await ai.models.generateContent({
+            model: "gemini-1.5-flash",
+            contents: `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
+                       Fornisci un'analisi brevissima e un consiglio tecnico. 
+                       Rispondi rigorosamente in formato JSON: {"summary": "...", "tip": "..."}`,
         });
 
-        const prompt = `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
-                        Fornisci un'analisi brevissima e un consiglio tecnico per migliorare.`;
+        // Pulizia della risposta per sicurezza
+        let aiText = response.text;
+        const jsonMatch = aiText.match(/\{[\s\S]*\}/);
 
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
+        if (!jsonMatch) {
+            throw new Error("L'AI non ha restituito un JSON valido");
+        }
 
-        // Con responseSchema, text è GIÀ un JSON valido
-        return res.status(200).json(JSON.parse(text));
+        const finalData = JSON.parse(jsonMatch[0]);
+        return res.status(200).json(finalData);
 
     } catch (error) {
-        console.error("Gemini Error:", error);
-        return res.status(200).json({
-            summary: "Il coach sta ricaricando le abilità",
-            tip: "C'è stato un problema di connessione con l'API di Google. Riprova."
+        console.error("Coach Error:", error);
+        return res.status(500).json({
+            summary: "Il coach è offline per manutenzione",
+            tip: "Errore tecnico: " + error.message
         });
     }
 }

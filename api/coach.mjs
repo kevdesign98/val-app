@@ -1,7 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
-
 export default async function handler(req, res) {
-    // Configurazione Headers CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -10,44 +7,44 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     try {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) throw new Error("Manca la API Key su Vercel");
-
-        // Inizializzazione Client nuova SDK
-        const ai = new GoogleGenAI({ apiKey });
+        // Deve corrispondere al nome su Vercel senza spazi!
+        const apiKey = process.env.Gemini_API_Key;
+        if (!apiKey) throw new Error("Manca GEMINI_API_KEY su Vercel");
+        console.log("API Key trovata:", apiKey.substring(0, 5) + "...");
 
         const { stats } = req.body;
-        if (!stats) throw new Error("Dati statistiche non ricevuti");
 
-        // Nella nuova SDK (@google/genai) si usa direttamente models.generateContent
-        // SENZA chiamare getGenerativeModel prima.
-        const response = await ai.models.generateContent({
-            model: "gemini-1.5-flash", // Nome pulito senza "models/"
-            contents: [{
-                role: "user",
-                parts: [{
-                    text: `Sei un coach di Valorant. Analizza: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
-          Fornisci un'analisi brevissima e un consiglio. 
-          Rispondi SOLO in formato JSON: {"summary": "...", "tip": "..."}`
+        // Usiamo l'endpoint v1 (più stabile) invece di v1beta
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `Sei un coach di Valorant. Dati: KD ${stats.kd}, HS ${stats.hs}%. 
+            Rispondi SOLO con un JSON: {"summary": "...", "tip": "..."}`
+                    }]
                 }]
-            }]
+            })
         });
 
-        // Estrazione testo (nella nuova SDK è una proprietà, non una funzione)
-        const aiText = response.text;
+        const data = await response.json();
 
-        // Pulizia JSON per sicurezza
-        const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error("L'AI non ha risposto con un JSON valido");
+        if (data.error) {
+            throw new Error(data.error.message);
+        }
 
-        return res.status(200).json(JSON.parse(jsonMatch[0]));
+        // Estrazione sicura del testo
+        const aiText = data.candidates[0].content.parts[0].text;
+        const cleanJson = aiText.replace(/```json|```/g, "").trim();
+
+        return res.status(200).json(JSON.parse(cleanJson));
 
     } catch (error) {
-        console.error("Errore Coach:", error.message);
-
-        // Restituiamo 200 con l'errore nel tip per vederlo nella Dashboard
         return res.status(200).json({
-            summary: "Errore di configurazione",
+            summary: "Errore di connessione",
             tip: "Dettaglio: " + error.message
         });
     }

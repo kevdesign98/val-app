@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         const { stats } = req.body;
 
         // Usiamo l'endpoint v1 (più stabile) invece di v1beta
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(url, {
             method: 'POST',
@@ -49,3 +49,4 @@ export default async function handler(req, res) {
         });
     }
 }
+

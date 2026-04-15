@@ -1,4 +1,7 @@
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+
 export default async function handler(req, res) {
+    // CORS Headers
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -7,66 +10,46 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
 
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca API KEY su Vercel" });
+    if (!apiKey) return res.status(200).json({ summary: "Errore", tip: "Manca API KEY" });
 
     try {
         const { stats } = req.body;
+        const genAI = new GoogleGenerativeAI(apiKey);
 
-        // Prova 'gemini-1.5-flash-latest' invece di solo 'gemini-1.5-flash'
-        // Se continua a fallire, usa 'gemini-pro' (che è il fallback universale)
-        const model = "gemini-1.5-flash";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        // Definiamo lo schema della risposta per non avere errori di parsing
+        const schema = {
+            description: "Valorant Coach Analysis",
+            type: SchemaType.OBJECT,
+            properties: {
+                summary: { type: SchemaType.STRING, description: "Breve analisi delle prestazioni" },
+                tip: { type: SchemaType.STRING, description: "Consiglio tecnico specifico" },
+            },
+            required: ["summary", "tip"],
+        };
 
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{
-                        text: `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
-                        Fornisci un'analisi brevissima e un consiglio tecnico. 
-                        Rispondi ESCLUSIVAMENTE con un oggetto JSON valido. 
-                        Esempio: {"summary": "Ottima mira", "tip": "Migliora il posizionamento"}`
-                    }]
-                }],
-                // Aggiungiamo parametri per forzare una risposta pulita
-                generationConfig: {
-                    temperature: 0.7,
-                    topK: 1,
-                    topP: 1,
-                    maxOutputTokens: 200,
-                    responseMimeType: "application/json" // Questo forza Gemini a rispondere in JSON (se supportato dal modello)
-                }
-            })
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash", // Nome esatto come da documentazione
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: schema,
+            },
         });
 
-        const data = await response.json();
+        const prompt = `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
+                        Fornisci un'analisi brevissima e un consiglio tecnico per migliorare.`;
 
-        if (data.error) {
-            return res.status(200).json({
-                summary: `Errore Modello: ${model}`,
-                tip: data.error.message
-            });
-        }
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        const text = response.text();
 
-        if (!data.candidates || !data.candidates[0]) {
-            throw new Error("Nessuna risposta dal coach");
-        }
-
-        let aiText = data.candidates[0].content.parts[0].text;
-
-        // Pulizia avanzata per estrarre solo il JSON
-        const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error("Risposta AI non valida");
-
-        const finalJson = JSON.parse(jsonMatch[0]);
-        return res.status(200).json(finalJson);
+        // Con responseSchema, text è GIÀ un JSON valido
+        return res.status(200).json(JSON.parse(text));
 
     } catch (error) {
-        console.error("Coach Error:", error);
+        console.error("Gemini Error:", error);
         return res.status(200).json({
-            summary: "Il coach è in pausa tattica",
-            tip: "Controlla la console o prova a cambiare modello in gemini-pro."
+            summary: "Il coach sta ricaricando le abilità",
+            tip: "C'è stato un problema di connessione con l'API di Google. Riprova."
         });
     }
 }

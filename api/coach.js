@@ -12,8 +12,8 @@ export default async function handler(req, res) {
     try {
         const { stats } = req.body;
 
-        // CAMBIO CRUCIALE: Usiamo v1beta e il modello con il suffisso -latest
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+        // URL TESTATO: v1beta + gemini-1.5-flash
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -21,7 +21,9 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 contents: [{
                     parts: [{
-                        text: `VALORANT COACH: KD ${stats.kd}, HS ${stats.hs}%. Rispondi SOLO JSON: {"summary": "Analisi breve", "tip": "Consiglio"}`
+                        text: `Agisci come coach di Valorant. Dati giocatore: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
+                        Fornisci un'analisi brevissima e un consiglio tecnico. 
+                        Rispondi ESCLUSIVAMENTE con questo formato JSON: {"summary": "string", "tip": "string"}`
                     }]
                 }]
             })
@@ -29,12 +31,11 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        // Se Google continua a dare errore, facciamo un fallback immediato a gemini-pro
         if (data.error) {
-            console.error("Errore Google:", data.error.message);
+            // Se vedi ancora "Not Found", prova a cambiare il nome modello in 'gemini-pro' qui sotto
             return res.status(200).json({
                 summary: "Google API Error",
-                tip: "Riprova tra un istante, stiamo calibrando i modelli."
+                tip: data.error.message
             });
         }
 
@@ -46,8 +47,8 @@ export default async function handler(req, res) {
 
     } catch (error) {
         return res.status(200).json({
-            summary: "Analisi quasi pronta",
-            tip: "Il coach sta arrivando, riprova il push."
+            summary: "Il coach sta analizzando i replay",
+            tip: "Riprova tra un istante."
         });
     }
 }

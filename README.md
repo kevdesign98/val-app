@@ -23,10 +23,14 @@ The project is constantly being updated, and the login feature is currently a wo
 
 ✨ New Features
 
-🔹 Callouts on the every maps. 
+🔹 Callouts on the every maps.
+
 🔹 Coach AI – Discover the new coach in the dashboard.
+
 🔹 Crosshairs and line ups - Coming soon!
+
 🔹 Esports Page – Coming soon!
+
 🔹 Tracker AI - Coming soon!
 
 🛠️ Tech Stack

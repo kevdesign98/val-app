@@ -1,52 +1,38 @@
 import { GoogleGenAI } from "@google/genai";
 
 export default async function handler(req, res) {
-    // Headers CORS
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // CORS Headers
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method === 'OPTIONS') return res.status(200).end();
 
-    try {
-        const apiKey = process.env.GEMINI_API_KEY;
-        if (!apiKey) throw new Error("Manca GEMINI_API_KEY");
+  try {
+    const apiKey = process.env.GEMINI_API_KEY;
+    const ai = new GoogleGenAI({ apiKey });
 
-        // Inizializzazione client (la versione 1.50.1 vuole l'oggetto con apiKey)
-        const ai = new GoogleGenAI({ apiKey });
+    // CAMBIA QUI: Usa solo il nome del modello senza "models/"
+    const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const { stats } = req.body;
-        if (!stats) throw new Error("Stats non ricevute");
+    const { stats } = req.body;
+    
+    // Generazione contenuto
+    const result = await model.generateContent(`Agisci come coach di Valorant. Analizza: KD ${stats.kd}, HS ${stats.hs}%. Rispondi solo JSON: {"summary": "...", "tip": "..."}`);
+    
+    const response = await result.response;
+    const text = response.text();
 
-        // Utilizziamo gemini-1.5-flash che è il più compatibile con gli account gratuiti
-        const result = await ai.models.generateContent({
-            model: "gemini-1.5-flash",
-            contents: [{
-                role: "user",
-                parts: [{
-                    text: `Sei un coach di Valorant. Analizza questi dati: KD ${stats.kd}, HS ${stats.hs}%, Winrate ${stats.winrate}%. 
-                    Fornisci un'analisi e un consiglio breve. 
-                    Rispondi rigorosamente in formato JSON: {"summary": "...", "tip": "..."}`
-                }]
-            }]
-        });
+    // Pulizia e invio
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    return res.status(200).json(JSON.parse(jsonMatch[0]));
 
-        // NOTA: Con @google/genai il testo si estrae così
-        const aiText = result.text;
-
-        // Pulizia per sicurezza
-        const jsonMatch = aiText.match(/\{[\s\S]*\}/);
-        const finalJson = jsonMatch ? JSON.parse(jsonMatch[0]) : { summary: "Errore formato", tip: aiText };
-
-        return res.status(200).json(finalJson);
-
-    } catch (error) {
-        console.error("Crash dettagliato:", error.message);
-        // Rispondiamo con 200 ma con l'errore nel tip così lo vedi sulla Dashboard!
-        return res.status(200).json({
-            summary: "Errore del Coach",
-            tip: "Dettaglio: " + error.message
-        });
-    }
+  } catch (error) {
+    // Questo è quello che vedi ora nello screenshot
+    return res.status(200).json({
+      summary: "Errore del Coach",
+      tip: `Dettaglio: ${error.message}`
+    });
+  }
 }

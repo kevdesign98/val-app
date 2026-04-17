@@ -103,19 +103,20 @@ export class DashboardComponent implements OnInit {
 
 
   calculateProfessionalStats(matchData: any[]) {
+
     if (!matchData || matchData.length === 0) return;
 
-    // 1. FILTRIAMO SOLO I MATCH COMPETITIVE
-    const competitiveMatches = matchData.filter(m =>
-      m.metadata.mode === 'Competitive' || m.metadata.mode === 'competitive'
-    );
+    // --- 1. FILTRIAMO SOLO LE PARTITE COMPETITIVE ---
+    const competitiveMatches = matchData.filter(m => m.metadata.mode === 'Competitive');
 
-    // Se ci sono match competitivi usiamo quelli, altrimenti fallback su tutto il matchData
-    const finalData = competitiveMatches.length > 0 ? competitiveMatches : matchData;
+    // Se non ci sono competitive negli ultimi match, usiamo matchData come fallback per non rompere la dashboard
+    // ma per il "Last Match" cercheremo specificamente la competitiva.
+    const dataToUse = competitiveMatches.length > 0 ? competitiveMatches : matchData;
 
-    // 2. LOGICA LAST MATCH REPORT (Prendiamo il primo dall'array filtrato)
-    const lastMatch = finalData[0];
-    const meLast = lastMatch.players.all_players.find((p: any) =>
+    // --- 2. LOGICA LAST MATCH (Cerca la prima competitiva, se non c'è prende l'ultima giocata) ---
+    const lastCompMatch = competitiveMatches[0] || matchData[0];
+
+    const meLast = lastCompMatch.players.all_players.find((p: any) =>
       p.name.toLowerCase() === this.name.toLowerCase()
     );
 
@@ -124,10 +125,11 @@ export class DashboardComponent implements OnInit {
       const opponentTeam = myTeam === 'red' ? 'blue' : 'red';
 
       this.lastMatchStats = {
-        map: lastMatch.metadata.map,
-        mode: lastMatch.metadata.mode,
-        result: lastMatch.teams[myTeam].has_won ? 'VICTORY' : 'DEFEAT',
-        score: `${lastMatch.teams[myTeam].rounds_won} - ${lastMatch.teams[opponentTeam]?.rounds_won || 0}`,
+        map: lastCompMatch.metadata.map,
+        mode: lastCompMatch.metadata.mode,
+        result: lastCompMatch.teams[myTeam].has_won ? 'VICTORY' : 'DEFEAT',
+        // Punteggio dinamico basato sul tuo team
+        score: `${lastCompMatch.teams[myTeam].rounds_won} - ${lastCompMatch.teams[opponentTeam].rounds_won}`,
         kills: meLast.stats.kills,
         deaths: meLast.stats.deaths,
         assists: meLast.stats.assists,
@@ -138,32 +140,28 @@ export class DashboardComponent implements OnInit {
       };
     }
 
-    // 3. INIZIALIZZAZIONE VARIABILI STATS GENERALI
     let tk = 0, td = 0, ts = 0, th = 0, wins = 0;
     const maps: any = {}, roles: any = {}, hours: any = {}, agents: any = {}, srvs: any = {};
     const wpns: { [key: string]: any } = {};
     const mates: { [key: string]: any } = {};
 
-    // 4. CALCOLO STATS SU FINAL DATA (SOLO COMPETITIVE)
-    finalData.forEach(match => {
+    dataToUse.forEach(match => {
       const me = match.players.all_players.find((p: any) =>
         p.name.toLowerCase() === this.name.toLowerCase()
       );
 
       if (me) {
-        const myTeamKey = me.team.toLowerCase();
-        const isWin = match.teams[myTeamKey]?.has_won;
+        const isWin = match.teams[me.team.toLowerCase()]?.has_won;
         if (isWin) wins++;
 
-        tk += me.stats.kills;
-        td += me.stats.deaths;
+        tk += me.stats.kills; td += me.stats.deaths;
         th += (me.stats.headshots || 0);
-        ts += (me.stats.headshots || 0) + (me.stats.bodyshots || 0) + (me.stats.legshots || 0);
+        const currentMatchShots = (me.stats.headshots || 0) + (me.stats.bodyshots || 0) + (me.stats.legshots || 0);
+        ts += currentMatchShots;
 
-        // Analisi Armi (Weapon Analysis)
         if (match.kills) {
           match.kills.forEach((kill: any) => {
-            if (kill.killer_display_name.toLowerCase().startsWith(this.name.toLowerCase())) {
+            if (kill.killer_display_name.toLowerCase() === this.name.toLowerCase() + '#' + this.tag.toLowerCase()) {
               const weaponUsed = kill.damage_weapon_name || 'Unknown';
               if (!wpns[weaponUsed]) wpns[weaponUsed] = { kills: 0, hs: 0, shots: 0 };
               wpns[weaponUsed].kills++;
@@ -171,86 +169,115 @@ export class DashboardComponent implements OnInit {
           });
         }
 
-        // Analisi Compagni di Squadra (Frequent Squad)
-        const myTeamPlayers = match.players.all_players.filter((p: any) =>
-          p.team === me.team && p.name.toLowerCase() !== this.name.toLowerCase()
-        );
+        if (Object.keys(wpns).length === 0 && me.damage_weapon) {
+          me.damage_weapon.forEach((w: any) => {
+            const name = w.weaponName || 'Vandal';
+            if (!wpns[name]) wpns[name] = { kills: 0, hs: 0, shots: 0 };
+            wpns[name].kills += w.kills || 0;
+            wpns[name].hs += w.headshots || 0;
+            wpns[name].shots += (w.headshots + w.bodyshots + w.legshots) || 0;
+          });
+        }
 
+
+        const myTeamPlayers = match.players.all_players.filter((p: any) => p.team === me.team && p.name !== me.name);
         myTeamPlayers.forEach((mate: any) => {
           if (!mates[mate.name]) {
-            mates[mate.name] = { character: mate.character, wins: 0, total: 0, kills: 0, deaths: 0, hs: 0, shots: 0 };
+            mates[mate.name] = {
+              character: mate.character,
+              wins: 0,
+              total: 0,
+              kills: 0,
+              deaths: 0,
+              hs: 0,
+              shots: 0
+            };
           }
           mates[mate.name].total++;
           if (isWin) mates[mate.name].wins++;
+
           mates[mate.name].kills += mate.stats.kills;
           mates[mate.name].deaths += mate.stats.deaths;
           mates[mate.name].hs += (mate.stats.headshots || 0);
           mates[mate.name].shots += (mate.stats.headshots + mate.stats.bodyshots + mate.stats.legshots) || 0;
         });
 
-        // Mappe, Agenti e Ruoli
         const mName = match.metadata.map;
+        const sName = match.metadata.cluster;
         if (!maps[mName]) maps[mName] = { w: 0, t: 0 };
-        maps[mName].t++; if (isWin) maps[mName].w++;
+        if (!srvs[sName]) srvs[sName] = { w: 0, t: 0 };
+        maps[mName].t++; srvs[sName].t++;
+        if (isWin) { maps[mName].w++; srvs[sName].w++; }
 
         const agent = me.character;
         agents[agent] = (agents[agent] || 0) + 1;
         const role = this.getRole(agent);
         roles[role] = (roles[role] || 0) + 1;
 
-        // Stats Orarie
         const hour = new Date(match.metadata.game_start_patched).getHours();
         if (!hours[hour]) hours[hour] = { k: 0, d: 0, w: 0, t: 0 };
-        hours[hour].k += me.stats.kills;
-        hours[hour].d += me.stats.deaths;
-        hours[hour].t++;
-        if (isWin) hours[hour].w++;
+        hours[hour].k += me.stats.kills; hours[hour].d += me.stats.deaths;
+        hours[hour].t++; if (isWin) hours[hour].w++;
       }
     });
 
-    // 5. ASSEGNAZIONE VALORI ALLA DASHBOARD
     this.avgKd = td > 0 ? tk / td : tk;
     this.avgHs = ts > 0 ? (th / ts) * 100 : 0;
-    this.winRate = Math.round((wins / finalData.length) * 100);
+    this.winRate = Math.round((wins / matchData.length) * 100);
     this.roleStats = roles;
     this.topAgent = Object.keys(agents).reduce((a, b) => agents[a] > agents[b] ? a : b, 'N/A');
 
-    // Ordinamento Mappe e Grafico
-    const sortedMaps = Object.keys(maps).map(k => ({
+    const wpnArray = Object.values(wpns) as any[];
+    const totalKillsCount = wpnArray.reduce((acc: number, curr: any) => acc + (curr.kills || 0), 0);
+
+    this.weaponAnalysis = Object.keys(wpns).map(k => ({
       name: k,
-      rate: Math.round((maps[k].w / maps[k].t) * 100)
-    })).sort((a, b) => b.rate - a.rate);
+      usage: totalKillsCount > 0 ? Math.round((wpns[k].kills / totalKillsCount) * 100) : 0,
+      headshot: wpns[k].shots > 0 ? ((wpns[k].hs / wpns[k].shots) * 100).toFixed(1) : this.avgHs.toFixed(1)
+    })).sort((a, b) => b.usage - a.usage).slice(0, 3);
 
-    if (sortedMaps.length > 0) {
-      this.bestMap = sortedMaps[0];
-      this.worstMap = sortedMaps[sortedMaps.length - 1];
-
-      this.mapChartData = {
-        labels: sortedMaps.map(m => m.name),
-        datasets: [{
-          data: sortedMaps.map(m => m.rate),
-          backgroundColor: '#6366f1',
-          borderRadius: 4,
-          barThickness: 12
-        }]
-      };
-    }
-
-    // Finalizzazione Compagni
     this.frequentSquad = Object.keys(mates).map(k => {
       const m = mates[k];
+      const kd = m.deaths > 0 ? (m.kills / m.deaths).toFixed(2) : m.kills.toFixed(2);
+      const hs = m.shots > 0 ? ((m.hs / m.shots) * 100).toFixed(1) : '0.0';
+
       return {
         name: k,
         role: this.getRole(m.character),
         winRate: Math.round((m.wins / m.total) * 100),
         matches: m.total,
-        kd: (m.kills / (m.deaths || 1)).toFixed(2),
-        hs: (m.shots > 0 ? (m.hs / m.shots * 100) : 0).toFixed(1),
+        kd: kd,
+        hs: hs,
         initial: k.charAt(0).toUpperCase()
       };
     }).sort((a, b) => b.matches - a.matches).slice(0, 3);
 
-    // Report finale per AI e UI
+    this.serverAnalysis = Object.keys(srvs).map(k => ({ name: k, wr: Math.round((srvs[k].w / srvs[k].t) * 100) }));
+    this.hourlyStats = Array.from({ length: 24 }, (_, i) => ({
+      h: i,
+      val: hours[i] ? (hours[i].k / (hours[i].d || 1)) : 0
+    }));
+
+    const sortedMaps = Object.keys(maps).map(k => ({
+      name: k,
+      rate: Math.round((maps[k].w / maps[k].t) * 100)
+    })).sort((a, b) => b.rate - a.rate);
+
+    this.bestMap = sortedMaps[0] || { name: 'N/A', rate: 0 };
+    this.worstMap = sortedMaps[sortedMaps.length - 1] || { name: 'N/A', rate: 0 };
+
+    this.mapChartData = {
+      labels: sortedMaps.map(m => m.name),
+      datasets: [
+        {
+          data: sortedMaps.map(m => m.rate),
+          backgroundColor: '#6366f1',
+          borderRadius: 4,
+          barThickness: 12
+        }
+      ]
+    };
+
     this.currentReport = {
       kd: this.avgKd.toFixed(2),
       hs: this.avgHs.toFixed(1),
@@ -258,7 +285,8 @@ export class DashboardComponent implements OnInit {
       top_agent: this.topAgent,
       best_map: this.bestMap.name,
       worst_map: this.worstMap.name,
-      hourly_peak: Object.keys(hours).length > 0 ? Object.keys(hours).sort((a, b) => hours[b].k - hours[a].k)[0] + ":00" : "N/A"
+      server: this.serverAnalysis[0]?.name,
+      hourly_peak: this.hourlyStats.sort((a, b) => b.val - a.val)[0]?.h + ":00"
     };
 
     if (this.chart) this.chart.update();

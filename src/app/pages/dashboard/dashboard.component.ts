@@ -5,6 +5,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { Router, RouterLink } from '@angular/router';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { HostListener, ElementRef } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 
 @Component({
@@ -42,6 +43,8 @@ export class DashboardComponent implements OnInit {
   coachSidebar: boolean = false;
   playerRankData: any;
   lastMatchStats: any = null;
+  userRank: any;
+  allRanks: any[] = [];
 
   readonly MODES = ['Competitive', 'Unrated', 'Deathmatch', 'Team Deathmatch', 'Spike Rush', 'Premier'];
   currentMode: string = 'Competitive';
@@ -92,26 +95,35 @@ export class DashboardComponent implements OnInit {
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
-  constructor(private stats: StatsService, private router: Router) { }
+  constructor(private stats: StatsService, private router: Router, private eRef: ElementRef) { }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
+      this.showUserMenu = false;
+    }
+  }
+
 
   ngOnInit() {
+
     this.stats.getMatchHistory(this.name, this.tag).subscribe({
       next: (res) => {
         this.matches = res;
         if (this.matches?.data) {
+          this.userRank = res.data;
           this.allMatches = this.matches.data;
           this.setMode(this.currentMode);
         } else {
-          // Caso in cui l'API risponde OK ma i dati sono vuoti
           this.resetStats();
         }
       },
       error: (err) => {
-        console.error('API Error:', err);
-        this.resetStats(); // Evita che la dashboard mostri dati vecchi o sporchi
-        // Opzionale: mostra un messaggio Toast o un alert "Server occupato, riprova tra poco"
+        console.error("Errore MMR:", err)
+        this.resetStats();
       }
     });
+
     const savedUser = localStorage.getItem('vlr_user');
     if (savedUser) {
       const user = JSON.parse(savedUser);
@@ -119,7 +131,21 @@ export class DashboardComponent implements OnInit {
       this.tag = user.tag;
 
       this.stats.getAccount(this.name, this.tag).subscribe(res => this.account = res);
-      this.stats.getMMR(this.name, this.tag).subscribe(res => this.mmr = res);
+
+      // MODIFICA QUI: Recupero MMR e mappatura immagine da Valorant-API
+      this.stats.getMMR(this.name, this.tag).subscribe((res: any) => {
+        this.mmr = res;
+        if (res?.data?.currenttier) {
+          this.stats.getRankTiers().subscribe((tiersRes: any) => {
+            const lastEpisode = tiersRes.data[tiersRes.data.length - 1];
+            const found = lastEpisode.tiers.find((t: any) => t.tier === res.data.currenttier);
+            if (found) {
+              // Aggiorniamo userRank con l'icona corretta
+              this.userRank = { ...this.userRank, icon: found.largeIcon, name: found.tierName };
+            }
+          });
+        }
+      });
 
       this.stats.getMatchHistory(this.name, this.tag).subscribe(res => {
         this.matches = res;
@@ -134,10 +160,22 @@ export class DashboardComponent implements OnInit {
 
   setMode(mode: string) {
     this.currentMode = mode;
-    const filtered = this.allMatches.filter(m =>
-      m.metadata.mode.toLowerCase() === mode.toLowerCase()
-    );
-    this.calculateProfessionalStats(filtered);
+
+    if (this.allMatches && this.allMatches.length > 0) {
+      // Filtriamo i match in base alla modalità (metadata.mode)
+      // Nota: Valorant API di solito usa 'Competitive', 'Unrated', 'Deathmatch', ecc.
+      const filteredMatches = this.allMatches.filter(match =>
+        match.metadata.mode.toLowerCase() === mode.toLowerCase()
+      );
+
+      // Se ci sono match per questa modalità, calcoliamo le stats
+      if (filteredMatches.length > 0) {
+        this.calculateProfessionalStats(filteredMatches);
+      } else {
+        // Se non ci sono match, resettiamo le card per non mostrare dati vecchi
+        this.resetStats();
+      }
+    }
   }
 
 
@@ -147,17 +185,14 @@ export class DashboardComponent implements OnInit {
 
     if (!matchData || matchData.length === 0) return;
 
-    // --- 1. FILTRIAMO SOLO LE PARTITE COMPETITIVE ---
-    const competitiveMatches = matchData.filter(m => m.metadata.mode === 'Competitive');
+    // --- RIMOSSO IL FILTRO FISSO 'Competitive' ---
+    // Usiamo direttamente matchData che è già stato filtrato dalla funzione setMode()
+    const dataToUse = matchData;
 
-    // Se non ci sono competitive negli ultimi match, usiamo matchData come fallback per non rompere la dashboard
-    // ma per il "Last Match" cercheremo specificamente la competitiva.
-    const dataToUse = competitiveMatches.length > 0 ? competitiveMatches : matchData;
+    // Per il "Last Match" prendiamo semplicemente il primo dell'array (che è il più recente della modalità scelta)
+    const lastMatch = dataToUse[0];
 
-    // --- 2. LOGICA LAST MATCH (Cerca la prima competitiva, se non c'è prende l'ultima giocata) ---
-    const lastCompMatch = competitiveMatches[0] || matchData[0];
-
-    const meLast = lastCompMatch.players.all_players.find((p: any) =>
+    const meLast = lastMatch.players.all_players.find((p: any) =>
       p.name.toLowerCase() === this.name.toLowerCase()
     );
 
@@ -166,11 +201,10 @@ export class DashboardComponent implements OnInit {
       const opponentTeam = myTeam === 'red' ? 'blue' : 'red';
 
       this.lastMatchStats = {
-        map: lastCompMatch.metadata.map,
-        mode: lastCompMatch.metadata.mode,
-        result: lastCompMatch.teams[myTeam].has_won ? 'VICTORY' : 'DEFEAT',
-        // Punteggio dinamico basato sul tuo team
-        score: `${lastCompMatch.teams[myTeam].rounds_won} - ${lastCompMatch.teams[opponentTeam].rounds_won}`,
+        map: lastMatch.metadata.map,
+        mode: lastMatch.metadata.mode,
+        result: lastMatch.teams[myTeam].has_won ? 'VICTORY' : 'DEFEAT',
+        score: `${lastMatch.teams[myTeam].rounds_won} - ${lastMatch.teams[opponentTeam].rounds_won}`,
         kills: meLast.stats.kills,
         deaths: meLast.stats.deaths,
         assists: meLast.stats.assists,
@@ -181,6 +215,8 @@ export class DashboardComponent implements OnInit {
       };
     }
 
+    // Da qui in poi il resto della tua logica (tk, td, ts, th...) va bene 
+    // perché userà correttamente 'dataToUse' che ora contiene la modalità giusta.
     let tk = 0, td = 0, ts = 0, th = 0, wins = 0;
     const maps: any = {}, roles: any = {}, hours: any = {}, agents: any = {}, srvs: any = {};
     const wpns: { [key: string]: any } = {};

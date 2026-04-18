@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -36,4 +36,9 @@ export class StatsService {
     const url = 'https://val-app-three.vercel.app/api/coach';
     return this.http.post(url, { stats: reportData });
   }
+
+  getRankTiers(): Observable<any> {
+    return this.http.get('https://valorant-api.com/v1/competitivetiers');
+  }
+
 }

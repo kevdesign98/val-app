@@ -43,6 +43,10 @@ export class DashboardComponent implements OnInit {
   playerRankData: any;
   lastMatchStats: any = null;
 
+  readonly MODES = ['Competitive', 'Unrated', 'Deathmatch', 'Team Deathmatch', 'Spike Rush', 'Premier'];
+  currentMode: string = 'Competitive';
+  allMatches: any[] = [];
+
   public mapChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: []
@@ -76,9 +80,38 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  showUserMenu: boolean = false;
+
+  logout() {
+    localStorage.removeItem('vlr_user');
+    this.router.navigate(['/Home']);
+  }
+
+  isMobileMenuOpen: boolean = false;
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
   constructor(private stats: StatsService, private router: Router) { }
 
   ngOnInit() {
+    this.stats.getMatchHistory(this.name, this.tag).subscribe({
+      next: (res) => {
+        this.matches = res;
+        if (this.matches?.data) {
+          this.allMatches = this.matches.data;
+          this.setMode(this.currentMode);
+        } else {
+          // Caso in cui l'API risponde OK ma i dati sono vuoti
+          this.resetStats();
+        }
+      },
+      error: (err) => {
+        console.error('API Error:', err);
+        this.resetStats(); // Evita che la dashboard mostri dati vecchi o sporchi
+        // Opzionale: mostra un messaggio Toast o un alert "Server occupato, riprova tra poco"
+      }
+    });
     const savedUser = localStorage.getItem('vlr_user');
     if (savedUser) {
       const user = JSON.parse(savedUser);
@@ -97,6 +130,14 @@ export class DashboardComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  setMode(mode: string) {
+    this.currentMode = mode;
+    const filtered = this.allMatches.filter(m =>
+      m.metadata.mode.toLowerCase() === mode.toLowerCase()
+    );
+    this.calculateProfessionalStats(filtered);
   }
 
 
@@ -292,6 +333,18 @@ export class DashboardComponent implements OnInit {
     if (this.chart) this.chart.update();
   }
 
+  private resetStats() {
+    this.lastMatchStats = null;
+    this.avgKd = 0;
+    this.avgHs = 0;
+    this.winRate = 0;
+    this.frequentSquad = [];
+    this.weaponAnalysis = [];
+    this.mapChartData = { labels: [], datasets: [] };
+    if (this.chart) this.chart.update();
+  }
+
+
   getRole(agent: string): string {
     const roles: any = {
       'Jett': 'Duelist', 'Reyna': 'Duelist', 'Raze': 'Duelist', 'Phoenix': 'Duelist', 'Neon': 'Duelist', 'Yoru': 'Duelist', 'Iso': 'Duelist',
@@ -319,5 +372,6 @@ export class DashboardComponent implements OnInit {
   }
 
   asNumber(v: any): number { return Number(v) || 0; }
+
 }
 

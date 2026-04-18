@@ -4,3 +4,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Impedisce lo scroll del corpo quando il menu mobile è aperto */
+.no-scroll {
+    overflow: hidden;
+}

@@ -13,6 +13,9 @@ import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { ListMatchesComponent } from "./components/list-matches/list-matches.component";
 import { EsportsComponent } from "./pages/esports/esports.component";
 import { TeamsDetailsComponent } from "./components/teams-details/teams-details.component";
+import { AgentsListDashboardComponent } from "./pages/agents-list-dashboard/agents-list-dashboard.component";
+import { WeaponsListDashboardComponent } from "./pages/weapons-list-dashboard/weapons-list-dashboard.component";
+import { MatchesDashboardComponent } from "./pages/matches-dashboard/matches-dashboard.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
@@ -30,4 +33,7 @@ export const routes: Routes = [
   { path: "esports", component: EsportsComponent },
   { path: "teams-details", component: TeamsDetailsComponent },
   { path: "**", component: NotFoundComponent },
+  { path: "agents-list-dashboard", component: AgentsListDashboardComponent },
+  { path: "weapons-list-dashboard", component: WeaponsListDashboardComponent },
+  { path: "matches-dashboard", component: MatchesDashboardComponent },
 ];

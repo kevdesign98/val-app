@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class StatsService {
   private vlrApiKey = environment.apiKey;
+  private url = "https://valorant-api.com/v1/agents";
 
   constructor(private http: HttpClient) { }
 
@@ -17,12 +18,18 @@ export class StatsService {
   }
 
   // Chiamate a HenrikDev
-  getMatchHistory(name: string, tag: string): Observable<any> {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=20`, {
-      headers: this.getVlrHeaders()
-    });
-  }
+  // stats.service.ts
+  getMatchHistory(name: string, tag: string, mode?: string): Observable<any> {
+    // Aggiungiamo il parametro filter per la modalità
+    let url = `https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=20`;
 
+    if (mode) {
+      // Se passiamo 'competitive', l'API cercherà solo le competitive
+      url += `&filter=${mode.toLowerCase()}`;
+    }
+
+    return this.http.get<any>(url, { headers: this.getVlrHeaders() });
+  }
   getAccount(name: string, tag: string) {
     return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`, { headers: this.getVlrHeaders() });
   }

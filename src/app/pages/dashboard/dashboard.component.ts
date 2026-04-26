@@ -6,11 +6,12 @@ import { Router, RouterLink } from '@angular/router';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { SidebarModule } from 'primeng/sidebar';
+import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FooterComponent, BaseChartDirective, SidebarModule, RouterLink],
+  imports: [CommonModule, FooterComponent, BaseChartDirective, SidebarModule, RouterLink, SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })

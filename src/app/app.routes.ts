@@ -32,8 +32,9 @@ export const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "esports", component: EsportsComponent },
   { path: "teams-details", component: TeamsDetailsComponent },
+
+  { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent },
+  { path: "dashboard/weapons-list-dashboard", component: WeaponsListDashboardComponent },
+  { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent },
   { path: "**", component: NotFoundComponent },
-  { path: "agents-list-dashboard", component: AgentsListDashboardComponent },
-  { path: "weapons-list-dashboard", component: WeaponsListDashboardComponent },
-  { path: "matches-dashboard", component: MatchesDashboardComponent },
 ];

@@ -1,12 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { SidebarModule } from 'primeng/sidebar';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterLink, SidebarModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+  name: string = '';
+  tag: string = '';
+  showUserMenu: boolean = false;
+  isMobileMenuOpen: boolean = false;
+
+
+  constructor(private router: Router, private eRef: ElementRef) { }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (!this.eRef.nativeElement.contains(event.target)) this.showUserMenu = false;
+  }
+
+  logout() { localStorage.removeItem('vlr_user'); this.router.navigate(['/Home']); }
 
 }

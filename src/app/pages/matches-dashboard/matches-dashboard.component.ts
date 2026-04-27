@@ -21,6 +21,7 @@ export class MatchesDashboardComponent implements OnInit {
   winRate: number = 0;
   kdRatio: string = '0.00';
   hsPrecision: number = 0;
+  openedMatchId: string | null = null;
 
   // Filtro Act
   currentAct: string = 'V26: A2';
@@ -99,5 +100,13 @@ export class MatchesDashboardComponent implements OnInit {
   calculateHS(playerStats: any): number {
     const totalHits = playerStats.headshots + playerStats.bodyshots + playerStats.legshots;
     return totalHits > 0 ? Math.round((playerStats.headshots / totalHits) * 100) : 0;
+  }
+
+  toggleMatchDetails(matchId: string) {
+    if (this.openedMatchId === matchId) {
+      this.openedMatchId = null; // Se è già aperto, lo chiudiamo
+    } else {
+      this.openedMatchId = matchId; // Altrimenti apriamo quello cliccato
+    }
   }
 }

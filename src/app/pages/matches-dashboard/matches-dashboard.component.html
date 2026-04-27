@@ -11,7 +11,6 @@
                         Analysis</span>
                     <span class="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Data Sync: Live</span>
                 </div>
-
                 <h1
                     class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter flex flex-wrap items-center gap-x-4">
                     <span>Welcome back,</span>
@@ -24,47 +23,20 @@
                     </ng-template>
                 </h1>
             </div>
-
-            <div class="flex items-center bg-[#101216] border border-white/5 rounded-2xl p-1 shadow-2xl">
-                <button
-                    class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest bg-rose-500 text-white">All
-                    Acts</button>
-                <div class="w-[1px] h-6 bg-white/10 mx-2"></div>
-                <div class="relative">
-                    <button (click)="showActMenu = !showActMenu"
-                        class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white flex items-center gap-3">
-                        {{ currentAct }} <i class="fas fa-ellipsis-v text-[10px]"></i>
-                    </button>
-                    <div *ngIf="showActMenu"
-                        class="absolute right-0 mt-4 w-48 bg-[#0c0e12] border border-white/10 rounded-2xl shadow-3xl z-50 p-2 space-y-1">
-                        <button (click)="currentAct = 'V26: A1'; showActMenu = false"
-                            class="w-full text-left px-4 py-3 text-[10px] font-bold text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all">V26:
-                            A1</button>
-                        <button (click)="currentAct = 'V25: A6'; showActMenu = false"
-                            class="w-full text-left px-4 py-3 text-[10px] font-bold text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all">V25:
-                            A6</button>
-                    </div>
-                </div>
-            </div>
         </header>
 
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
-            <div
-                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+            <div class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl">
                 <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
                 <p class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-1">Winrate</p>
                 <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : winRate + '%' }}</h3>
             </div>
-
-            <div
-                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+            <div class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl">
                 <div class="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
                 <p class="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] mb-1">K/D Ratio</p>
                 <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : kdRatio }}</h3>
             </div>
-
-            <div
-                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+            <div class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl">
                 <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
                 <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] mb-1">HS Precision</p>
                 <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : hsPrecision + '%' }}</h3>
@@ -82,47 +54,122 @@
 
             <ng-container *ngIf="!isLoading">
                 <div *ngFor="let match of allMatches"
-                    class="group relative bg-[#101216] border border-white/5 rounded-3xl p-6 transition-all hover:border-indigo-500/30 overflow-hidden mb-4 shadow-xl">
+                    class="group relative bg-[#101216] border border-white/5 rounded-3xl transition-all hover:border-indigo-500/30 overflow-hidden mb-4 shadow-xl">
+
                     <ng-container *ngIf="getMyStats(match) as me">
-                        <div class="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-all duration-500">
-                            <img [src]="'https://media.valorant-api.com/maps/' + match.metadata.mapid + '/listviewicon.png'"
-                                class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-r from-[#101216] to-transparent"></div>
+                        <div (click)="toggleMatchDetails(match.metadata.matchid)"
+                            class="relative p-6 cursor-pointer z-20">
+                            <div
+                                class="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-all duration-500">
+                                <img [src]="'https://media.valorant-api.com/maps/' + match.metadata.mapid + '/listviewicon.png'"
+                                    class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-r from-[#101216] to-transparent"></div>
+                            </div>
+
+                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                                <div [class]="didIWin(match) ? 'bg-green-500' : 'bg-red-500'"
+                                    class="w-1.5 h-12 rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)]"></div>
+
+                                <div class="flex items-center gap-4 min-w-[200px]">
+                                    <img [src]="me.assets.agent.small"
+                                        class="w-14 h-14 rounded-2xl border border-white/10">
+                                    <div>
+                                        <h4 class="text-xl font-black italic uppercase leading-none">{{
+                                            match.metadata.map }}</h4>
+                                        <span class="text-[9px] font-black text-gray-500 tracking-widest">{{
+                                            match.metadata.mode }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex-1 text-center">
+                                    <p [class]="didIWin(match) ? 'text-green-500' : 'text-red-500'"
+                                        class="text-2xl font-black italic">
+                                        {{ match.teams.blue.rounds_won }} - {{ match.teams.red.rounds_won }}
+                                    </p>
+                                    <span
+                                        class="text-[9px] uppercase text-gray-600 font-bold tracking-widest italic">Final
+                                        Score</span>
+                                </div>
+
+                                <div class="flex gap-12 mr-6">
+                                    <div class="text-left">
+                                        <p class="text-white font-black italic text-lg leading-none">{{ me.stats.kills
+                                            }}/{{ me.stats.deaths }}/{{ me.stats.assists }}</p>
+                                        <span class="text-[9px] font-black text-gray-500 uppercase">KDA Ratio</span>
+                                    </div>
+                                    <div class="text-left">
+                                        <p class="text-indigo-400 font-black italic text-lg leading-none">{{
+                                            calculateHS(me.stats) }}%</p>
+                                        <span class="text-[9px] font-black text-gray-500 uppercase">Precision</span>
+                                    </div>
+                                </div>
+
+                                <i class="fas fa-chevron-down text-gray-700 transition-transform duration-300"
+                                    [class.rotate-180]="openedMatchId === match.metadata.matchid"></i>
+                            </div>
                         </div>
 
-                        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                            <div [class]="didIWin(match) ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]' : 'bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]'"
-                                class="w-1.5 h-12 rounded-full"></div>
-
-                            <div class="flex items-center gap-4 min-w-[200px]">
-                                <img [src]="me.assets.agent.small" class="w-14 h-14 rounded-2xl border border-white/10">
-                                <div>
-                                    <h4 class="text-xl font-black italic uppercase leading-none">{{ match.metadata.map
-                                        }}</h4>
-                                    <span class="text-[9px] font-black text-gray-500 tracking-widest">{{
-                                        match.metadata.mode }}</span>
+                        <div *ngIf="openedMatchId === match.metadata.matchid"
+                            class="relative z-10 border-t border-white/5 bg-black/40 p-8 animate-in fade-in duration-300">
+                            <div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
+                                <div class="xl:col-span-1 bg-[#0c0e12] border border-white/5 p-6 rounded-2xl">
+                                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-4">
+                                        Round Stats</p>
+                                    <div class="space-y-4">
+                                        <div class="bg-white/5 p-4 rounded-xl text-center">
+                                            <span
+                                                class="block text-[8px] text-gray-500 uppercase font-bold tracking-wider">Avg
+                                                Score</span>
+                                            <span class="text-2xl font-black italic text-white">{{ (me.stats.score /
+                                                match.metadata.rounds_played).toFixed(0) }}</span>
+                                        </div>
+                                        <div class="bg-white/5 p-4 rounded-xl text-center">
+                                            <span
+                                                class="block text-[8px] text-gray-500 uppercase font-bold tracking-wider">Avg
+                                                Damage</span>
+                                            <span class="text-2xl font-black italic text-white">{{ (me.damage_made /
+                                                match.metadata.rounds_played).toFixed(0) }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="flex-1 text-center">
-                                <p [class]="didIWin(match) ? 'text-green-500' : 'text-red-500'"
-                                    class="text-2xl font-black italic">
-                                    {{ match.teams.blue.rounds_won }} - {{ match.teams.red.rounds_won }}
-                                </p>
-                                <span class="text-[9px] uppercase text-gray-600 font-bold tracking-widest italic">Final
-                                    Score</span>
-                            </div>
-
-                            <div class="flex gap-12">
-                                <div class="text-left">
-                                    <p class="text-white font-black italic text-lg leading-none">{{ me.stats.kills }}/{{
-                                        me.stats.deaths }}/{{ me.stats.assists }}</p>
-                                    <span class="text-[9px] font-black text-gray-500 uppercase">KDA Ratio</span>
-                                </div>
-                                <div class="text-left">
-                                    <p class="text-indigo-400 font-black italic text-lg leading-none">{{
-                                        calculateHS(me.stats) }}%</p>
-                                    <span class="text-[9px] font-black text-gray-500 uppercase">Precision</span>
+                                <div class="xl:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div class="space-y-2">
+                                        <p
+                                            class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2 px-2">
+                                            Enemies Team</p>
+                                        <div *ngFor="let p of match.players.blue"
+                                            [class.bg-indigo-500]="p.name.toLowerCase() === name.toLowerCase()"
+                                            class="flex items-center gap-3 p-2 rounded-xl border border-transparent">
+                                            <img [src]="p.assets.agent.small" class="w-8 h-8 rounded-lg opacity-80">
+                                            <div class="flex-1">
+                                                <span class="block text-xs font-bold"
+                                                    [class.text-indigo-400]="p.name.toLowerCase() === name.toLowerCase()">{{
+                                                    p.name }}</span>
+                                                <span class="text-[9px] text-white uppercase">{{ p.stats.kills }}/{{
+                                                    p.stats.deaths }}/{{ p.stats.assists }}</span>
+                                            </div>
+                                            <span class="text-[10px] font-mono text-white">{{ p.stats.score }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <p
+                                            class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-2 px-2 text-right">
+                                            Your Team</p>
+                                        <div *ngFor="let p of match.players.red"
+                                            [class.bg-rose-500]="p.name.toLowerCase() === name.toLowerCase()"
+                                            class="flex items-center gap-3 p-2 rounded-xl border border-transparent flex-row-reverse text-right">
+                                            <img [src]="p.assets.agent.small" class="w-8 h-8 rounded-lg opacity-80">
+                                            <div class="flex-1">
+                                                <span class="block text-xs font-bold"
+                                                    [class.text-white]="p.name.toLowerCase() === name.toLowerCase()">{{
+                                                    p.name }}</span>
+                                                <span class="text-[9px] text-white uppercase">{{ p.stats.kills }}/{{
+                                                    p.stats.deaths }}/{{ p.stats.assists }}</span>
+                                            </div>
+                                            <span class="text-[10px] font-mono text-white">{{ p.stats.score }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -132,4 +179,3 @@
         </div>
     </main>
 </div>
-<app-footer />

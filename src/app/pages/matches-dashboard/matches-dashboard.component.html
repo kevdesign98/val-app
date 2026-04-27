@@ -1,238 +1,135 @@
-<div class="flex min-h-screen bg-[#08090B]">
+<div class="flex min-h-screen bg-[#08090B] text-white">
     <app-sidebar class="hidden md:block" />
 
-    <main class="flex-1 pl-0 md:pl-2 pb-20 overflow-x-hidden">
-        <div class="p-4 md:p-10 max-w-[1400px] mx-auto animate-in fade-in zoom-in-95 duration-700">
+    <main class="flex-1 p-4 md:p-10 max-w-[1400px] mx-auto overflow-x-hidden">
 
-            <header
-                class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-3">
-                        <span
-                            class="px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[9px] font-black uppercase tracking-[0.2em]">
-                            Tactical Analysis
-                        </span>
-                        <span class="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Data Sync:
-                            Live</span>
-                    </div>
-                    <h1 class="text-4xl md:text-6xl font-black italic text-white uppercase tracking-tighter">
-                        Welcome back, <span class="text-indigo-500">{{ name }}</span><span class="text-white/20">#{{ tag
-                            }}</span>
-                    </h1>
-                    <p class="text-gray-500 mt-2 font-medium max-w-xl">
-                        Your combat report is up to date. We've analyzed your latest performances to optimize your next
-                        match.
-                    </p>
+        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <span
+                        class="px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[9px] font-black uppercase tracking-[0.2em]">Tactical
+                        Analysis</span>
+                    <span class="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Data Sync: Live</span>
                 </div>
 
-                <div class="flex gap-4">
-                    <div class="bg-[#101216] border border-white/5 p-4 rounded-2xl flex items-center gap-4 shadow-xl">
-                        <div
-                            class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 border border-green-500/20">
-                            <i class="fas fa-arrow-up text-sm"></i>
-                        </div>
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="hidden md:flex bg-[#101216] border border-white/5 p-4 rounded-2xl items-center gap-4 shadow-xl">
-                                <div
-                                    class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 border border-green-500/20">
-                                    <i class="fas fa-arrow-up text-sm"></i>
-                                </div>
-                                <div>
-                                    <p
-                                        class="text-[8px] font-black text-gray-500 uppercase tracking-widest leading-none mb-1">
-                                        Trend</p>
-                                    <p class="text-white font-black italic text-base leading-none">+2.4%</p>
-                                </div>
-                            </div>
-
-                            <div class="relative">
-                                <button (click)="showActMenu = !showActMenu"
-                                    class="bg-[#101216] border border-white/10 hover:border-indigo-500/50 px-5 py-4 rounded-2xl flex items-center gap-4 transition-all shadow-2xl group">
-                                    <div class="text-left">
-                                        <p
-                                            class="text-[8px] font-black text-indigo-400 uppercase tracking-widest leading-none mb-1">
-                                            Current Act</p>
-                                        <p class="text-white font-black italic text-base leading-none uppercase">{{
-                                            currentAct.replace('-', ': ') }}</p>
-                                    </div>
-                                    <i
-                                        class="fas fa-chevron-down text-xs text-gray-500 group-hover:text-indigo-400 transition-colors"></i>
-                                </button>
-
-                                <div *ngIf="showActMenu"
-                                    class="absolute right-0 mt-3 w-48 bg-[#0c0e12] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
-                                    <div class="py-2">
-                                        <button *ngFor="let act of acts" (click)="selectAct(act.id)"
-                                            [class.bg-indigo-500]="currentAct === act.id"
-                                            class="w-full text-left px-5 py-3 text-xs font-bold uppercase tracking-wider transition-colors hover:bg-white/5"
-                                            [ngClass]="currentAct === act.id ? 'text-white' : 'text-gray-400 hover:text-white'">
-                                            {{ act.name }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div
-                    class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group hover:border-indigo-500/30 transition-all">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.5)]">
-                    </div>
-                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-1">Recent Winrate</p>
-                    <h3
-                        class="text-4xl font-black italic text-white group-hover:scale-110 transition-transform origin-left">
-                        {{ winRate }}%</h3>
-                    <i class="fas fa-chart-line absolute right-6 bottom-6 text-white/5 text-5xl"></i>
-                </div>
-
-                <div
-                    class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group hover:border-rose-500/30 transition-all">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]">
-                    </div>
-                    <p class="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] mb-1">Kill/Death Avg</p>
-                    <h3
-                        class="text-4xl font-black italic text-white group-hover:scale-110 transition-transform origin-left">
-                        1.18</h3>
-                    <i class="fas fa-crosshairs absolute right-6 bottom-6 text-white/5 text-5xl"></i>
-                </div>
-
-                <div
-                    class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group hover:border-emerald-500/30 transition-all">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
-                    </div>
-                    <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] mb-1">HS Precision</p>
-                    <h3
-                        class="text-4xl font-black italic text-white group-hover:scale-110 transition-transform origin-left">
-                        24%</h3>
-                    <i class="fas fa-bullseye absolute right-6 bottom-6 text-white/5 text-5xl"></i>
-                </div>
-            </section>
-
-            <div class="space-y-6">
-                <h2 class="text-xs font-black uppercase tracking-[0.3em] text-gray-500 flex items-center gap-3 mb-6">
-                    <span class="w-8 h-[1px] bg-gray-800"></span> Combat History
-                </h2>
-
-                <div *ngIf="isLoading" class="space-y-4">
-                    <div *ngFor="let i of [1,2,3,4]"
-                        class="bg-[#101216] border border-white/5 rounded-3xl p-8 animate-pulse flex items-center gap-6">
-                        <div class="w-1.5 h-14 bg-gray-800 rounded-full"></div>
-                        <div class="w-14 h-14 bg-gray-800 rounded-2xl"></div>
-                        <div class="flex-1 h-4 bg-gray-800 rounded w-1/4"></div>
-                        <div class="w-24 h-8 bg-gray-800 rounded-lg"></div>
-                    </div>
-                </div>
-
-                <ng-container *ngIf="!isLoading">
-                    <div *ngFor="let match of allMatches"
-                        class="group relative bg-[#101216] border border-white/5 rounded-3xl transition-all duration-300 hover:border-indigo-500/30 hover:shadow-[0_0_30px_rgba(79,70,229,0.1)] overflow-hidden mb-4">
-
-                        <ng-container *ngIf="getMyStats(match) as me">
-                            <div
-                                class="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                                <img [src]="'https://media.valorant-api.com/maps/' + match.metadata.mapid + '/listviewicon.png'"
-                                    class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700">
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-r from-[#101216] via-[#101216]/60 to-transparent">
-                                </div>
-                            </div>
-
-                            <div class="relative z-10 flex flex-col md:flex-row items-center p-5 md:p-8 gap-6">
-                                <div [class]="didIWin(match) ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.6)]' : 'bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)]'"
-                                    class="w-1.5 h-14 rounded-full"></div>
-
-                                <div class="flex items-center gap-5 min-w-[200px]">
-                                    <div class="relative">
-                                        <img [src]="me.assets.agent.small"
-                                            class="w-14 h-14 rounded-2xl object-cover bg-white/5 border border-white/10 relative z-10">
-                                        <div [class]="didIWin(match) ? 'bg-green-500/20' : 'bg-red-500/20'"
-                                            class="absolute -inset-1 blur-lg rounded-full"></div>
-                                    </div>
-                                    <div>
-                                        <h4
-                                            class="text-white font-black italic uppercase text-lg leading-tight tracking-tighter">
-                                            {{ match.metadata.map }}</h4>
-                                        <span
-                                            class="px-2 py-0.5 bg-white/5 rounded text-[9px] font-black uppercase text-gray-400 tracking-widest border border-white/5">
-                                            {{ match.metadata.mode }}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="flex-1 flex flex-col items-center justify-center border-x border-white/5 px-6">
-                                    <p [class]="didIWin(match) ? 'text-green-500' : 'text-red-500'"
-                                        class="text-2xl font-black italic tracking-widest">
-                                        {{ match.teams.blue.rounds_won }} <span
-                                            class="text-white/20 mx-1 text-xl font-light">-</span> {{
-                                        match.teams.red.rounds_won }}
-                                    </p>
-                                    <span
-                                        class="text-[9px] font-black uppercase text-gray-500 tracking-widest mt-1">Final
-                                        Score</span>
-                                </div>
-
-                                <div class="grid grid-cols-2 md:flex md:flex-1 gap-8 md:gap-12 w-full md:w-auto">
-                                    <div class="text-center md:text-left">
-                                        <p class="text-white font-black italic text-lg leading-none">{{ me.stats.kills
-                                            }}/{{ me.stats.deaths }}/{{ me.stats.assists }}</p>
-                                        <span class="text-[9px] font-black uppercase text-gray-500 tracking-widest">KDA
-                                            Ratio</span>
-                                    </div>
-                                    <div class="text-center md:text-left">
-                                        <p class="text-indigo-400 font-black italic text-lg leading-none">{{
-                                            calculateHS(me.stats) }}%</p>
-                                        <span
-                                            class="text-[9px] font-black uppercase text-gray-500 tracking-widest">Precision</span>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="text-gray-700 group-hover:text-indigo-400 transition-all transform group-hover:translate-y-1">
-                                    <i class="fas fa-chevron-down text-xl"></i>
-                                </div>
-                            </div>
-
-                            <div
-                                class="relative z-10 border-t border-white/5 hidden group-hover:grid grid-cols-2 md:grid-cols-4 gap-6 p-8 bg-[#0c0e12]/80 backdrop-blur-xl animate-in slide-in-from-top-2 duration-300">
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="w-10 h-10 flex items-center justify-center bg-indigo-500/10 rounded-xl border border-indigo-500/20 text-indigo-400">
-                                        <i class="fas fa-shield-alt"></i>
-                                    </div>
-                                    <div>
-                                        <p
-                                            class="text-[9px] font-black text-gray-500 uppercase leading-none mb-1 text-center">
-                                            Rank</p>
-                                        <p class="text-xs font-bold uppercase italic text-center text-white">{{
-                                            me.currenttier_patched || 'Unrated' }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-4">
-                                    <div
-                                        class="w-10 h-10 flex items-center justify-center bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-400">
-                                        <i class="fas fa-fire"></i>
-                                    </div>
-                                    <div>
-                                        <p
-                                            class="text-[9px] font-black text-gray-500 uppercase leading-none mb-1 text-center">
-                                            Damage / Round</p>
-                                        <p class="text-xs font-bold uppercase italic text-center text-white">
-                                            {{ (me.damage_made / (match.teams.blue.rounds_won +
-                                            match.teams.red.rounds_won)) | number:'1.0-0' }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                </ng-container>
+                <h1
+                    class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter flex flex-wrap items-center gap-x-4">
+                    <span>Welcome back,</span>
+                    <ng-container *ngIf="!isLoading; else nameLoader">
+                        <span class="text-indigo-500">{{ name }}</span>
+                        <span class="text-white/20 -ml-2">#{{ tag }}</span>
+                    </ng-container>
+                    <ng-template #nameLoader>
+                        <span class="w-64 h-12 bg-white/5 animate-pulse rounded-2xl"></span>
+                    </ng-template>
+                </h1>
             </div>
-            <app-footer />
+
+            <div class="flex items-center bg-[#101216] border border-white/5 rounded-2xl p-1 shadow-2xl">
+                <button
+                    class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest bg-rose-500 text-white">All
+                    Acts</button>
+                <div class="w-[1px] h-6 bg-white/10 mx-2"></div>
+                <div class="relative">
+                    <button (click)="showActMenu = !showActMenu"
+                        class="px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white flex items-center gap-3">
+                        {{ currentAct }} <i class="fas fa-ellipsis-v text-[10px]"></i>
+                    </button>
+                    <div *ngIf="showActMenu"
+                        class="absolute right-0 mt-4 w-48 bg-[#0c0e12] border border-white/10 rounded-2xl shadow-3xl z-50 p-2 space-y-1">
+                        <button (click)="currentAct = 'V26: A1'; showActMenu = false"
+                            class="w-full text-left px-4 py-3 text-[10px] font-bold text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all">V26:
+                            A1</button>
+                        <button (click)="currentAct = 'V25: A6'; showActMenu = false"
+                            class="w-full text-left px-4 py-3 text-[10px] font-bold text-gray-400 hover:bg-white/5 hover:text-white rounded-lg transition-all">V25:
+                            A6</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
+            <div
+                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                <p class="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-1">Winrate</p>
+                <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : winRate + '%' }}</h3>
+            </div>
+
+            <div
+                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
+                <p class="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] mb-1">K/D Ratio</p>
+                <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : kdRatio }}</h3>
+            </div>
+
+            <div
+                class="relative overflow-hidden bg-[#101216] border border-white/5 p-6 rounded-[2rem] shadow-2xl group">
+                <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] mb-1">HS Precision</p>
+                <h3 class="text-4xl font-black italic">{{ isLoading ? '---' : hsPrecision + '%' }}</h3>
+            </div>
+        </section>
+
+        <div class="space-y-6">
+            <h2 class="text-xs font-black uppercase tracking-[0.3em] text-gray-500 flex items-center gap-3 mb-6">
+                <span class="w-8 h-[1px] bg-gray-800"></span> Combat History
+            </h2>
+
+            <div *ngIf="isLoading" class="space-y-4">
+                <div *ngFor="let i of [1,2,3]" class="bg-[#101216] h-24 rounded-3xl animate-pulse"></div>
+            </div>
+
+            <ng-container *ngIf="!isLoading">
+                <div *ngFor="let match of allMatches"
+                    class="group relative bg-[#101216] border border-white/5 rounded-3xl p-6 transition-all hover:border-indigo-500/30 overflow-hidden mb-4 shadow-xl">
+                    <ng-container *ngIf="getMyStats(match) as me">
+                        <div class="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-all duration-500">
+                            <img [src]="'https://media.valorant-api.com/maps/' + match.metadata.mapid + '/listviewicon.png'"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-[#101216] to-transparent"></div>
+                        </div>
+
+                        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                            <div [class]="didIWin(match) ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]' : 'bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.5)]'"
+                                class="w-1.5 h-12 rounded-full"></div>
+
+                            <div class="flex items-center gap-4 min-w-[200px]">
+                                <img [src]="me.assets.agent.small" class="w-14 h-14 rounded-2xl border border-white/10">
+                                <div>
+                                    <h4 class="text-xl font-black italic uppercase leading-none">{{ match.metadata.map
+                                        }}</h4>
+                                    <span class="text-[9px] font-black text-gray-500 tracking-widest">{{
+                                        match.metadata.mode }}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex-1 text-center">
+                                <p [class]="didIWin(match) ? 'text-green-500' : 'text-red-500'"
+                                    class="text-2xl font-black italic">
+                                    {{ match.teams.blue.rounds_won }} - {{ match.teams.red.rounds_won }}
+                                </p>
+                                <span class="text-[9px] uppercase text-gray-600 font-bold tracking-widest italic">Final
+                                    Score</span>
+                            </div>
+
+                            <div class="flex gap-12">
+                                <div class="text-left">
+                                    <p class="text-white font-black italic text-lg leading-none">{{ me.stats.kills }}/{{
+                                        me.stats.deaths }}/{{ me.stats.assists }}</p>
+                                    <span class="text-[9px] font-black text-gray-500 uppercase">KDA Ratio</span>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-indigo-400 font-black italic text-lg leading-none">{{
+                                        calculateHS(me.stats) }}%</p>
+                                    <span class="text-[9px] font-black text-gray-500 uppercase">Precision</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
         </div>
     </main>
 </div>
+<app-footer />

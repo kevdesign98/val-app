@@ -36,5 +36,6 @@ export const routes: Routes = [
   { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent },
   { path: "dashboard/weapons-list-dashboard", component: WeaponsListDashboardComponent },
   { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent },
+  { path: 'dashboard/matches/:name/:tag', component: MatchesDashboardComponent },
   { path: "**", component: NotFoundComponent },
 ];

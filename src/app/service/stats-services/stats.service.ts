@@ -96,4 +96,9 @@ export class StatsService {
       hs: totalShots > 0 ? Math.round((totalHeadshots / totalShots) * 100) : 0
     };
   }
+
+
+  getSeasons(): Observable<any> {
+    return this.http.get('https://valorant-api.com/v1/seasons');
+  }
 }

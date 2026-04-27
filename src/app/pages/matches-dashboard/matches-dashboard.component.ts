@@ -31,6 +31,7 @@ export class MatchesDashboardComponent implements OnInit {
   selectedAct: string = 'e9a2'; // Esempio: Episodio 9 Atto 2
   availableActs: any[] = []; // Da popolare con una chiamata API
 
+
   selectAct(actId: string) {
     this.currentAct = actId;
     this.showActMenu = false;
@@ -86,6 +87,26 @@ export class MatchesDashboardComponent implements OnInit {
       // Creiamo una mappa: { 21: 'url_icona_platino', 22: 'url_icona_platino2', ... }
       lastEpisode.tiers.forEach((t: any) => {
         this.rankMap[t.tier] = t.largeIcon;
+      });
+
+      this.statsService.getSeasons().subscribe({
+        next: (res: any) => {
+          console.log('Tutte le stagioni:', res.data); // Controlla in console!
+
+          // Filtriamo: prendiamo solo gli "Act" che hanno un nome e non sono "Border"
+          this.availableActs = res.data
+            .filter((s: any) =>
+              s.type === 'act' &&
+              !s.displayName.includes('Border')
+            )
+            .reverse(); // Mette i più recenti in alto
+
+          if (this.availableActs.length > 0) {
+            // Imposta di default l'atto più recente se selectedAct è vuoto
+            this.selectedAct = this.availableActs[0].displayName;
+          }
+        },
+        error: (err) => console.error('Errore nel recupero atti:', err)
       });
     });
   }

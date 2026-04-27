@@ -59,23 +59,36 @@
                     Unrated
                 </button>
             </div>
-
             <div class="relative group">
                 <button
-                    class="bg-[#101216] border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-4 hover:border-indigo-500/50 transition-all">
+                    class="bg-[#101216] border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-4 group-hover:border-indigo-500/50 transition-all">
                     <div class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-300">Active Act: <span
-                            class="text-white">{{ selectedAct }}</span></span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-300">
+                        Act: <span class="text-white">{{ selectedAct || 'Loading...' }}</span>
+                    </span>
                     <i
                         class="fas fa-chevron-down text-[8px] text-gray-600 group-hover:rotate-180 transition-transform"></i>
                 </button>
 
-                <div
-                    class="absolute right-0 top-full mt-2 w-56 bg-[#101216] border border-white/5 rounded-2xl hidden group-hover:block z-50 shadow-2xl overflow-hidden backdrop-blur-xl">
-                    <button *ngFor="let act of ['Episode 9: Act 2', 'Episode 9: Act 1', 'Episode 8: Act 3']"
-                        class="w-full px-5 py-4 text-left text-[10px] font-bold uppercase hover:bg-indigo-500/10 transition-colors border-b border-white/5 last:border-0 text-gray-400 hover:text-white">
-                        {{ act }}
-                    </button>
+                <div *ngIf="availableActs.length > 0"
+                    class="absolute right-0 top-full w-64 pt-2 hidden group-hover:block z-[100] animate-in fade-in slide-in-from-top-1 duration-200">
+
+                    <div
+                        class="bg-[#101216] border border-white/5 rounded-2xl shadow-2xl overflow-y-auto max-h-[300px] backdrop-blur-xl">
+                        <button *ngFor="let act of availableActs" (click)="changeAct(act)"
+                            class="w-full px-5 py-4 text-left flex justify-between items-center hover:bg-indigo-500/10 transition-colors border-b border-white/5 last:border-0">
+
+                            <span class="text-[10px] font-black uppercase tracking-widest"
+                                [class.text-indigo-400]="selectedAct === act.displayName"
+                                [class.text-gray-400]="selectedAct !== act.displayName">
+                                {{ act.displayName }}
+                            </span>
+
+                            <div *ngIf="selectedAct === act.displayName"
+                                class="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]">
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

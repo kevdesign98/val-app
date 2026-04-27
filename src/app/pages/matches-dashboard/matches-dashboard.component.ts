@@ -27,6 +27,9 @@ export class MatchesDashboardComponent implements OnInit {
   // Filtro Act
   currentAct: string = 'V26: A2';
   showActMenu: boolean = false;
+  selectedMode: string = 'all'; // 'all', 'competitive', 'unrated', 'deathmatch'
+  selectedAct: string = 'e9a2'; // Esempio: Episodio 9 Atto 2
+  availableActs: any[] = []; // Da popolare con una chiamata API
 
   selectAct(actId: string) {
     this.currentAct = actId;
@@ -35,6 +38,18 @@ export class MatchesDashboardComponent implements OnInit {
   }
 
   constructor(private statsService: StatsService, private route: ActivatedRoute) { }
+
+  get filteredMatches() {
+    if (this.selectedMode === 'all') return this.allMatches;
+    return this.allMatches.filter(m => m.metadata.mode.toLowerCase() === this.selectedMode.toLowerCase());
+  }
+
+  // Funzione per cambiare atto (qui dovresti richiamare il service per nuovi dati)
+  changeAct(actId: string) {
+    this.selectedAct = actId;
+    // Richiama la funzione di caricamento match passando l'actId
+    // es: this.loadMatchHistory(actId);
+  }
 
   fetchMatches() {
     this.isLoading = true;

@@ -7,8 +7,9 @@
             <div>
                 <div class="flex items-center gap-3 mb-3">
                     <span
-                        class="px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[9px] font-black uppercase tracking-[0.2em]">Tactical
-                        Analysis</span>
+                        class="px-2 py-0.5 rounded bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[9px] font-black uppercase tracking-[0.2em]">
+                        Tactical Analysis
+                    </span>
                     <span class="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Data Sync: Live</span>
                 </div>
                 <h1
@@ -43,6 +44,42 @@
             </div>
         </section>
 
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+            <div class="flex bg-[#101216] border border-white/5 p-1 rounded-2xl">
+                <button (click)="selectedMode = 'all'" [class.bg-indigo-500]="selectedMode === 'all'"
+                    class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">
+                    All Matches
+                </button>
+                <button (click)="selectedMode = 'competitive'" [class.bg-indigo-500]="selectedMode === 'competitive'"
+                    class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">
+                    Competitive
+                </button>
+                <button (click)="selectedMode = 'unrated'" [class.bg-indigo-500]="selectedMode === 'unrated'"
+                    class="px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">
+                    Unrated
+                </button>
+            </div>
+
+            <div class="relative group">
+                <button
+                    class="bg-[#101216] border border-white/5 px-6 py-3 rounded-2xl flex items-center gap-4 hover:border-indigo-500/50 transition-all">
+                    <div class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-gray-300">Active Act: <span
+                            class="text-white">{{ selectedAct }}</span></span>
+                    <i
+                        class="fas fa-chevron-down text-[8px] text-gray-600 group-hover:rotate-180 transition-transform"></i>
+                </button>
+
+                <div
+                    class="absolute right-0 top-full mt-2 w-56 bg-[#101216] border border-white/5 rounded-2xl hidden group-hover:block z-50 shadow-2xl overflow-hidden backdrop-blur-xl">
+                    <button *ngFor="let act of ['Episode 9: Act 2', 'Episode 9: Act 1', 'Episode 8: Act 3']"
+                        class="w-full px-5 py-4 text-left text-[10px] font-bold uppercase hover:bg-indigo-500/10 transition-colors border-b border-white/5 last:border-0 text-gray-400 hover:text-white">
+                        {{ act }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="space-y-6">
             <h2 class="text-xs font-black uppercase tracking-[0.3em] text-gray-500 flex items-center gap-3 mb-6">
                 <span class="w-8 h-[1px] bg-gray-800"></span> Combat History
@@ -53,7 +90,7 @@
             </div>
 
             <ng-container *ngIf="!isLoading">
-                <div *ngFor="let match of allMatches"
+                <div *ngFor="let match of filteredMatches"
                     class="group relative bg-[#101216] border border-white/5 rounded-3xl transition-all hover:border-indigo-500/30 overflow-hidden mb-4 shadow-xl"
                     [class.border-indigo-500]="openedMatchId === match.metadata.matchid">
 
@@ -97,10 +134,8 @@
                                     <div class="flex flex-col items-center gap-1">
                                         <img *ngIf="rankMap[me.currenttier]" [src]="rankMap[me.currenttier]"
                                             class="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(99,102,241,0.5)]">
-
                                         <div *ngIf="!rankMap[me.currenttier]"
                                             class="w-8 h-8 bg-white/5 animate-pulse rounded-full"></div>
-
                                         <span class="text-[7px] font-black text-gray-500 uppercase tracking-tighter">{{
                                             me.currenttier_patched }}</span>
                                     </div>
@@ -124,7 +159,6 @@
                         <div *ngIf="openedMatchId === match.metadata.matchid"
                             class="relative z-10 border-t border-white/5 bg-black/40 p-8 animate-in fade-in duration-300">
                             <div class="grid grid-cols-1 xl:grid-cols-5 gap-8">
-
                                 <div
                                     class="xl:col-span-1 bg-[#0c0e12] border border-white/5 p-6 rounded-2xl shadow-inner">
                                     <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-4">
@@ -148,7 +182,6 @@
                                 </div>
 
                                 <div class="xl:col-span-4 grid grid-cols-1 md:grid-cols-2 gap-10">
-
                                     <div class="space-y-3">
                                         <p
                                             class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2 px-2 flex justify-between">
@@ -157,7 +190,6 @@
                                         </p>
                                         <div *ngFor="let p of match.players.blue"
                                             [class.bg-indigo-500]="p.name.toLowerCase() === name.toLowerCase()"
-                                            [class.border-indigo-500]="p.name.toLowerCase() === name.toLowerCase()"
                                             class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-white/10 transition-all bg-white/[0.02]">
                                             <img [src]="p.assets.agent.small"
                                                 class="w-10 h-10 rounded-lg shadow-md border border-white/5">
@@ -167,13 +199,12 @@
                                                     {{ p.name }}<span class="text-gray-600 font-normal">#{{ p.tag
                                                         }}</span>
                                                 </span>
-                                                <span class="text-[9px] text-gray-500 font-bold">KDA: {{ p.stats.kills
-                                                    }}/{{ p.stats.deaths }}/{{ p.stats.assists }}</span>
+                                                <span class="text-[9px] text-gray-500 font-bold uppercase">KDA: {{
+                                                    p.stats.kills }}/{{ p.stats.deaths }}/{{ p.stats.assists }}</span>
                                             </div>
                                             <div class="flex flex-col items-end">
                                                 <img *ngIf="rankMap[p.currenttier]" [src]="rankMap[p.currenttier]"
                                                     class="w-6 h-6 object-contain" [title]="p.currenttier_patched">
-
                                                 <span class="text-[8px] font-mono text-gray-600">{{ p.stats.score
                                                     }}</span>
                                             </div>
@@ -188,7 +219,6 @@
                                         </p>
                                         <div *ngFor="let p of match.players.red"
                                             [class.bg-rose-500]="p.name.toLowerCase() === name.toLowerCase()"
-                                            [class.border-rose-500]="p.name.toLowerCase() === name.toLowerCase()"
                                             class="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-white/10 transition-all bg-white/[0.02] flex-row-reverse text-right">
                                             <img [src]="p.assets.agent.small"
                                                 class="w-10 h-10 rounded-lg shadow-md border border-white/5">
@@ -198,19 +228,17 @@
                                                     {{ p.name }}<span class="text-gray-600 font-normal">#{{ p.tag
                                                         }}</span>
                                                 </span>
-                                                <span class="text-[9px] text-gray-500 font-bold">KDA: {{ p.stats.kills
-                                                    }}/{{ p.stats.deaths }}/{{ p.stats.assists }}</span>
+                                                <span class="text-[9px] text-gray-500 font-bold uppercase">KDA: {{
+                                                    p.stats.kills }}/{{ p.stats.deaths }}/{{ p.stats.assists }}</span>
                                             </div>
-                                            <div class="flex flex-col items-end">
+                                            <div class="flex flex-col items-start">
                                                 <img *ngIf="rankMap[p.currenttier]" [src]="rankMap[p.currenttier]"
                                                     class="w-6 h-6 object-contain" [title]="p.currenttier_patched">
-
-                                                <span class="text-[8px] font-mono text-gray-600">{{
-                                                    p.stats.score }}</span>
+                                                <span class="text-[8px] font-mono text-gray-600">{{ p.stats.score
+                                                    }}</span>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

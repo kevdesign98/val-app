@@ -22,6 +22,7 @@ export class MatchesDashboardComponent implements OnInit {
   kdRatio: string = '0.00';
   hsPrecision: number = 0;
   openedMatchId: string | null = null;
+  rankMap: { [key: number]: string } = {};
 
   // Filtro Act
   currentAct: string = 'V26: A2';
@@ -62,6 +63,15 @@ export class MatchesDashboardComponent implements OnInit {
       if (this.name && this.tag) {
         this.fetchMatches(); // <--- Nome aggiornato qui
       }
+    });
+    this.statsService.getRankTiers().subscribe((tiersRes: any) => {
+      // Prendiamo l'ultimo episodio disponibile
+      const lastEpisode = tiersRes.data[tiersRes.data.length - 1];
+
+      // Creiamo una mappa: { 21: 'url_icona_platino', 22: 'url_icona_platino2', ... }
+      lastEpisode.tiers.forEach((t: any) => {
+        this.rankMap[t.tier] = t.largeIcon;
+      });
     });
   }
 
@@ -109,4 +119,6 @@ export class MatchesDashboardComponent implements OnInit {
       this.openedMatchId = matchId; // Altrimenti apriamo quello cliccato
     }
   }
+
+
 }

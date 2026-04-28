@@ -24,38 +24,89 @@ export class MatchesDashboardComponent implements OnInit {
   openedMatchId: string | null = null;
   rankMap: { [key: number]: string } = {};
 
-  // Filtro Act
-  currentAct: string = 'V26: A2';
-  showActMenu: boolean = false;
-  selectedMode: string = 'all'; // 'all', 'competitive', 'unrated', 'deathmatch'
-  selectedAct: string = 'e9a2'; // Esempio: Episodio 9 Atto 2
-  availableActs: any[] = []; // Da popolare con una chiamata API
-
-
-  selectAct(actId: string) {
-    this.currentAct = actId;
-    this.showActMenu = false;
-    this.fetchMatches(); // Ricarica i dati con il nuovo filtro
-  }
+  // Filtri e Menu
+  selectedMode: string = 'all';
+  selectedAct: string = '';
+  availableActs: any[] = [];
+  isActMenuOpen: boolean = false; // Gestisce l'apertura del menu a click
 
   constructor(private statsService: StatsService, private route: ActivatedRoute) { }
 
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.name = params['name'];
+      this.tag = params['tag'];
+
+      if (this.name && this.tag) {
+        this.fetchMatches();
+      }
+    });
+
+    // Caricamento Ranghi
+    this.statsService.getRankTiers().subscribe((tiersRes: any) => {
+      const lastEpisode = tiersRes.data[tiersRes.data.length - 1];
+      lastEpisode.tiers.forEach((t: any) => {
+        this.rankMap[t.tier] = t.largeIcon;
+      });
+
+      // Caricamento Stagioni (Atti)
+      this.statsService.getSeasons().subscribe({
+        next: (res: any) => {
+          // Filtriamo gli atti e usiamo il 'title' (es: Episode 9 // Act 2) se disponibile
+          this.availableActs = res.data
+            .filter((s: any) => s.type?.includes('Act') || (s.displayName.startsWith('ACT') && !s.displayName.includes('Border')))
+            .map((s: any) => ({
+              id: s.uuid,
+              displayName: s.title || s.displayName // Preferisce il titolo completo
+            }))
+            .reverse();
+
+          if (this.availableActs.length > 0) {
+            this.selectedAct = this.availableActs[0].displayName;
+          }
+        },
+        error: (err) => console.error('Errore nel recupero atti:', err)
+      });
+    });
+  }
+
+  // Logica Filtri
   get filteredMatches() {
     if (this.selectedMode === 'all') return this.allMatches;
     return this.allMatches.filter(m => m.metadata.mode.toLowerCase() === this.selectedMode.toLowerCase());
   }
 
-  // Funzione per cambiare atto (qui dovresti richiamare il service per nuovi dati)
-  changeAct(actId: string) {
-    this.selectedAct = actId;
-    // Richiama la funzione di caricamento match passando l'actId
-    // es: this.loadMatchHistory(actId);
+  get weaponStats() {
+    const stats: any = {};
+
+    this.allMatches.forEach(match => {
+      const me = match.players.all_players.find((p: any) => p.name.toLowerCase() === this.name.toLowerCase());
+      if (!me) return;
+
+      // Nota: Henrik API v3 fornisce le kill dettagliate
+      match.kills.forEach((kill: any) => {
+        if (kill.killer_display_name.toLowerCase() === (this.name + '#' + this.tag).toLowerCase()) {
+          const weaponName = kill.damage_weapon_name || 'Ability';
+          if (!stats[weaponName]) {
+            stats[weaponName] = { name: weaponName, kills: 0, icon: kill.damage_weapon_assets?.display_icon };
+          }
+          stats[weaponName].kills++;
+        }
+      });
+    });
+
+    // Trasformiamo in array e ordiniamo per kill
+    return Object.values(stats).sort((a: any, b: any) => b.kills - a.kills).slice(0, 5);
+  }
+
+  changeAct(act: any) {
+    this.selectedAct = act.displayName;
+    this.isActMenuOpen = false; // Chiude il menu
+    this.fetchMatches(); // Ricarica i dati per quell'atto
   }
 
   fetchMatches() {
     this.isLoading = true;
-
-    // Usiamo il metodo del tuo StatsService
     this.statsService.getDashboardData('eu', this.name, this.tag).subscribe({
       next: (data) => {
         this.allMatches = data.matches;
@@ -71,65 +122,7 @@ export class MatchesDashboardComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.name = params['name'];
-      this.tag = params['tag'];
-
-      if (this.name && this.tag) {
-        this.fetchMatches(); // <--- Nome aggiornato qui
-      }
-    });
-    this.statsService.getRankTiers().subscribe((tiersRes: any) => {
-      // Prendiamo l'ultimo episodio disponibile
-      const lastEpisode = tiersRes.data[tiersRes.data.length - 1];
-
-      // Creiamo una mappa: { 21: 'url_icona_platino', 22: 'url_icona_platino2', ... }
-      lastEpisode.tiers.forEach((t: any) => {
-        this.rankMap[t.tier] = t.largeIcon;
-      });
-
-      this.statsService.getSeasons().subscribe({
-        next: (res: any) => {
-          console.log('Tutte le stagioni:', res.data); // Controlla in console!
-
-          // Filtriamo: prendiamo solo gli "Act" che hanno un nome e non sono "Border"
-          this.availableActs = res.data
-            .filter((s: any) =>
-              s.type === 'act' &&
-              !s.displayName.includes('Border')
-            )
-            .reverse(); // Mette i più recenti in alto
-
-          if (this.availableActs.length > 0) {
-            // Imposta di default l'atto più recente se selectedAct è vuoto
-            this.selectedAct = this.availableActs[0].displayName;
-          }
-        },
-        error: (err) => console.error('Errore nel recupero atti:', err)
-      });
-    });
-  }
-
-  loadData() {
-    this.isLoading = true;
-    // Chiamata al tuo nuovo metodo del service
-    this.statsService.getDashboardData('eu', this.name, this.tag).subscribe({
-      next: (data) => {
-        this.allMatches = data.matches;
-        this.winRate = data.stats.winrate;
-        this.kdRatio = data.stats.kd;
-        this.hsPrecision = data.stats.hs;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error("Errore API:", err);
-        this.isLoading = false;
-      }
-    });
-  }
-
-  // Helper per trovare TE STESSO tra i 10 giocatori del match
+  // Helper Stats
   getMyStats(match: any) {
     return match.players.all_players.find((p: any) =>
       p.name.toLowerCase() === this.name.toLowerCase()
@@ -149,12 +142,6 @@ export class MatchesDashboardComponent implements OnInit {
   }
 
   toggleMatchDetails(matchId: string) {
-    if (this.openedMatchId === matchId) {
-      this.openedMatchId = null; // Se è già aperto, lo chiudiamo
-    } else {
-      this.openedMatchId = matchId; // Altrimenti apriamo quello cliccato
-    }
+    this.openedMatchId = this.openedMatchId === matchId ? null : matchId;
   }
-
-
 }

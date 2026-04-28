@@ -1,1 +1,59 @@
-<p>weapons-list-dashboard works!</p>
+<app-sidebar />
+
+<main class="p-10 bg-[#08090B] min-h-screen text-white">
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-12">
+            <h1 class="text-5xl font-black italic uppercase tracking-tighter text-indigo-500">Arsenal Analytics</h1>
+            <p class="text-gray-500 font-bold uppercase text-[10px] tracking-[0.3em]">Complete ballistic performance
+                report</p>
+        </header>
+
+        <div *ngIf="isLoading" class="text-center py-20">
+            <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-indigo-500 mx-auto"></div>
+            <p class="mt-4 text-gray-400">Summoning weapon data...</p>
+        </div>
+
+        <div *ngIf="!isLoading && fullArsenalStats.length === 0" class="text-center py-20">
+            <p class="text-gray-500 text-lg">No weapon data found for this player.</p>
+        </div>
+
+        <div *ngIf="!isLoading && fullArsenalStats.length > 0"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div *ngFor="let weapon of fullArsenalStats"
+                class="bg-[#101216] border border-white/5 p-6 rounded-[2rem] hover:border-indigo-500/50 transition-all group">
+
+                <div class="h-20 flex items-center justify-center mb-6">
+                    <img [src]="weapon.icon"
+                        class="max-h-full object-contain filter drop-shadow-2xl group-hover:scale-110 transition-transform">
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <h3 class="text-lg font-black uppercase italic">{{ weapon.name }}</h3>
+                            <p class="text-[9px] text-gray-500 font-bold uppercase">Weapon Class</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-2xl font-black italic text-indigo-400">{{ weapon.kills }}</span>
+                            <p class="text-[9px] text-gray-500 font-bold uppercase">Kills</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[8px] font-black uppercase tracking-widest text-gray-400">
+                            <span>Usage Intensity</span>
+                            <span>{{ weapon.usageRate }}%</span>
+                        </div>
+                        <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]"
+                                [style.width.%]="weapon.usageRate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<app-footer />

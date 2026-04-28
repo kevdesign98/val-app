@@ -101,4 +101,12 @@ export class StatsService {
   getSeasons(): Observable<any> {
     return this.http.get('https://valorant-api.com/v1/seasons');
   }
+  getPlayerMatches(region: string, name: string, tag: string): Observable<any> {
+    // Assicurati che l'URL sia quello corretto della tua API (Henrik o simile)
+    const url = `https://api.henrikdev.xyz/valorant/v3/matches/${region}/${name}/${tag}`;
+
+    return this.http.get<any>(url).pipe(
+      map(res => res.data) // Estrae l'array dei match dai dati dell'API
+    );
+  }
 }

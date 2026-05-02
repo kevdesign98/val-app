@@ -18,6 +18,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   loading = false;
   errorMessage = '';
+  showHelpModal = false;
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +30,11 @@ export class LoginComponent {
       riotId: ['', Validators.required],
       tagline: ['', Validators.required]
     });
+  }
+
+  toggleHelpModal() {
+    this.showHelpModal = !this.showHelpModal;
+
   }
 
   onSubmit() {

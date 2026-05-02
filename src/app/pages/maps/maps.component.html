@@ -13,7 +13,7 @@
       Master the <span class="text-indigo-600">Maps</span>
     </h1>
     <p class="text-lg text-gray-400 max-w-xl mx-auto font-medium italic opacity-80">
-      Prepare for every battlefield. From the depths of Abyss to the heights of Ascent.
+      Prepare for every battlefield.<br>From the depths of Abyss to the heights of Ascent.
     </p>
   </div>
 </div>
@@ -33,10 +33,11 @@
 
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
-        <div class="absolute inset-0 p-10 flex flex-col justify-end">
-          <div class="flex justify-between items-end">
+        <div class="absolute inset-0 p-10 flex flex-col justify-end cursor-pointer"
+          [routerLink]="['/maps-strat', map.uuid]">
+          <div class=" flex justify-between items-end">
             <div>
-              <span class="text-indigo-500 font-mono text-[10px] tracking-widest uppercase mb-1 block">Coordinate:
+              <span class="text-indigo-500 text-[12px] tracking-widest uppercase mb-1 block">Coordinate:
                 {{map.coordinates || 'Unknown'}}</span>
               <h2
                 class="text-5xl font-black text-white uppercase italic tracking-tighter leading-none group-hover:text-indigo-400 transition-colors">
@@ -48,13 +49,6 @@
               class="p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl hover:bg-indigo-600 hover:border-indigo-500 transition-all group/btn">
               <span class="text-white group-hover:translate-x-1 inline-block transition-transform">→</span>
             </button>
-          </div>
-        </div>
-
-        <div class="absolute top-6 left-6">
-          <div class="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-lg">
-            <span class="text-[8px] font-bold text-white/60 tracking-[0.3em] uppercase italic">Tactical_Scan //
-              OK</span>
           </div>
         </div>
       </div>

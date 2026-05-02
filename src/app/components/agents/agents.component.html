@@ -37,8 +37,8 @@
         <div class="relative z-10 flex items-center gap-3 mb-2">
           <img *ngIf="agent.role?.displayIcon" [src]="agent.role.displayIcon" class="w-4 h-4 opacity-50 invert"
             alt="role">
-          <span class="text-[10px] font-mono text-indigo-400 uppercase tracking-widest">{{ agent.role?.displayName ||
-            'Unknown' }}</span>
+          <span class="text-[11px] font-semibold text-indigo-400 uppercase tracking-widest">{{
+            agent.role?.displayName || 'Unknown' }}</span>
         </div>
 
         <div class="relative flex-1 flex items-center justify-center z-10 cursor-pointer"

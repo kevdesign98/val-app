@@ -1,13 +1,14 @@
 <div class="relative z-10 w-full md:w-4/5 mx-auto overflow-visible">
-  <p-carousel [value]="agents" [numVisible]="1" [numScroll]="1" [circular]="true" 
-              [autoplayInterval]="4000" [responsiveOptions]="responsiveOptions">
+  <p-carousel [value]="agents" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="4000"
+    [responsiveOptions]="responsiveOptions">
     <ng-template pTemplate="item" let-agent>
-      
-      <div class="agent-stage relative h-[500px] flex items-center justify-center cursor-pointer" 
-           [routerLink]="['/agents', agent.uuid]">
-        
+
+      <div class="agent-stage relative h-[500px] flex items-center justify-center cursor-pointer"
+        [routerLink]="['/agents', agent.uuid]">
+
         <div class="absolute inset-0 flex items-center justify-center z-0 select-none">
-          <h2 class="text-[5.5rem] md:text-[12rem] font-black uppercase text-white/[0.03] tracking-tighter leading-none italic">
+          <h2
+            class="text-[5.5rem] md:text-[12rem] font-black uppercase text-white/[0.03] tracking-tighter leading-none italic">
             {{ agent.displayName }}
           </h2>
         </div>
@@ -15,25 +16,11 @@
         <div class="absolute bottom-10 w-64 h-12 bg-indigo-600/20 blur-2xl rounded-[100%] z-1"></div>
 
         <div class="relative z-10 transform transition-all duration-700 hover:scale-110">
-          <img [src]="agent.fullPortrait" 
-               alt="{{ agent.displayName }}"
-               class="mx-auto h-[450px] object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] agent-portrait"
-               loading="lazy" />
-        </div>
-
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-center z-20">
-          <div class="flex items-center justify-center space-x-2 mb-2">
-            <img [src]="agent.role?.displayIcon" class="w-5 h-5 opacity-50">
-            <span class="text-[10px] font-bold tracking-[0.4em] text-indigo-400 uppercase">
-              {{ agent.role?.displayName }}
-            </span>
-          </div>
-          <!-- <h3 class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
-            {{ agent.displayName }}
-          </h3> -->
+          <img [src]="agent.fullPortrait" alt="{{ agent.displayName }}"
+            class="mx-auto h-[450px] object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] agent-portrait"
+            loading="lazy" />
         </div>
       </div>
-
     </ng-template>
   </p-carousel>
 </div>

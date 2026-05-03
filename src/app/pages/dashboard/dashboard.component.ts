@@ -2,17 +2,17 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular
 import { StatsService } from '../../service/stats-services/stats.service';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { SidebarModule } from 'primeng/sidebar';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
-import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FooterComponent, BaseChartDirective, SidebarModule, RouterLink, SidebarComponent],
+  imports: [CommonModule, FooterComponent, BaseChartDirective, SidebarModule, SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
 
   // Filtri Modalità
 
-  readonly MODES = ['Competitive', 'Unrated', 'Deathmatch', 'Team Deathmatch', 'Spike Rush', 'Premier'];
+  readonly MODES = ['Competitive', 'Unrated', 'Deathmatch', 'Team Deathmatch', 'Spike Rush', 'Premier', 'Swiftplay'];
 
   currentMode: string = 'Competitive';
 
@@ -169,8 +169,7 @@ export class DashboardComponent implements OnInit {
 
     // Inizializzazione predefinita
 
-    this.selectMode('Competitive');
-
+    this.selectMode('All Matches');
   }
 
 
@@ -181,71 +180,49 @@ export class DashboardComponent implements OnInit {
    */
 
   selectMode(mode: string) {
-
     this.currentMode = mode;
-
     this.aiAnalysis = null;
-
     this.loadingAI = true;
 
+    // 1. Decidiamo cosa inviare all'API: se è "All Matches", mandiamo stringa vuota o null
+    const apiQueryMode = (mode === 'All Matches') ? '' : mode;
 
-    this.stats.getMatchHistory(this.name, this.tag, mode).subscribe({
-
+    this.stats.getMatchHistory(this.name, this.tag, apiQueryMode).subscribe({
       next: (res: any) => {
-
+        console.log("Risposta API Henrik:", res); // GUARDA LA CONSOLE (F12)
         this.allMatches = res.data || [];
 
 
         const filtered = this.allMatches.filter(m => {
-
-          // FIX: Usiamo l'optional chaining e il fallback '' per evitare l'errore se metadata o mode sono null
-
           const apiMode = (m.metadata?.mode || '').toLowerCase().trim();
-
           const selected = (mode || '').toLowerCase().trim();
 
-
-          // Se apiMode è rimasta vuota (perché il dato era null), saltiamo il match
+          // 2. Se l'utente ha scelto "All Matches", non filtriamo nulla nel frontend
+          if (selected === 'all matches') return true;
 
           if (!apiMode) return false;
 
-
+          // 3. Gestione casi speciali
           if (selected === 'team deathmatch') return apiMode.includes('team');
-
           if (selected === 'deathmatch') return apiMode === 'deathmatch' && !apiMode.includes('team');
 
-
+          // 4. Per Swiftplay e altri: rimuove gli spazi (es. "swift play" -> "swiftplay")
           return apiMode.includes(selected.replace(/\s+/g, ''));
-
         });
 
-
         if (filtered.length > 0) {
-
           this.calculateProfessionalStats(filtered);
-
         } else {
-
           this.resetStats();
-
         }
-
         this.loadingAI = false;
-
       },
-
       error: (err) => {
-
         console.error("Errore recupero match:", err);
-
         this.resetStats();
-
         this.loadingAI = false;
-
       }
-
     });
-
   }
 
 
@@ -302,8 +279,9 @@ export class DashboardComponent implements OnInit {
 
     matchData.forEach(match => {
 
-      const me = match.players?.all_players?.find((p: any) => p.name.toLowerCase() === this.name.toLowerCase());
-
+      const me = match.players?.all_players?.find((p: any) =>
+        p.name.toLowerCase().trim() === this.name.toLowerCase().trim()
+      );
       if (!me) return;
 
 

@@ -3,7 +3,7 @@ import {
 } from "./chunk-3OV72XIM.js";
 
 // node_modules/lenis/dist/lenis.mjs
-var version = "1.3.21";
+var version = "1.3.23";
 function clamp(min, input, max) {
   return Math.max(min, Math.min(input, max));
 }
@@ -42,7 +42,7 @@ var Animate = class {
       this.value = this.from + (this.to - this.from) * easedProgress;
     } else if (this.lerp) {
       this.value = damp(this.value, this.to, this.lerp * 60, deltaTime);
-      if (Math.round(this.value) === this.to) {
+      if (Math.round(this.value) === Math.round(this.to)) {
         this.value = this.to;
         completed = true;
       }
@@ -588,7 +588,7 @@ var Lenis = class {
     if (event.cancelable) event.preventDefault();
     const isSyncTouch = isTouch && this.options.syncTouch;
     const hasTouchInertia = isTouch && event.type === "touchend";
-    if (hasTouchInertia) delta = Math.sign(this.velocity) * Math.abs(this.velocity) ** this.options.touchInertiaExponent;
+    if (hasTouchInertia) delta = Math.sign(delta) * Math.abs(this.velocity) ** this.options.touchInertiaExponent;
     this.scrollTo(this.targetScroll + delta, __spreadValues({
       programmatic: false
     }, isSyncTouch ? {
@@ -747,7 +747,6 @@ var Lenis = class {
     }
     if (typeof target !== "number") return;
     target += adjustedOffset;
-    target = Math.round(target);
     if (this.options.infinite) {
       if (programmatic) {
         this.targetScroll = this.animatedScroll = this.scroll;
@@ -992,10 +991,12 @@ var Lenis = class {
   }
   updateClassName() {
     this.cleanUpClassName();
-    this.rootElement.className = `${this.rootElement.className} ${this.className}`.trim();
+    this.className.split(" ").forEach((className) => {
+      this.rootElement.classList.add(className);
+    });
   }
   cleanUpClassName() {
-    this.rootElement.className = this.rootElement.className.replace(/lenis(-\w+)?/g, "").trim();
+    for (const className of Array.from(this.rootElement.classList)) if (className === "lenis" || className.startsWith("lenis-")) this.rootElement.classList.remove(className);
   }
 };
 export {

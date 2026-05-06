@@ -39,9 +39,9 @@ export class AuthservicesService {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('vlr_user');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/Home']);
   }
 
   // isLoggedIn(): boolean {

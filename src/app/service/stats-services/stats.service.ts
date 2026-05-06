@@ -18,25 +18,31 @@ export class StatsService {
     });
   }
 
-  // Chiamate a HenrikDev
   // stats.service.ts
-  getMatchHistory(name: string, tag: string, mode?: string): Observable<any> {
-    // Aggiungiamo il parametro filter per la modalità
-    let url = `https://api.henrikdev.xyz/valorant/v3/matches/eu/${name}/${tag}?size=20`;
+  getMatchHistory(name: string, tag: string, mode: string = ''): Observable<any> {
+    const n = encodeURIComponent(name);
+    const t = encodeURIComponent(tag);
 
-    if (mode) {
-      // Se passiamo 'competitive', l'API cercherà solo le competitive
-      url += `&filter=${mode.toLowerCase()}`;
-    }
+    // Forza 'eu' se region non è passata, per evitare 'undefined' nell'URL
+    const url = `https://api.henrikdev.xyz/valorant/v3/matches/eu/${n}/${t}?size=20${mode ? '&mode=' + mode.toLowerCase() : ''}`;
 
     return this.http.get<any>(url, { headers: this.getVlrHeaders() });
   }
-  getAccount(name: string, tag: string) {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${name}/${tag}`, { headers: this.getVlrHeaders() });
+
+  getAccount(name: string, tag: string): Observable<any> {
+    const n = encodeURIComponent(name);
+    const t = encodeURIComponent(tag);
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/account/${n}/${t}`, {
+      headers: this.getVlrHeaders()
+    });
   }
 
-  getMMR(name: string, tag: string) {
-    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${name}/${tag}`, { headers: this.getVlrHeaders() });
+  getMMR(name: string, tag: string): Observable<any> {
+    const n = encodeURIComponent(name);
+    const t = encodeURIComponent(tag);
+    return this.http.get(`https://api.henrikdev.xyz/valorant/v1/mmr/eu/${n}/${t}`, {
+      headers: this.getVlrHeaders()
+    });
   }
 
   // Chiamata al tuo Coach su Vercel
@@ -65,26 +71,43 @@ export class StatsService {
     );
   }
 
-  private calculateGlobalStats(matches: any[], name: string) {
+
+  /**
+ * Calcola le statistiche globali utilizzando il PUUID se il nome è oscurato,
+ * o il nome come fallback per compatibilità.
+ */
+  private calculateGlobalStats(matches: any[], identifier: string) {
     let totalKills = 0;
     let totalDeaths = 0;
     let totalHeadshots = 0;
     let totalShots = 0;
     let wins = 0;
 
-    matches.forEach(m => {
+    const searchIdentifier = identifier.trim().toLowerCase();
+
+    matches.forEach((m) => {
+      // Cerchiamo il giocatore: 
+      // 1. Per PUUID (più affidabile se i nomi sono vuoti)
+      // 2. Per Nome (come fallback)
       const me = m.players?.all_players?.find((p: any) =>
-        p.name.toLowerCase() === name.toLowerCase()
+        p.puuid === identifier || p.name.toLowerCase().trim() === searchIdentifier
       );
 
       if (me) {
-        totalKills += me.stats.kills;
-        totalDeaths += me.stats.deaths;
-        totalHeadshots += me.stats.headshots;
-        totalShots += (me.stats.headshots + me.stats.bodyshots + me.stats.legshots);
+        // Somma delle statistiche
+        totalKills += me.stats?.kills || 0;
+        totalDeaths += me.stats?.deaths || 0;
+        totalHeadshots += me.stats?.headshots || 0;
 
-        const myTeam = me.team.toLowerCase() as 'red' | 'blue';
-        if (m.teams[myTeam]?.has_won) {
+        // Calcolo colpi totali per la precisione Headshot
+        const shots = (me.stats?.headshots || 0) +
+          (me.stats?.bodyshots || 0) +
+          (me.stats?.legshots || 0);
+        totalShots += shots;
+
+        // Calcolo Winrate
+        const myTeam = me.team?.toLowerCase();
+        if (myTeam && m.teams && m.teams[myTeam]?.has_won === true) {
           wins++;
         }
       }
@@ -97,8 +120,14 @@ export class StatsService {
     };
   }
 
-
   getSeasons(): Observable<any> {
     return this.http.get('https://valorant-api.com/v1/seasons');
+  }
+  getPlayerMatches(region: string, name: string, tag: string): Observable<any> {
+    const url = `https://api.henrikdev.xyz/valorant/v3/matches/${region}/${name}/${tag}`;
+    // AGGIUNTO: { headers: this.getVlrHeaders() }
+    return this.http.get<any>(url, { headers: this.getVlrHeaders() }).pipe(
+      map(res => res.data)
+    );
   }
 }

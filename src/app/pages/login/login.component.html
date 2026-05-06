@@ -12,11 +12,11 @@
         <div class="bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-10 backdrop-blur-3xl shadow-2xl">
 
             <div class="text-center mb-10">
-                <span class="text-indigo-500 font-mono tracking-[0.4em] text-[10px] uppercase block mb-2">
+                <span class="text-indigo-500 font-mono tracking-[0.4em] text-[12px] uppercase block mb-2">
                     // System_Auth
                 </span>
                 <h2 class="text-4xl font-black text-white uppercase italic tracking-tighter">Identity Check</h2>
-                <p class="text-gray-500 text-[10px] font-mono uppercase tracking-widest mt-2">
+                <p class="text-gray-500 text-[12px] font-mono uppercase tracking-widest mt-2">
                     Enter credentials to sync tracker data
                 </p>
             </div>
@@ -56,7 +56,7 @@
                     <div class="flex items-center justify-center gap-2">
                         <span *ngIf="!loading">Authorize Access</span>
                         <ng-container *ngIf="loading">
-                            <span class="animate-pulse">Establishing Connection...</span>
+                            <span class="animate-pulse">Establishing Connection</span>
                             <div class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin">
                             </div>
                         </ng-container>
@@ -65,21 +65,73 @@
             </form>
 
             <div class="mt-8 pt-8 border-t border-white/5 flex flex-col items-center gap-4">
-                <a href="#"
-                    class="text-[10px] text-gray-500 uppercase tracking-widest hover:text-white transition-colors">
+                <span (click)="toggleHelpModal()"
+                    class="cursor-pointer text-[10px] text-gray-500 uppercase tracking-widest hover:text-white transition-colors">
                     Need help with Riot ID?
-                </a>
-                <p class="text-[10px] text-white/20 font-mono italic">Secure Terminal v.2.0.26</p>
+                </span>
+                <p class="text-[12px] text-white font-mono italic">Secure Terminal v.2.0.26</p>
+            </div>
+
+            <div *ngIf="showHelpModal"
+                class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-md bg-black/60 animate-in fade-in duration-300">
+
+                <div class="absolute inset-0" (click)="toggleHelpModal()"></div>
+
+                <div
+                    class="relative bg-[#101216] border border-white/10 w-full max-w-md rounded-[2.5rem] p-8 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-[50px] -mr-16 -mt-16"></div>
+
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <span class="text-indigo-500 text-[10px] font-black uppercase tracking-widest">//
+                                PROTOCOL_INFO</span>
+                            <h2 class="text-2xl font-black italic uppercase tracking-tighter text-white">Riot ID Guide
+                            </h2>
+                        </div>
+                        <button (click)="toggleHelpModal()" class="text-gray-500 hover:text-white transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-6 text-left">
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                            <p class="text-gray-400 text-[15px] leading-relaxed">
+                                Your <span class="text-white text-[15px] font-bold">Riot ID</span> consists of
+                                two parts: your display name and a tagline (a numeric or alphanumeric code).
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <div class="flex-1">
+                                <p class="text-[10px] font-black uppercase text-indigo-400 mb-1">Nickname</p>
+                                <div
+                                    class="bg-black/40 border border-white/5 p-3 rounded-xl text-sm font-mono text-white">
+                                    PlayerOne</div>
+                            </div>
+                            <div class="pt-4 text-gray-600 font-black">+</div>
+                            <div class="w-24">
+                                <p class="text-[10px] font-black uppercase text-indigo-400 mb-1">Tagline</p>
+                                <div
+                                    class="bg-black/40 border border-white/5 p-3 rounded-xl text-sm font-mono text-white">
+                                    EUW</div>
+                            </div>
+                        </div>
+
+                        <p class="text-[15px] text-gray-500 italic">
+                            *Note: Enter the Nickname in the first field and the Tagline (without #) in the second.
+                        </p>
+                    </div>
+
+                    <button (click)="toggleHelpModal()"
+                        class="w-full mt-8 bg-white/5 hover:bg-indigo-500 border border-white/10 hover:border-indigo-400 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300">
+                        Understood
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="mt-6 flex justify-between px-6 opacity-20">
-            <div class="flex flex-col gap-1">
-                <div class="w-12 h-[1px] bg-white"></div>
-                <div class="w-8 h-[1px] bg-white"></div>
-            </div>
-            <div class="font-mono text-[8px] text-white tracking-widest">ENCRYPTED_LINE_ACTIVE</div>
-        </div>
+
     </div>
 </div>
 

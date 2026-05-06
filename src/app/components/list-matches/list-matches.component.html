@@ -47,7 +47,7 @@
               class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
 
               <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">{{ match.utc |
+                <span class="text-indigo-500  text-[12px] uppercase tracking-widest font-bold">{{ match.utc |
                   date: 'MMM d, y' }}</span>
                 <span class="text-2xl font-black italic tracking-tighter">{{ match.utc | date: 'shortTime' }}</span>
               </div>
@@ -59,7 +59,6 @@
                     class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
                     {{ match.teams[0].name }}
                   </span>
-                  <!-- <span class="text-[15px] text-gray-500 font-mono">{{ match.teams[0].country }}</span> -->
                 </div>
 
                 <div class="flex flex-col items-center">
@@ -72,7 +71,6 @@
                     class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
                     {{ match.teams[1].name }}
                   </span>
-                  <!-- <span class="text-[9px] text-gray-500 font-mono">{{ match.teams[1].country }}</span> -->
                 </div>
               </div>
 
@@ -93,8 +91,7 @@
               class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
 
               <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span
-                  class="text-indigo-500 font-mono text-[10px] uppercase tracking-widest font-bold">Final_Result</span>
+                <span class="text-indigo-500 text-[12px] uppercase tracking-widest font-bold">Final_Result</span>
                 <span class="text-[11px] font-bold text-gray-500 uppercase italic">{{ result.ago }}</span>
               </div>
 
@@ -121,8 +118,8 @@
 
               <div class="mt-4 md:mt-0 flex flex-col items-center md:items-end min-w-[150px]">
                 <div class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
-                  <img [src]="result.img" class="w-4 h-4 object-contain" *ngIf="result.img">
-                  <span class="text-[9px] font-mono font-bold uppercase tracking-tighter">{{ result.event }}</span>
+                  <img [src]="result.img" class="w-5 h-5 object-contain" *ngIf="result.img">
+                  <span class="text-[12px] font-bold uppercase tracking-tighter">{{ result.event }}</span>
                 </div>
               </div>
             </div>

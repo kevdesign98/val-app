@@ -33,9 +33,9 @@ The project is constantly being updated, and the login feature is currently a wo
 
 🛠️ Tech Stack
 
-Framework: Angular 18 (standalone components)
+Framework: Angular 18 (standalone components) ---> Update in Angular 19
 
-UI Library: PrimeNG 18
+UI Library: PrimeNG 18 ---> Update in PrimeNG 19
 
 Styling: TailwindCSS
 

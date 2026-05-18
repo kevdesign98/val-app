@@ -2,3 +2,4 @@ node_modules
 # Environments
 src/environments/environments.ts
 src/environments/environments.prod.ts
+.angular

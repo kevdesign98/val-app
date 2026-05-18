@@ -21,23 +21,21 @@ The project is constantly being updated, and the login feature is currently a wo
 
 🔹 TailwindCSS – Utility-first CSS for fast and flexible styling.
 
+🔹 Esports Page
+
 ✨ New Features
 
 🔹 Callouts on the every maps.
 
-🔹 Coach AI – Discover the new coach in the dashboard.
+🔹 Coach AI + Tracker AI – Discover the new coach in the dashboard.
 
 🔹 Crosshairs and line ups - Coming soon!
 
-🔹 Esports Page – Coming soon!
-
-🔹 Tracker AI - Coming soon!
-
 🛠️ Tech Stack
 
-Framework: Angular 18 (standalone components)
+Framework: Angular 18 (standalone components) ---> Update in Angular 19
 
-UI Library: PrimeNG 18
+UI Library: PrimeNG 18 ---> Update in PrimeNG 19
 
 Styling: TailwindCSS
 

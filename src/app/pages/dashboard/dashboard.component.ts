@@ -7,6 +7,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { SidebarModule } from 'primeng/sidebar';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
+import { SeoService } from '../../service/seo-services/seo.service';
 
 
 @Component({
@@ -107,7 +108,7 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  constructor(private stats: StatsService, private router: Router, private eRef: ElementRef) { }
+  constructor(private stats: StatsService, private router: Router, private eRef: ElementRef, private seo: SeoService) { }
 
 
   @HostListener('document:click', ['$event'])
@@ -163,6 +164,12 @@ export class DashboardComponent implements OnInit {
         });
 
       }
+
+      this.seo.generateTags({
+        title: 'La tua Dashboard Analitica',
+        description: 'Scopri il tuo livello di Tilt, l\'efficacia delle tue utility e i consigli dell\'AI su ValApp.',
+        image: 'https://valapp.it/assets/dashboard-preview.png' // Anteprima dinamica
+      });
 
     });
 

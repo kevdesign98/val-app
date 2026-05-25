@@ -18,7 +18,7 @@ import { HttpClient } from "@angular/common/http";
   ],
   templateUrl: "./agents-carousel.component.html",
   styleUrl: "./agents-carousel.component.css",
-  host: { ngSkipHydration: "true" },
+  host: { ngSkipHydration: "true" }
 })
 export class AgentsCarouselComponent implements OnInit {
   agents: any = [];

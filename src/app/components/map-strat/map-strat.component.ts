@@ -12,7 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, RouterLink],
   templateUrl: "./map-strat.component.html",
-  styleUrls: ["./map-strat.component.css"],
+  styleUrls: ["./map-strat.component.css"]
 })
 export class MapStratComponent implements OnInit {
   map: any;

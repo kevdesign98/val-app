@@ -18,7 +18,7 @@ import { GalleriaModule } from "primeng/galleria";
     GalleriaModule,
   ],
   templateUrl: "./agents-details.component.html",
-  styleUrl: "./agents-details.component.css",
+  styleUrl: "./agents-details.component.css"
 })
 export class AgentsDetailsComponent implements OnInit {
   agent: any;

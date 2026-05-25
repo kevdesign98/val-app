@@ -10,7 +10,7 @@ import { FooterComponent } from "../footer/footer.component";
   standalone: true,
   imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
   templateUrl: "./agents.component.html",
-  styleUrl: "./agents.component.css",
+  styleUrl: "./agents.component.css"
 })
 export class AgentsComponent implements OnInit {
   agents: any[] = [];
@@ -18,7 +18,7 @@ export class AgentsComponent implements OnInit {
   roles: string[] = ["All", "Sentinel", "Initiator", "Controller", "Duelist"];
   selectedRole: string = "All";
 
-  constructor(private listAgentsService: ListAgentsService) {}
+  constructor(private listAgentsService: ListAgentsService) { }
 
   ngOnInit() {
     this.listAgentsService.getAgents().subscribe((data) => {

@@ -10,7 +10,7 @@ import { CommonModule } from "@angular/common";
   standalone: true,
   imports: [RouterLink, NavbarComponent, FooterComponent, CommonModule,],
   templateUrl: "./maps.component.html",
-  styleUrl: "./maps.component.css",
+  styleUrl: "./maps.component.css"
 })
 export class MapsComponent implements OnInit {
   maps: any[] = [];

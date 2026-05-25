@@ -10,7 +10,7 @@ import { RouterModule } from "@angular/router";
   standalone: true,
   imports: [CommonModule, NavbarComponent, FooterComponent, RouterModule],
   templateUrl: "./weapons.component.html",
-  styleUrl: "./weapons.component.css",
+  styleUrl: "./weapons.component.css"
 })
 export class WeaponsComponent implements OnInit {
   activeWeaponBg: string = "";
@@ -30,7 +30,7 @@ export class WeaponsComponent implements OnInit {
   // salva la skin equipaggiata per ogni arma
   selectedSkins: { [weaponUuid: string]: any } = {};
 
-  constructor(private weaponsService: WeaponsService) {}
+  constructor(private weaponsService: WeaponsService) { }
 
   ngOnInit(): void {
     this.weaponsService.getWeapons().subscribe((res) => {

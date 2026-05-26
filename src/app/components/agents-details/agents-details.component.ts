@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
-import { CommonModule } from "@angular/common";
+
 import { ActivatedRoute, Route, Router } from "@angular/router";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { BackgroundsAgentsService } from "../../service/backgrounds-agents/backgrounds-agents.service";
@@ -12,11 +12,10 @@ import { GalleriaModule } from "primeng/galleria";
   selector: "app-agents-details",
   standalone: true,
   imports: [
-    CommonModule,
     NavbarComponent,
     FooterComponent,
-    GalleriaModule,
-  ],
+    GalleriaModule
+],
   templateUrl: "./agents-details.component.html",
   styleUrl: "./agents-details.component.css"
 })

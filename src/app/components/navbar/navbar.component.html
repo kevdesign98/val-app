@@ -12,75 +12,82 @@
     </a>
 
     <div class="flex md:order-2 items-center space-x-2">
-      <button *ngIf="showInstallBtn" (click)="installPWA()"
-        class="flex items-center space-x-2 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 font-bold rounded-xl text-[10px] px-3 py-2 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] uppercase tracking-widest mr-1 animate-pulse">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        <span class="hidden lg:inline">Install App</span>
-      </button>
-
-      <ng-container *ngIf="auth.currentUser$ | async as user; else loginBtn">
-        <div class="flex items-center space-x-3">
-          <div class="hidden sm:flex flex-col items-end mr-2">
-            <span class="text-white text-[10px] font-bold leading-none uppercase">{{ user.name }}</span>
-            <span class="text-indigo-400 text-[8px] font-mono leading-none">#{{ user.tag }}</span>
-          </div>
-          <button (click)="logout()"
-            class="text-white bg-red-600/20 hover:bg-red-600 border border-red-600/50 font-semibold rounded-xl text-sm px-4 py-2 transition-all duration-300">
-            Logout
+      @if (showInstallBtn) {
+        <button (click)="installPWA()"
+          class="flex items-center space-x-2 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white border border-indigo-500/30 font-bold rounded-xl text-[10px] px-3 py-2 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.2)] uppercase tracking-widest mr-1 animate-pulse">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span class="hidden lg:inline">Install App</span>
           </button>
-        </div>
-      </ng-container>
+        }
 
-      <ng-template #loginBtn>
-        <a routerLink="/login"
-          class="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-xl text-sm px-5 py-2.5 transition-all duration-300">
-          Login
-        </a>
-      </ng-template>
-
-      <button (click)="isOpen = !isOpen"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden hover:bg-white/10 focus:outline-none transition-colors">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path *ngIf="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7" />
-          <path *ngIf="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-    <div [ngClass]="{ 'hidden': !isOpen, 'flex': isOpen }"
-      class="items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all">
-      <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
-        <li>
-          <a routerLink="/Home" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Home</a>
-        </li>
-        <li>
-          <a routerLink="/weapons" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Weapons</a>
-        </li>
-        <li>
-          <a routerLink="/agents" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Agents</a>
-        </li>
-        <li>
-          <a routerLink="/maps" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Maps</a>
-        </li>
-        <li>
-          <a routerLink="/esports" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Esports</a>
-        </li>
-        <li *ngIf="auth.isLoggedIn()">
-          <a routerLink="/dashboard" routerLinkActive="text-indigo-400"
-            class="nav-link block py-2 px-3 text-indigo-400 font-bold hover:text-white transition-colors animate-pulse">
-            Dashboard
+        @if (auth.currentUser$ | async; as user) {
+          <div class="flex items-center space-x-3">
+            <div class="hidden sm:flex flex-col items-end mr-2">
+              <span class="text-white text-[10px] font-bold leading-none uppercase">{{ user.name }}</span>
+              <span class="text-indigo-400 text-[8px] font-mono leading-none">#{{ user.tag }}</span>
+            </div>
+            <button (click)="logout()"
+              class="text-white bg-red-600/20 hover:bg-red-600 border border-red-600/50 font-semibold rounded-xl text-sm px-4 py-2 transition-all duration-300">
+              Logout
+            </button>
+          </div>
+        } @else {
+          <a routerLink="/login"
+            class="text-white bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-xl text-sm px-5 py-2.5 transition-all duration-300">
+            Login
           </a>
-        </li>
-      </ul>
+        }
+
+
+        <button (click)="isOpen = !isOpen"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-gray-400 rounded-xl md:hidden hover:bg-white/10 focus:outline-none transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if (!isOpen) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7" />
+            }
+            @if (isOpen) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18L18 6M6 6l12 12" />
+            }
+          </svg>
+        </button>
+      </div>
+      <div [ngClass]="{ 'hidden': !isOpen, 'flex': isOpen }"
+        class="items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:flex-row md:space-x-8 md:mt-0">
+          <li>
+            <a routerLink="/Home" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Home</a>
+          </li>
+          <li>
+            <a routerLink="/weapons" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Weapons</a>
+          </li>
+          <li>
+            <a routerLink="/agents" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Agents</a>
+          </li>
+          <li>
+            <a routerLink="/maps" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Maps</a>
+          </li>
+          <li>
+            <a routerLink="/esports" routerLinkActive="text-indigo-400"
+            class="nav-link block py-2 px-3 text-white/70 hover:text-white transition-colors">Esports</a>
+          </li>
+          @if (auth.isLoggedIn()) {
+            <li>
+              <a routerLink="/dashboard" routerLinkActive="text-indigo-400"
+                class="nav-link block py-2 px-3 text-indigo-400 font-bold hover:text-white transition-colors animate-pulse">
+                Dashboard
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>

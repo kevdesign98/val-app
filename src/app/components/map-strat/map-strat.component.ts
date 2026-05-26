@@ -1,7 +1,7 @@
 import { Component, OnInit, PLATFORM_ID, inject } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MapsService } from "../../service/maps-services/maps.service";
-import { CommonModule } from "@angular/common";
+
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { RouterLink } from "@angular/router";
@@ -10,7 +10,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: "app-map-strat",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, RouterLink],
+  imports: [NavbarComponent, FooterComponent, RouterLink],
   templateUrl: "./map-strat.component.html",
   styleUrls: ["./map-strat.component.css"]
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { CommonModule } from '@angular/common';
+
 import { StatsService } from '../../service/stats-services/stats.service';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { ActivatedRoute } from '@angular/router';
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-matches-dashboard',
   standalone: true,
-  imports: [FooterComponent, CommonModule, SidebarComponent],
+  imports: [FooterComponent, SidebarComponent],
   templateUrl: './matches-dashboard.component.html',
   styleUrl: './matches-dashboard.component.css'
 })

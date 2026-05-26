@@ -2,167 +2,171 @@
 
 <div class="relative min-h-screen bg-[#050505] text-white pt-24 pb-20 overflow-hidden">
 
-    <div class="absolute inset-0 z-0">
-        <div class="blob blob-indigo opacity-10"></div>
-        <div class="blob blob-red opacity-5"></div>
-        <div class="map-overlay-tech opacity-20"></div>
+  <div class="absolute inset-0 z-0">
+    <div class="blob blob-indigo opacity-10"></div>
+    <div class="blob blob-red opacity-5"></div>
+    <div class="map-overlay-tech opacity-20"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10">
+
+    <div class="mb-12">
+      <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">//
+      Global_Esports_Portal</span>
+      <h1 class="text-5xl md:text-6xl font-black uppercase italic tracking-tighter">VCT HUB</h1>
     </div>
 
-    <div class="container mx-auto px-4 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        <div class="mb-12">
-            <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">//
-                Global_Esports_Portal</span>
-            <h1 class="text-5xl md:text-6xl font-black uppercase italic tracking-tighter">VCT HUB</h1>
-        </div>
+      <div class="lg:col-span-2 space-y-8">
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div
+          class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden shadow-2xl cursor-pointer">
+          <div class="relative aspect-video rounded-[2.3rem] overflow-hidden">
+            <img src="assets/esports/esports-champions.jpg"
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              alt="Featured News">
+              <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 p-8 md:p-12">
+                <span
+                  class="px-4 py-1 bg-indigo-600 rounded-full text-[10px] font-black uppercase mb-4 inline-block shadow-[0_0_15px_rgba(99,102,241,0.5)]">Breaking
+                News</span>
+                <h3 class="text-3xl md:text-4xl font-black uppercase italic leading-none mb-4">Champions
+                Tour 2026: The New Era</h3>
+                <p class="text-gray-300 font-medium italic max-w-lg">Discover the new format and the teams
+                qualified for the next international event.</p>
+              </div>
+            </div>
+          </div>
 
-            <div class="lg:col-span-2 space-y-8">
-
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              class="relative group overflow-hidden rounded-[2.5rem] border border-white/10 bg-black/40 p-1 cursor-pointer min-h-[300px]">
+              <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-8 overflow-hidden">
                 <div
-                    class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden shadow-2xl cursor-pointer">
-                    <div class="relative aspect-video rounded-[2.3rem] overflow-hidden">
-                        <img src="assets/esports/esports-champions.jpg"
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            alt="Featured News">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                        <div class="absolute bottom-0 left-0 p-8 md:p-12">
-                            <span
-                                class="px-4 py-1 bg-indigo-600 rounded-full text-[10px] font-black uppercase mb-4 inline-block shadow-[0_0_15px_rgba(99,102,241,0.5)]">Breaking
-                                News</span>
-                            <h3 class="text-3xl md:text-4xl font-black uppercase italic leading-none mb-4">Champions
-                                Tour 2026: The New Era</h3>
-                            <p class="text-gray-300 font-medium italic max-w-lg">Discover the new format and the teams
-                                qualified for the next international event.</p>
-                        </div>
-                    </div>
+                  class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-600/10 blur-[80px] group-hover:bg-indigo-600/20 transition-all">
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div
-                        class="relative group overflow-hidden rounded-[2.5rem] border border-white/10 bg-black/40 p-1 cursor-pointer min-h-[300px]">
-                        <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-8 overflow-hidden">
-                            <div
-                                class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-600/10 blur-[80px] group-hover:bg-indigo-600/20 transition-all">
-                            </div>
-                            <div class="relative z-10 h-full flex flex-col">
-                                <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] mb-4">//
-                                    Database_Access</span>
-                                <h3 class="text-3xl font-black uppercase italic leading-none mb-6">Teams
-                                    &<br>Rosters</h3>
-                                <div class="flex -space-x-3 mb-auto">
-                                    <div *ngFor="let team of teams"
-                                        class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-white/5 flex items-center justify-center p-2 backdrop-blur-sm">
-                                        <img [src]="team.image" class="w-full h-full object-contain shadow-white">
-                                    </div>
-                                    <div
-                                        class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-indigo-600 flex items-center justify-center text-[10px] font-black italic shadow-[0_0_15px_rgba(99,102,241,0.5)]">
-                                        +30</div>
-                                </div>
-                                <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4"
-                                    routerLink="/teams-details">
-                                    <span
-                                        class="text-[9px] font-black uppercase tracking-widest text-white/40 group-hover:text-white/80 transition-colors">Explore
-                                        Stats</span>
-                                    <div
-                                        class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-indigo-500 group-hover:text-indigo-500 transition-all transform group-hover:translate-x-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M5 12h14" />
-                                            <path d="m12 5 7 7-7 7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="relative z-10 h-full flex flex-col">
+                  <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] mb-4">//
+                  Database_Access</span>
+                  <h3 class="text-3xl font-black uppercase italic leading-none mb-6">Teams
+                    &<br>Rosters</h3>
+                    <div class="flex -space-x-3 mb-auto">
+                      @for (team of teams; track team) {
+                        <div
+                          class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-white/5 flex items-center justify-center p-2 backdrop-blur-sm">
+                          <img [src]="team.image" class="w-full h-full object-contain shadow-white">
                         </div>
+                      }
+                      <div
+                        class="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-indigo-600 flex items-center justify-center text-[10px] font-black italic shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                      +30</div>
                     </div>
-                    <div
-                        class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden cursor-pointer">
-                        <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-6">
-                            <div class="aspect-video rounded-2xl overflow-hidden mb-4 bg-black">
-                                <img src="assets/esports/esports-teams.jpg"
-                                    class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                            </div>
-                            <span
-                                class="text-indigo-500 font-mono text-[10px] font-bold uppercase tracking-widest">Market
-                                // Transfer</span>
-                            <h4
-                                class="text-xl font-black uppercase italic mt-2 group-hover:text-indigo-400 transition-colors">
-                                Roster shuffle: Top teams announce changes</h4>
-                        </div>
+                    <div class="pt-6 flex items-center justify-between border-t border-white/5 mt-4"
+                      routerLink="/teams-details">
+                      <span
+                        class="text-[9px] font-black uppercase tracking-widest text-white/40 group-hover:text-white/80 transition-colors">Explore
+                      Stats</span>
+                      <div
+                        class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-indigo-500 group-hover:text-indigo-500 transition-all transform group-hover:translate-x-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M5 12h14" />
+                          <path d="m12 5 7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
+              <div
+                class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden cursor-pointer">
+                <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-6">
+                  <div class="aspect-video rounded-2xl overflow-hidden mb-4 bg-black">
+                    <img src="assets/esports/esports-teams.jpg"
+                      class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                    </div>
+                    <span
+                      class="text-indigo-500 font-mono text-[10px] font-bold uppercase tracking-widest">Market
+                    // Transfer</span>
+                    <h4
+                      class="text-xl font-black uppercase italic mt-2 group-hover:text-indigo-400 transition-colors">
+                    Roster shuffle: Top teams announce changes</h4>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="space-y-8">
 
-                <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden cursor-pointer"
-                    routerLink="/list-matches">
-                    <div
-                        class="relative h-full w-full bg-indigo-600 rounded-[2.3rem] p-8 overflow-hidden transition-all group-hover:bg-indigo-500">
-                        <div
-                            class="absolute top-0 right-0 p-4 opacity-20 group-hover:rotate-12 transition-transform duration-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                fill="none" stroke="white" stroke-width="1.5">
-                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-                                <path d="M4 22h16" />
-                                <path d="M10 14.66V17" />
-                                <path d="M14 14.66V17" />
-                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-                            </svg>
-                        </div>
-                        <h4 class="text-3xl font-black uppercase italic leading-none mb-3">Live<br>Results</h4>
-                        <p class="text-white/80 text-sm font-medium italic mb-6">Check the latest scores and upcoming
-                            schedules.</p>
-                        <span
-                            class="inline-flex items-center gap-2 px-4 py-2 bg-black/20 rounded-xl text-[10px] font-black uppercase tracking-widest group-hover:bg-black/40 transition-colors">
-                            Go to Center
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="3">
-                                <path d="M5 12h14" />
-                                <path d="m12 5 7 7-7 7" />
-                            </svg>
-                        </span>
-                    </div>
+              <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden cursor-pointer"
+                routerLink="/list-matches">
+                <div
+                  class="relative h-full w-full bg-indigo-600 rounded-[2.3rem] p-8 overflow-hidden transition-all group-hover:bg-indigo-500">
+                  <div
+                    class="absolute top-0 right-0 p-4 opacity-20 group-hover:rotate-12 transition-transform duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                      fill="none" stroke="white" stroke-width="1.5">
+                      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                      <path d="M4 22h16" />
+                      <path d="M10 14.66V17" />
+                      <path d="M14 14.66V17" />
+                      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+                    </svg>
+                  </div>
+                  <h4 class="text-3xl font-black uppercase italic leading-none mb-3">Live<br>Results</h4>
+                  <p class="text-white/80 text-sm font-medium italic mb-6">Check the latest scores and upcoming
+                  schedules.</p>
+                  <span
+                    class="inline-flex items-center gap-2 px-4 py-2 bg-black/20 rounded-xl text-[10px] font-black uppercase tracking-widest group-hover:bg-black/40 transition-colors">
+                    Go to Center
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="3">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden">
+                <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-8">
+                  <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3">
+                    <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                    Pro Meta
+                  </h4>
+                  <div class="space-y-4">
+                    @for (agent of [['Jett', '78%'], ['Omen', '62%'], ['Killjoy', '54%']]; track agent) {
+                      <div
+                        class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-all hover:bg-white/10">
+                        <span class="font-black uppercase italic text-sm">{{agent[0]}}</span>
+                        <span class="text-indigo-400 font-mono font-bold">{{agent[1]}} Pick Rate</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden">
+                <div
+                  class="relative h-full w-full bg-gradient-to-br from-[#9146FF]/20 to-black rounded-[2.3rem] p-8 text-center transition-all group-hover:from-[#9146FF]/30">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Twitch_Glitch_Logo_Purple.svg"
+                    class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-500">
+                    <h4 class="text-xl font-black uppercase italic">Watch Live</h4>
+                    <p class="text-gray-400 text-xs mt-2 mb-6 italic">Catch every tactical moment on the official
+                    channel.</p>
+                    <a href="https://twitch.tv/valorant" target="_blank"
+                      class="block py-4 bg-[#9146FF] hover:bg-[#a970ff] rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_10px_30px_rgba(145,70,255,0.3)]">
+                      Open Twitch
+                    </a>
+                  </div>
                 </div>
 
-                <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden">
-                    <div class="relative h-full w-full bg-[#0a0a0a] rounded-[2.3rem] p-8">
-                        <h4 class="text-lg font-black uppercase italic mb-6 flex items-center gap-3">
-                            <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                            Pro Meta
-                        </h4>
-                        <div class="space-y-4">
-                            <div *ngFor="let agent of [['Jett', '78%'], ['Omen', '62%'], ['Killjoy', '54%']]"
-                                class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-all hover:bg-white/10">
-                                <span class="font-black uppercase italic text-sm">{{agent[0]}}</span>
-                                <span class="text-indigo-400 font-mono font-bold">{{agent[1]}} Pick Rate</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative group p-1 rounded-[2.5rem] border border-white/10 bg-black/40 overflow-hidden">
-                    <div
-                        class="relative h-full w-full bg-gradient-to-br from-[#9146FF]/20 to-black rounded-[2.3rem] p-8 text-center transition-all group-hover:from-[#9146FF]/30">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Twitch_Glitch_Logo_Purple.svg"
-                            class="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform duration-500">
-                        <h4 class="text-xl font-black uppercase italic">Watch Live</h4>
-                        <p class="text-gray-400 text-xs mt-2 mb-6 italic">Catch every tactical moment on the official
-                            channel.</p>
-                        <a href="https://twitch.tv/valorant" target="_blank"
-                            class="block py-4 bg-[#9146FF] hover:bg-[#a970ff] rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_10px_30px_rgba(145,70,255,0.3)]">
-                            Open Twitch
-                        </a>
-                    </div>
-                </div>
-
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
 
-<app-footer />
+        <app-footer />

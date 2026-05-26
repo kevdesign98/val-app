@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+
 import { Component, OnInit } from "@angular/core";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
@@ -7,7 +7,7 @@ import { TeamsServicesService } from "../../service/teams-services/teams-service
 @Component({
   selector: "app-teams-details",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent],
+  imports: [NavbarComponent, FooterComponent],
   templateUrl: "./teams-details.component.html",
   styleUrl: "./teams-details.component.css"
 })

@@ -12,7 +12,7 @@
 
     <div class="relative rounded-[2.5rem] overflow-hidden mb-12 border border-white/10 shadow-2xl">
       <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
-        style="background-image: url('assets/champions.png')"></div>
+      style="background-image: url('assets/champions.png')"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
 
       <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
@@ -30,10 +30,10 @@
         </div>
         <div class="text-center md:text-left">
           <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">//
-            Global_Circuit_Feed</span>
+          Global_Circuit_Feed</span>
           <h1 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Match Center</h1>
           <p class="text-gray-400 font-medium italic mt-2 text-sm md:text-base">Monitor upcoming battles and live
-            results.</p>
+          results.</p>
         </div>
       </div>
     </div>
@@ -43,86 +43,88 @@
 
         <p-tabPanel header="Schedule">
           <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            <div *ngFor="let match of matches"
-              class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
-
-              <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span class="text-indigo-500  text-[12px] uppercase tracking-widest font-bold">{{ match.utc |
-                  date: 'MMM d, y' }}</span>
-                <span class="text-2xl font-black italic tracking-tighter">{{ match.utc | date: 'shortTime' }}</span>
-              </div>
-
-              <div class="flex items-center gap-8 md:gap-16 flex-1 justify-center py-4 md:py-0"
-                *ngIf="match.teams && match.teams.length >= 2">
-                <div class="flex flex-col items-center min-w-[100px]">
-                  <span
-                    class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
-                    {{ match.teams[0].name }}
-                  </span>
-                </div>
-
-                <div class="flex flex-col items-center">
-                  <span
-                    class="text-xs font-black italic text-indigo-500/50 group-hover:text-indigo-500 transition-colors">VS</span>
-                </div>
-
-                <div class="flex flex-col items-center min-w-[100px]">
-                  <span
-                    class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
-                    {{ match.teams[1].name }}
-                  </span>
-                </div>
-              </div>
-
+            @for (match of matches; track match) {
               <div
-                class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5 min-w-[220px] justify-center">
-                <img [src]="match.img" class="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all"
-                  *ngIf="match.img">
-                <span class="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white">{{
+                class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
+                <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
+                  <span class="text-indigo-500  text-[12px] uppercase tracking-widest font-bold">{{ match.utc |
+                  date: 'MMM d, y' }}</span>
+                  <span class="text-2xl font-black italic tracking-tighter">{{ match.utc | date: 'shortTime' }}</span>
+                </div>
+                @if (match.teams && match.teams.length >= 2) {
+                  <div class="flex items-center gap-8 md:gap-16 flex-1 justify-center py-4 md:py-0"
+                    >
+                    <div class="flex flex-col items-center min-w-[100px]">
+                      <span
+                        class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
+                        {{ match.teams[0].name }}
+                      </span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                      <span
+                      class="text-xs font-black italic text-indigo-500/50 group-hover:text-indigo-500 transition-colors">VS</span>
+                    </div>
+                    <div class="flex flex-col items-center min-w-[100px]">
+                      <span
+                        class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
+                        {{ match.teams[1].name }}
+                      </span>
+                    </div>
+                  </div>
+                }
+                <div
+                  class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5 min-w-[220px] justify-center">
+                  @if (match.img) {
+                    <img [src]="match.img" class="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all"
+                      >
+                  }
+                  <span class="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white">{{
                   match.event }}</span>
+                </div>
               </div>
-            </div>
+            }
           </div>
         </p-tabPanel>
 
         <p-tabPanel header="Results">
           <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            <div *ngFor="let result of resultMatches"
-              class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
-
-              <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                <span class="text-indigo-500 text-[12px] uppercase tracking-widest font-bold">Final_Result</span>
-                <span class="text-[11px] font-bold text-gray-500 uppercase italic">{{ result.ago }}</span>
-              </div>
-
-              <div class="flex items-center gap-6 md:gap-16 flex-1 justify-center py-4 md:py-0"
-                *ngIf="result.teams && result.teams.length >= 2">
-                <div class="flex items-center gap-4">
-                  <span class="text-sm md:text-lg font-black uppercase text-right w-24 md:w-32 transition-colors"
-                    [class.text-indigo-400]="(result.teams[0].score || '0') > (result.teams[1].score || '0')">
-                    {{ result.teams[0].name }}
-                  </span>
-                  <span class="text-3xl font-black w-10 text-center">{{ result.teams[0].score || '0' }}</span>
+            @for (result of resultMatches; track result) {
+              <div
+                class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
+                <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
+                  <span class="text-indigo-500 text-[12px] uppercase tracking-widest font-bold">Final_Result</span>
+                  <span class="text-[11px] font-bold text-gray-500 uppercase italic">{{ result.ago }}</span>
                 </div>
-
-                <div class="text-white/10 font-black text-xl italic mx-2">-</div>
-
-                <div class="flex items-center gap-4">
-                  <span class="text-3xl font-black w-10 text-center">{{ result.teams[1].score || '0' }}</span>
-                  <span class="text-sm md:text-lg font-black uppercase text-left w-24 md:w-32 transition-colors"
-                    [class.text-indigo-400]="(result.teams[1].score || '0') > (result.teams[0].score || '0')">
-                    {{ result.teams[1].name }}
-                  </span>
+                @if (result.teams && result.teams.length >= 2) {
+                  <div class="flex items-center gap-6 md:gap-16 flex-1 justify-center py-4 md:py-0"
+                    >
+                    <div class="flex items-center gap-4">
+                      <span class="text-sm md:text-lg font-black uppercase text-right w-24 md:w-32 transition-colors"
+                        [class.text-indigo-400]="(result.teams[0].score || '0') > (result.teams[1].score || '0')">
+                        {{ result.teams[0].name }}
+                      </span>
+                      <span class="text-3xl font-black w-10 text-center">{{ result.teams[0].score || '0' }}</span>
+                    </div>
+                    <div class="text-white/10 font-black text-xl italic mx-2">-</div>
+                    <div class="flex items-center gap-4">
+                      <span class="text-3xl font-black w-10 text-center">{{ result.teams[1].score || '0' }}</span>
+                      <span class="text-sm md:text-lg font-black uppercase text-left w-24 md:w-32 transition-colors"
+                        [class.text-indigo-400]="(result.teams[1].score || '0') > (result.teams[0].score || '0')">
+                        {{ result.teams[1].name }}
+                      </span>
+                    </div>
+                  </div>
+                }
+                <div class="mt-4 md:mt-0 flex flex-col items-center md:items-end min-w-[150px]">
+                  <div class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+                    @if (result.img) {
+                      <img [src]="result.img" class="w-5 h-5 object-contain">
+                    }
+                    <span class="text-[12px] font-bold uppercase tracking-tighter">{{ result.event }}</span>
+                  </div>
                 </div>
               </div>
-
-              <div class="mt-4 md:mt-0 flex flex-col items-center md:items-end min-w-[150px]">
-                <div class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
-                  <img [src]="result.img" class="w-5 h-5 object-contain" *ngIf="result.img">
-                  <span class="text-[12px] font-bold uppercase tracking-tighter">{{ result.event }}</span>
-                </div>
-              </div>
-            </div>
+            }
           </div>
         </p-tabPanel>
 

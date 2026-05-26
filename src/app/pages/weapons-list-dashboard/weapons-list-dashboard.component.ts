@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../../components/sidebar/sidebar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
-import { CommonModule } from '@angular/common';
+
 import { StatsService } from '../../service/stats-services/stats.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-weapons-list-dashboard',
   standalone: true,
-  imports: [SidebarComponent, FooterComponent, CommonModule],
+  imports: [SidebarComponent, FooterComponent],
   templateUrl: './weapons-list-dashboard.component.html',
   styleUrl: './weapons-list-dashboard.component.css'
 })

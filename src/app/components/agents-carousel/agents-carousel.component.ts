@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { ButtonModule } from "primeng/button";
 import { CarouselModule } from "primeng/carousel";
 import { CardModule } from "primeng/card";
@@ -10,12 +10,11 @@ import { HttpClient } from "@angular/common/http";
   selector: "app-agents-carousel",
   standalone: true,
   imports: [
-    CommonModule,
     ButtonModule,
     CarouselModule,
     CardModule,
-    RouterModule,
-  ],
+    RouterModule
+],
   templateUrl: "./agents-carousel.component.html",
   styleUrl: "./agents-carousel.component.css",
   host: { ngSkipHydration: "true" }

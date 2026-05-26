@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ListAgentsService } from "../../service/list-agents.service";
 import { RouterLink } from "@angular/router";
@@ -8,7 +7,7 @@ import { FooterComponent } from "../footer/footer.component";
 @Component({
   selector: "app-agents",
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
+  imports: [RouterLink, NavbarComponent, FooterComponent],
   templateUrl: "./agents.component.html",
   styleUrl: "./agents.component.css"
 })

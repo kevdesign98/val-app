@@ -1,321 +1,331 @@
 <!-- <app-navbar />
 <div class="min-h-screen bg-[#050505] text-white pt-24 pb-12 overflow-hidden">
 
-    <div class="absolute inset-0 z-0">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full"></div>
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10">
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+      <div>
+        <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] block mb-2">//
+        Global_Database_Access</span>
+        <h1 class="text-5xl font-black uppercase italic tracking-tighter">VCT Teams</h1>
+      </div>
+
+      <div class="flex flex-wrap gap-3 bg-white/5 p-2 rounded-[2rem] border border-white/10 backdrop-blur-md">
+        <button *ngFor="let reg of ['EMEA', 'AMERICAS', 'PACIFIC']" (click)="filterByRegion(reg)"
+          [class.bg-indigo-600]="currentRegion === reg"
+          [class.shadow-[0_0_20px_rgba(99,102,241,0.4)]]="currentRegion === reg"
+          class="px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase italic tracking-widest transition-all duration-300">
+          {{ reg }}
+        </button>
+      </div>
     </div>
 
-    <div class="container mx-auto px-4 relative z-10">
+    <div class="flex flex-col lg:flex-row gap-8">
 
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+      <div class="w-full lg:w-1/3 xl:w-1/4 space-y-3 max-h-[700px] overflow-y-auto pr-2 custom-scrollbar">
+        <div *ngFor="let team of filteredTeams" (click)="selectTeam(team)"
+          [class.border-indigo-500]="activeTeam?.id === team.id" [class.bg-white]="activeTeam?.id === team.id"
+          class="group relative p-1 rounded-2xl border border-white/5 bg-white/[0.02] cursor-pointer transition-all hover:bg-white/[0.05]">
+
+          <div class="flex items-center gap-4 p-3">
+            <div
+              class="w-12 h-12 rounded-xl bg-black/40 p-2 flex items-center justify-center border border-white/5">
+              <img [src]="team?.img"
+                class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500">
+              </div>
+              <div class="flex-1">
+                <h3 class="font-black uppercase italic tracking-tighter text-sm">{{ team?.name }}</h3>
+                <p class="text-[9px] text-gray-500 font-bold uppercase">{{ team?.country }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full lg:w-2/3 xl:w-3/4">
+
+          <div *ngIf="!activeTeam"
+            class="h-[500px] flex flex-col items-center justify-center border border-white/5 bg-white/[0.02] rounded-[3rem]">
+            <div
+              class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4">
+            </div>
+            <p class="text-indigo-400 font-mono text-xs uppercase animate-pulse">Synchronizing with VLR
+            Database...</p>
+          </div>
+
+          <div *ngIf="activeTeam" class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+
+            <div class="relative group p-1 rounded-[3rem] border border-white/10 bg-black/40 overflow-hidden">
+              <div class="relative bg-[#0a0a0a] rounded-[2.8rem] p-8 md:p-12 overflow-hidden">
+                <img [src]="activeTeam?.img"
+                  class="absolute -right-10 -bottom-10 w-64 opacity-5 grayscale pointer-events-none">
+
+                  <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                    <div class="relative">
+                      <div class="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full"></div>
+                      <img [src]="activeTeam?.img"
+                        class="relative w-32 h-32 md:w-48 md:h-48 object-contain">
+                      </div>
+
+                      <div class="text-center md:text-left">
+                        <h2
+                          class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-6">
+                          {{ activeTeam?.name }}
+                        </h2>
+                        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                          <span
+                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
+                            Region: {{ currentRegion }}
+                          </span>
+                          <span
+                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
+                            ID: {{ activeTeam?.id }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                  <div class="space-y-6">
+                    <h3
+                      class="text-xl font-black uppercase italic flex items-center gap-3 pl-4 border-l-4 border-indigo-600">
+                      Current Roster
+                    </h3>
+
+                    <div class="space-y-3">
+
+                      <ng-container *ngIf="activeRoster && activeRoster.length > 0; else noPlayerData">
+
+                        <div *ngFor="let player of activeRoster"
+                          class="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-2xl">
+
+                          <div class="flex items-center gap-4">
+                            <div
+                              class="w-10 h-10 bg-indigo-600/20 rounded-lg flex items-center justify-center text-indigo-400 font-black italic">
+                              {{ (player?.ign) ? player.ign[0] : '?' }}
+                            </div>
+
+                            <div>
+                              <div class="font-black uppercase italic text-white">
+                                {{ player?.ign || 'Player Identity Hidden' }}
+                              </div>
+                              <div
+                                class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">
+                                Professional Athlete
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                      </ng-container>
+
+                      <ng-template #noPlayerData>
+                        <div
+                          class="p-8 text-center border border-white/5 bg-white/[0.02] rounded-2xl border-dashed">
+                          <p
+                            class="text-gray-600 text-[10px] uppercase font-mono tracking-widest animate-pulse">
+                            Waiting for roster decryption...
+                          </p>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+
+                  <div class="bg-[#0a0a0a] rounded-[2.3rem] p-8 border border-white/10">
+                    <h3 class="text-xl font-black uppercase italic mb-8">Team Performance</h3>
+                    <div class="space-y-6">
+                      <div *ngFor="let stat of [['Win Rate', '72%'], ['Pistol Round', '64%'], ['Clutch Factor', '51%']]"
+                        class="space-y-2">
+                        <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                          <span class="text-gray-500">{{stat[0]}}</span>
+                          <span class="text-indigo-400">{{stat[1]}}</span>
+                        </div>
+                        <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div class="h-full bg-indigo-500/50" [style.width]="stat[1]"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-footer /> -->
+
+      <app-navbar />
+
+      <div class="min-h-screen bg-[#050505] text-white pt-24 pb-12 overflow-hidden">
+
+        <div class="absolute inset-0 z-0">
+          <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full"></div>
+          <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
             <div>
-                <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] block mb-2">//
-                    Global_Database_Access</span>
-                <h1 class="text-5xl font-black uppercase italic tracking-tighter">VCT Teams</h1>
+              <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] block mb-2">//
+              Global_Database_Access</span>
+              <h1 class="text-5xl font-black uppercase italic tracking-tighter">VCT Teams</h1>
             </div>
 
             <div class="flex flex-wrap gap-3 bg-white/5 p-2 rounded-[2rem] border border-white/10 backdrop-blur-md">
-                <button *ngFor="let reg of ['EMEA', 'AMERICAS', 'PACIFIC']" (click)="filterByRegion(reg)"
-                    [class.bg-indigo-600]="currentRegion === reg"
-                    [class.shadow-[0_0_20px_rgba(99,102,241,0.4)]]="currentRegion === reg"
-                    class="px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase italic tracking-widest transition-all duration-300">
-                    {{ reg }}
+              @for (reg of ['EMEA', 'AMERICAS', 'PACIFIC']; track reg) {
+                <button (click)="filterByRegion(reg)"
+                  [class.bg-indigo-600]="currentRegion === reg"
+                  class="px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase italic tracking-widest transition-all duration-300">
+                  {{ reg }}
                 </button>
+              }
             </div>
-        </div>
+          </div>
 
-        <div class="flex flex-col lg:flex-row gap-8">
+          <div class="flex flex-col lg:flex-row gap-8">
 
             <div class="w-full lg:w-1/3 xl:w-1/4 space-y-3 max-h-[700px] overflow-y-auto pr-2 custom-scrollbar">
-                <div *ngFor="let team of filteredTeams" (click)="selectTeam(team)"
-                    [class.border-indigo-500]="activeTeam?.id === team.id" [class.bg-white]="activeTeam?.id === team.id"
-                    class="group relative p-1 rounded-2xl border border-white/5 bg-white/[0.02] cursor-pointer transition-all hover:bg-white/[0.05]">
 
-                    <div class="flex items-center gap-4 p-3">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-black/40 p-2 flex items-center justify-center border border-white/5">
-                            <img [src]="team?.img"
-                                class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-black uppercase italic tracking-tighter text-sm">{{ team?.name }}</h3>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase">{{ team?.country }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-2/3 xl:w-3/4">
-
-                <div *ngIf="!activeTeam"
-                    class="h-[500px] flex flex-col items-center justify-center border border-white/5 bg-white/[0.02] rounded-[3rem]">
+              @for (team of filteredTeams; track team) {
+                <div (click)="selectTeam(team)"
+                  [class.border-indigo-500]="activeTeam?.id === team.id" [class.bg-white]="activeTeam?.id === team.id"
+                  class="group relative p-1 rounded-2xl border border-white/5 bg-white/[0.02] cursor-pointer transition-all hover:bg-white/[0.05]">
+                  <div class="flex items-center gap-4 p-3">
                     <div
-                        class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4">
+                      class="w-12 h-12 rounded-xl bg-black/40 p-2 flex items-center justify-center border border-white/5">
+                      <img [src]="team?.img"
+                        class="max-w-full max-h-full object-contain group-hover:scale-110 transition-all">
+                      </div>
+                      <div class="flex-1">
+                        <h3 class="font-black uppercase italic tracking-tighter text-sm">{{ team?.name }}</h3>
+                        <p class="text-[9px] text-gray-500 font-bold uppercase">{{ team?.country }}</p>
+                      </div>
                     </div>
-                    <p class="text-indigo-400 font-mono text-xs uppercase animate-pulse">Synchronizing with VLR
-                        Database...</p>
-                </div>
+                  </div>
+                }
 
-                <div *ngIf="activeTeam" class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-
-                    <div class="relative group p-1 rounded-[3rem] border border-white/10 bg-black/40 overflow-hidden">
-                        <div class="relative bg-[#0a0a0a] rounded-[2.8rem] p-8 md:p-12 overflow-hidden">
-                            <img [src]="activeTeam?.img"
-                                class="absolute -right-10 -bottom-10 w-64 opacity-5 grayscale pointer-events-none">
-
-                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full"></div>
-                                    <img [src]="activeTeam?.img"
-                                        class="relative w-32 h-32 md:w-48 md:h-48 object-contain">
-                                </div>
-
-                                <div class="text-center md:text-left">
-                                    <h2
-                                        class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-6">
-                                        {{ activeTeam?.name }}
-                                    </h2>
-                                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                                        <span
-                                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
-                                            Region: {{ currentRegion }}
-                                        </span>
-                                        <span
-                                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10 tracking-widest">
-                                            ID: {{ activeTeam?.id }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                        <div class="space-y-6">
-                            <h3
-                                class="text-xl font-black uppercase italic flex items-center gap-3 pl-4 border-l-4 border-indigo-600">
-                                Current Roster
-                            </h3>
-
-                            <div class="space-y-3">
-
-                                <ng-container *ngIf="activeRoster && activeRoster.length > 0; else noPlayerData">
-
-                                    <div *ngFor="let player of activeRoster"
-                                        class="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-2xl">
-
-                                        <div class="flex items-center gap-4">
-                                            <div
-                                                class="w-10 h-10 bg-indigo-600/20 rounded-lg flex items-center justify-center text-indigo-400 font-black italic">
-                                                {{ (player?.ign) ? player.ign[0] : '?' }}
-                                            </div>
-
-                                            <div>
-                                                <div class="font-black uppercase italic text-white">
-                                                    {{ player?.ign || 'Player Identity Hidden' }}
-                                                </div>
-                                                <div
-                                                    class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">
-                                                    Professional Athlete
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </ng-container>
-
-                                <ng-template #noPlayerData>
-                                    <div
-                                        class="p-8 text-center border border-white/5 bg-white/[0.02] rounded-2xl border-dashed">
-                                        <p
-                                            class="text-gray-600 text-[10px] uppercase font-mono tracking-widest animate-pulse">
-                                            Waiting for roster decryption...
-                                        </p>
-                                    </div>
-                                </ng-template>
-                            </div>
-                        </div>
-
-                        <div class="bg-[#0a0a0a] rounded-[2.3rem] p-8 border border-white/10">
-                            <h3 class="text-xl font-black uppercase italic mb-8">Team Performance</h3>
-                            <div class="space-y-6">
-                                <div *ngFor="let stat of [['Win Rate', '72%'], ['Pistol Round', '64%'], ['Clutch Factor', '51%']]"
-                                    class="space-y-2">
-                                    <div class="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                                        <span class="text-gray-500">{{stat[0]}}</span>
-                                        <span class="text-indigo-400">{{stat[1]}}</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-indigo-500/50" [style.width]="stat[1]"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<app-footer /> -->
-
-<app-navbar />
-
-<div class="min-h-screen bg-[#050505] text-white pt-24 pb-12 overflow-hidden">
-
-    <div class="absolute inset-0 z-0">
-        <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full"></div>
-    </div>
-
-    <div class="container mx-auto px-4 relative z-10">
-
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
-            <div>
-                <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em] block mb-2">//
-                    Global_Database_Access</span>
-                <h1 class="text-5xl font-black uppercase italic tracking-tighter">VCT Teams</h1>
-            </div>
-
-            <div class="flex flex-wrap gap-3 bg-white/5 p-2 rounded-[2rem] border border-white/10 backdrop-blur-md">
-                <button *ngFor="let reg of ['EMEA', 'AMERICAS', 'PACIFIC']" (click)="filterByRegion(reg)"
-                    [class.bg-indigo-600]="currentRegion === reg"
-                    class="px-8 py-3 rounded-[1.5rem] text-[10px] font-black uppercase italic tracking-widest transition-all duration-300">
-                    {{ reg }}
-                </button>
-            </div>
-        </div>
-
-        <div class="flex flex-col lg:flex-row gap-8">
-
-            <div class="w-full lg:w-1/3 xl:w-1/4 space-y-3 max-h-[700px] overflow-y-auto pr-2 custom-scrollbar">
-
-                <div *ngFor="let team of filteredTeams" (click)="selectTeam(team)"
-                    [class.border-indigo-500]="activeTeam?.id === team.id" [class.bg-white]="activeTeam?.id === team.id"
-                    class="group relative p-1 rounded-2xl border border-white/5 bg-white/[0.02] cursor-pointer transition-all hover:bg-white/[0.05]">
-                    <div class="flex items-center gap-4 p-3">
-                        <div
-                            class="w-12 h-12 rounded-xl bg-black/40 p-2 flex items-center justify-center border border-white/5">
-                            <img [src]="team?.img"
-                                class="max-w-full max-h-full object-contain group-hover:scale-110 transition-all">
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-black uppercase italic tracking-tighter text-sm">{{ team?.name }}</h3>
-                            <p class="text-[9px] text-gray-500 font-bold uppercase">{{ team?.country }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="filteredTeams.length === 0"
+                @if (filteredTeams.length === 0) {
+                  <div
                     class="p-8 text-center border border-white/5 bg-white/[0.02] rounded-2xl border-dashed">
                     <p class="text-gray-600 text-[10px] uppercase font-mono">No teams decrypted.</p>
-                </div>
-            </div>
+                  </div>
+                }
+              </div>
 
-            <div class="w-full lg:w-2/3 xl:w-3/4">
+              <div class="w-full lg:w-2/3 xl:w-3/4">
 
-                <div *ngIf="!activeTeam"
+                @if (!activeTeam) {
+                  <div
                     class="h-[500px] flex flex-col items-center justify-center border border-white/5 bg-white/[0.02] rounded-[3rem]">
                     <div
-                        class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4">
+                      class="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mb-4">
                     </div>
                     <p class="text-indigo-400 font-mono text-xs uppercase">Synchronizing...</p>
-                </div>
+                  </div>
+                }
 
-                <div *ngIf="activeTeam" class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-
+                @if (activeTeam) {
+                  <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div class="relative p-1 rounded-[3rem] border border-white/10 bg-black/40 overflow-hidden">
-                        <div class="relative bg-[#0a0a0a] rounded-[2.8rem] p-8 md:p-12 overflow-hidden">
-                            <img [src]="activeTeam?.img"
-                                class="absolute -right-10 -bottom-10 w-64 opacity-5 grayscale pointer-events-none">
-                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
-                                <div class="relative">
-                                    <div class="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full"></div>
-                                    <img [src]="activeTeam?.img"
-                                        class="relative w-32 h-32 md:w-48 md:h-48 object-contain">
+                      <div class="relative bg-[#0a0a0a] rounded-[2.8rem] p-8 md:p-12 overflow-hidden">
+                        <img [src]="activeTeam?.img"
+                          class="absolute -right-10 -bottom-10 w-64 opacity-5 grayscale pointer-events-none">
+                          <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
+                            <div class="relative">
+                              <div class="absolute inset-0 bg-indigo-500/20 blur-3xl rounded-full"></div>
+                              <img [src]="activeTeam?.img"
+                                class="relative w-32 h-32 md:w-48 md:h-48 object-contain">
+                              </div>
+                              <div class="text-center md:text-left">
+                                <h2
+                                  class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-6">
+                                {{ activeTeam?.name }}</h2>
+                                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                                  <span
+                                    class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10">Region:
+                                  {{ currentRegion }}</span>
+                                  <span
+                                    class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10">ID:
+                                  {{ activeTeam?.id }}</span>
                                 </div>
-                                <div class="text-center md:text-left">
-                                    <h2
-                                        class="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none mb-6">
-                                        {{ activeTeam?.name }}</h2>
-                                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                                        <span
-                                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10">Region:
-                                            {{ currentRegion }}</span>
-                                        <span
-                                            class="px-4 py-2 bg-white/5 rounded-full text-[10px] font-black uppercase border border-white/10">ID:
-                                            {{ activeTeam?.id }}</span>
-                                    </div>
-                                </div>
+                              </div>
                             </div>
+                          </div>
                         </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                        <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                          <div class="space-y-6">
                             <h3
-                                class="text-xl font-black uppercase italic flex items-center gap-3 pl-4 border-l-4 border-indigo-600">
-                                Current Roster</h3>
+                              class="text-xl font-black uppercase italic flex items-center gap-3 pl-4 border-l-4 border-indigo-600">
+                            Current Roster</h3>
                             <div class="space-y-3">
-                                <ng-container *ngIf="activeRoster.length > 0; else emptyRoster">
-                                    <div *ngFor="let player of activeRoster"
-                                        class="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-2xl">
-                                        <div class="flex items-center gap-4">
-                                            <div
-                                                class="w-10 h-10 bg-indigo-600/20 rounded-lg flex items-center justify-center overflow-hidden border border-white/5">
-                                                <img *ngIf="player?.img" [src]="player.img"
-                                                    class="w-full h-full object-cover">
-                                                <span *ngIf="!player?.img" class="text-indigo-400 font-black italic">{{
-                                                    player?.user ? player.user[0] : '?' }}</span>
-                                            </div>
-                                            <div>
-                                                <div class="font-black uppercase italic text-white">{{ player?.user ||
-                                                    'Unknown Agent' }}</div>
-                                                <div class="text-[9px] text-gray-500 font-bold uppercase">Professional
-                                                    Athlete</div>
-                                            </div>
-                                        </div>
+                              @if (activeRoster.length > 0) {
+                                @for (player of activeRoster; track player) {
+                                  <div
+                                    class="flex items-center justify-between p-4 bg-white/[0.03] border border-white/5 rounded-2xl">
+                                    <div class="flex items-center gap-4">
+                                      <div
+                                        class="w-10 h-10 bg-indigo-600/20 rounded-lg flex items-center justify-center overflow-hidden border border-white/5">
+                                        @if (player?.img) {
+                                          <img [src]="player.img"
+                                            class="w-full h-full object-cover">
+                                        }
+                                        @if (!player?.img) {
+                                          <span class="text-indigo-400 font-black italic">{{
+                                          player?.user ? player.user[0] : '?' }}</span>
+                                        }
+                                      </div>
+                                      <div>
+                                        <div class="font-black uppercase italic text-white">{{ player?.user ||
+                                        'Unknown Agent' }}</div>
+                                        <div class="text-[9px] text-gray-500 font-bold uppercase">Professional
+                                        Athlete</div>
+                                      </div>
                                     </div>
-                                </ng-container>
-                                <ng-template #emptyRoster>
-                                    <div
-                                        class="p-8 text-center border border-white/5 bg-white/[0.02] rounded-2xl border-dashed">
-                                        <p class="text-gray-600 text-[10px] uppercase font-mono">No personnel data
-                                            available</p>
-                                    </div>
-                                </ng-template>
+                                  </div>
+                                }
+                              } @else {
+                                <div
+                                  class="p-8 text-center border border-white/5 bg-white/[0.02] rounded-2xl border-dashed">
+                                  <p class="text-gray-600 text-[10px] uppercase font-mono">No personnel data
+                                  available</p>
+                                </div>
+                              }
                             </div>
-                        </div>
-
-                        <div class="bg-[#0a0a0a] rounded-[2.3rem] p-8 border border-white/10">
+                          </div>
+                          <div class="bg-[#0a0a0a] rounded-[2.3rem] p-8 border border-white/10">
                             <h3 class="text-xl font-black uppercase italic mb-8">Performance</h3>
                             <div class="space-y-6">
-                                <div class="space-y-2">
-                                    <div class="flex justify-between text-[10px] font-black uppercase"><span
-                                            class="text-gray-500">Win Rate</span><span
-                                            class="text-indigo-400">72%</span></div>
-                                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-indigo-500/50 w-[72%]"></div>
-                                    </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between text-[10px] font-black uppercase"><span
-                                            class="text-gray-500">Pistol Round</span><span
-                                            class="text-indigo-400">64%</span></div>
-                                    <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-indigo-500/50 w-[64%]"></div>
-                                    </div>
-                                </div>
+                              <div class="space-y-2">
+                                <div class="flex justify-between text-[10px] font-black uppercase"><span
+                                class="text-gray-500">Win Rate</span><span
+                              class="text-indigo-400">72%</span></div>
+                              <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-500/50 w-[72%]"></div>
+                              </div>
                             </div>
+                            <div class="space-y-2">
+                              <div class="flex justify-between text-[10px] font-black uppercase"><span
+                              class="text-gray-500">Pistol Round</span><span
+                            class="text-indigo-400">64%</span></div>
+                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                              <div class="h-full bg-indigo-500/50 w-[64%]"></div>
+                            </div>
+                          </div>
                         </div>
-
+                      </div>
                     </div>
-                </div>
+                  </div>
+                }
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
-<app-footer />
+        <app-footer />

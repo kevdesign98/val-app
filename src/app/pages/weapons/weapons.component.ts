@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
+
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { WeaponsService } from "../../service/weapons-services/weapons.service";
@@ -8,7 +8,7 @@ import { RouterModule } from "@angular/router";
 @Component({
   selector: "app-weapons",
   standalone: true,
-  imports: [CommonModule, NavbarComponent, FooterComponent, RouterModule],
+  imports: [NavbarComponent, FooterComponent, RouterModule],
   templateUrl: "./weapons.component.html",
   styleUrl: "./weapons.component.css"
 })

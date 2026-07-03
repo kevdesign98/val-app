@@ -16,6 +16,7 @@ import { TeamsDetailsComponent } from "./components/teams-details/teams-details.
 import { AgentsListDashboardComponent } from "./pages/agents-list-dashboard/agents-list-dashboard.component";
 import { WeaponsListDashboardComponent } from "./pages/weapons-list-dashboard/weapons-list-dashboard.component";
 import { MatchesDashboardComponent } from "./pages/matches-dashboard/matches-dashboard.component";
+import { PrivacyComponent } from "./pages/privacy/privacy.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: "login", component: LoginComponent, title: 'Login - ValApp' },
   { path: "esports", component: EsportsComponent, title: 'Esports - ValApp' },
   { path: "teams-details", component: TeamsDetailsComponent, title: 'Dettagli Squadra - ValApp' },
+  { path: "privacy", component: PrivacyComponent, title: 'Privacy & Cookie Policy - ValApp' },
 
   { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent, title: 'Agenti - ValApp' },
   { path: "dashboard/weapons-list-dashboard", component: WeaponsListDashboardComponent, title: 'Armi - ValApp' },

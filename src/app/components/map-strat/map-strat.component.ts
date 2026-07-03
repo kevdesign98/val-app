@@ -25,7 +25,7 @@ export class MapStratComponent implements OnInit {
   competitiveMaps = [
     "Abyss", "Ascent", "Breeze", "Bind", "Corrode",
     "Fracture", "Haven", "Icebox", "Lotus", "Pearl",
-    "Split", "Sunset"
+    "Split", "Summit", "Sunset"
   ];
 
   maps: any[] = [];

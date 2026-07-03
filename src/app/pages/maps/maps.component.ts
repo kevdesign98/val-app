@@ -28,6 +28,7 @@ export class MapsComponent implements OnInit {
     "Lotus",
     "Pearl",
     "Split",
+    "Summit",
     "Sunset",
   ];
 

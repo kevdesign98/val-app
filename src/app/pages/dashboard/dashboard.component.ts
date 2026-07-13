@@ -5,7 +5,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { Router } from '@angular/router';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { SeoService } from '../../service/seo-services/seo.service';
 
@@ -13,7 +13,7 @@ import { SeoService } from '../../service/seo-services/seo.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FooterComponent, BaseChartDirective, SidebarModule, SidebarComponent],
+  imports: [CommonModule, FooterComponent, BaseChartDirective, DrawerModule, SidebarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -21,30 +21,19 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
-
   name: string = '';
-
   tag: string = '';
-
   account: any;
-
   mmr: any;
 
 
   // Stats Principali
-
   avgKd: number = 0;
-
   avgHs: number = 0;
-
   winRate: number = 0;
-
   bestMap: any = { name: 'N/A', rate: 0 };
-
   worstMap: any = { name: 'N/A', rate: 0 };
-
   topAgent: string = 'N/A';
-
   topAgentImage: string = '';
 
 
@@ -119,46 +108,27 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
-
-
-
-
-
   ngOnInit() {
-
     const savedUser = localStorage.getItem('vlr_user');
-
     if (!savedUser) {
-
       this.router.navigate(['/login']);
-
       return;
-
     }
 
 
     const user = JSON.parse(savedUser);
-
     this.name = user.name;
-
     this.tag = user.tag;
 
 
     // Caricamento Dati Profilo
 
     this.stats.getAccount(this.name, this.tag).subscribe(res => this.account = res);
-
     this.stats.getMMR(this.name, this.tag).subscribe((res: any) => {
-
       if (res?.data?.currenttier) {
-
         this.stats.getRankTiers().subscribe((tiersRes: any) => {
-
           const lastEpisode = tiersRes.data[tiersRes.data.length - 1];
-
           const found = lastEpisode.tiers.find((t: any) => t.tier === res.data.currenttier);
-
           if (found) this.userRank = { icon: found.largeIcon, name: found.tierName };
 
         });

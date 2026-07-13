@@ -1,3 +1,9 @@
+.centro-div {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
 :host ::ng-deep .p-tabview {
     background: transparent;
 }
@@ -7,26 +13,47 @@
     border: none !important;
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    /* Spazio leggermente aumentato per far respirare le tab grandi */
+    margin-bottom: 2.5rem;
 }
 
 :host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px border rgba(255, 255, 255, 0.1) !important;
-    color: rgba(255, 255, 255, 0.4) !important;
-    border-radius: 1rem !important;
-    padding: 1rem 2rem !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    font-style: italic !important;
-    transition: all 0.3s ease !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    /* Corretto il typo 'border' in 'solid' */
+    color: rgba(255, 255, 255, 0.5) !important;
+    border-radius: 1.25rem !important;
+    /* Arrotondamento più morbido in linea con i 3xl delle card */
+    padding: 1.2rem 2.5rem !important;
+    /* Padding aumentato per accogliere i testi più grandi e le icone */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
+/* Effetto Hover sulle tab non attive */
+:host ::ng-deep .p-tabview .p-tabview-nav li:not(.p-highlight):hover .p-tabview-nav-link {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* TAB ATTIVA (HIGHLIGHT): Mantiene lo sfondo Indigo pieno e aggiunge un leggero bagliore neon */
 :host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
     background: #6366f1 !important;
+    border-color: #4f46e5 !important;
     color: white !important;
-    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3) !important;
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Animazione e colore dell'icona SVG quando la tab è attiva */
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .tab-icon {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+/* Transizione fluida per l'icona interna al passaggio del mouse o al cambio di stato */
+.tab-icon {
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 :host ::ng-deep .p-tabview .p-tabview-panels {
@@ -58,4 +85,40 @@
 .map-overlay-tech {
     background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
     background-size: 32px 32px;
+}
+
+/* 1. Sovrascriviamo il vincolo dei 10rem sul drawer inferiore di PrimeNG v19 */
+::ng-deep .p-drawer-bottom .p-drawer {
+    height: 85vh !important;
+    /* Forza la dimensione reale che volevi! */
+}
+
+/* 2. Rimonviamo l'header nativo e la X verde fluorescente */
+::ng-deep .p-drawer-header {
+    display: none !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* 3. Gestiamo correttamente il content interno */
+::ng-deep .p-drawer-content {
+    padding: 2rem !important;
+    height: 100% !important;
+    overflow-y: auto !important;
+}
+
+/* 4. Overlay di sfondo scuro con blur */
+::ng-deep .p-drawer-mask {
+    background-color: rgba(3, 3, 5, 0.8) !important;
+    backdrop-filter: blur(6px) !important;
+}
+
+/* 5. Finitura estetica cyberpunk del drawer */
+::ng-deep .p-drawer {
+    background: #070708 !important;
+    color: #ffffff !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 2.5rem 2.5rem 0 0 !important;
+    box-shadow: 0 -15px 50px rgba(0, 0, 0, 0.9) !important;
 }

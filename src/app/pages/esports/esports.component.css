@@ -1,17 +1,37 @@
-@keyframes loading {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(300%); }
+/* Sovrascrittura e adattamento stili PrimeNG v19 in chiave Dark Cyberpunk */
+::v-deep .custom-vct-carousel .p-carousel-indicators {
+  padding: 1rem 0 0 0;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+::v-deep .custom-vct-carousel .p-carousel-indicator-button {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  width: 1.5rem !important;
+  height: 4px !important;
+  border-radius: 2px !important;
+  transition: all 0.3s ease;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+::v-deep .custom-vct-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
+  background-color: #4f46e5 !important;
+  /* Indigo-600 */
+  box-shadow: 0 0 10px rgba(79, 70, 229, 0.6);
+  width: 2.5rem !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #4f46e5;
-  border-radius: 10px;
+::v-deep .custom-vct-carousel .p-carousel-prev-button,
+::v-deep .custom-vct-carousel .p-carousel-next-button {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  border-radius: 1rem !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  transition: all 0.3s ease;
+}
+
+::v-deep .custom-vct-carousel .p-carousel-prev-button:hover,
+::v-deep .custom-vct-carousel .p-carousel-next-button:hover {
+  background: #4f46e5 !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
 }

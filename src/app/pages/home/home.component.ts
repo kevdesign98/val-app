@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
 
   activeMapImage: string = "";
 
+  showIntro = true;
+
   maps: any[] = [
     {
       name: "Ascent",
@@ -78,6 +80,10 @@ export class HomeComponent implements OnInit {
         };
       });
     });
+
+    setTimeout(() => {
+      this.showIntro = false;
+    }, 1500)
   }
 
   /**

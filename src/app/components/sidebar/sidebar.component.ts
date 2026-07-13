@@ -1,14 +1,14 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, SidebarModule],
+  imports: [CommonModule, RouterLink, DrawerModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

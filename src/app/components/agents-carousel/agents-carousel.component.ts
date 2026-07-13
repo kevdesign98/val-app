@@ -1,10 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-
-import { ButtonModule } from "primeng/button";
-import { CarouselModule } from "primeng/carousel";
-import { CardModule } from "primeng/card";
-import { RouterModule, Router } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { CarouselModule } from 'primeng/carousel';
+import { CardModule } from 'primeng/card';
+import { RouterModule, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: "app-agents-carousel",
@@ -14,7 +13,7 @@ import { HttpClient } from "@angular/common/http";
     CarouselModule,
     CardModule,
     RouterModule
-],
+  ],
   templateUrl: "./agents-carousel.component.html",
   styleUrl: "./agents-carousel.component.css",
   host: { ngSkipHydration: "true" }

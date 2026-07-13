@@ -1,0 +1,42 @@
+/* Customizzazione Mask Sfondo scuro e blurrato */
+::ng-deep .p-dialog-mask {
+    background-color: rgba(3, 3, 5, 0.85) !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* Rimuove i padding standard di PrimeNG sul contenuto per gestirli con Tailwind */
+::ng-deep .p-dialog .p-dialog-content {
+    background: #0a0a0c !important;
+    padding: 0 !important;
+}
+
+/* Sblocca lo scroll del pannello dropdown (p-select / p-dropdown v19) */
+:host ::ng-deep .p-select-overlay .p-select-list-container,
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items-wrapper {
+    max-height: 200px !important;
+    /* Definisce un'altezza limite oltre la quale scatta lo scroll */
+    overflow-y: auto !important;
+    /* Forza la barra verticale a scorrere */
+    overflow-x: hidden !important;
+    /* Evita fastidiosi scorrimenti orizzontali */
+    pointer-events: auto !important;
+    /* Assicura che il mouse possa interagire con la lista */
+}
+
+/* Opzionale: Applica lo stile della scrollbar custom per coerenza con il resto di ValApp */
+:host ::ng-deep .p-select-list-container::-webkit-scrollbar,
+:host ::ng-deep .p-dropdown-items-wrapper::-webkit-scrollbar {
+    width: 6px;
+}
+
+:host ::ng-deep .p-select-list-container::-webkit-scrollbar-thumb,
+:host ::ng-deep .p-dropdown-items-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    /* Colore Indigo */
+    border-radius: 10px;
+}
+
+:host ::ng-deep .p-select-list-container::-webkit-scrollbar-thumb:hover,
+:host ::ng-deep .p-dropdown-items-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.6);
+}

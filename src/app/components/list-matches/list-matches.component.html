@@ -2,7 +2,8 @@
 
 <div class="relative min-h-screen bg-[#050505] text-white pt-24 pb-20 overflow-hidden">
 
-  <div class="absolute inset-0 z-0">
+  <!-- Sfondi Ambientali Tech -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
     <div class="blob blob-indigo opacity-10"></div>
     <div class="blob blob-red opacity-5"></div>
     <div class="map-overlay-tech opacity-20"></div>
@@ -10,9 +11,10 @@
 
   <div class="container mx-auto px-4 relative z-10">
 
+    <!-- Header Match Center -->
     <div class="relative rounded-[2.5rem] overflow-hidden mb-12 border border-white/10 shadow-2xl">
       <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
-      style="background-image: url('assets/champions.png')"></div>
+        style="background-image: url('assets/champions.png')"></div>
       <div class="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
 
       <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
@@ -30,107 +32,248 @@
         </div>
         <div class="text-center md:text-left">
           <span class="text-indigo-400 font-mono tracking-[0.3em] text-[10px] uppercase block mb-2">//
-          Global_Circuit_Feed</span>
+            Global_Circuit_Feed</span>
           <h1 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Match Center</h1>
           <p class="text-gray-400 font-medium italic mt-2 text-sm md:text-base">Monitor upcoming battles and live
-          results.</p>
+            results.</p>
         </div>
       </div>
     </div>
 
+    <!-- Sezione Tabs Modernizzata PrimeNG v20 -->
     <div class="custom-tabs">
-      <p-tabView>
+      <p-tabs value="0">
 
-        <p-tabPanel header="Schedule">
-          <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            @for (match of matches; track match) {
-              <div
-                class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/50 transition-all duration-300">
-                <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                  <span class="text-indigo-500  text-[12px] uppercase tracking-widest font-bold">{{ match.utc |
-                  date: 'MMM d, y' }}</span>
-                  <span class="text-2xl font-black italic tracking-tighter">{{ match.utc | date: 'shortTime' }}</span>
+        <!-- LISTA DEI BOTTONI (TABLIST) CENTRATA -->
+        <p-tablist>
+
+          <!-- TAB: SCHEDULE -->
+          <p-tab value="0">
+            <div class="flex items-center gap-3 py-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                class="tab-icon">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span class="text-lg md:text-xl font-black uppercase italic tracking-tight">Schedule</span>
+            </div>
+          </p-tab>
+
+          <!-- TAB: RESULTS -->
+          <p-tab value="1">
+            <div class="flex items-center gap-3 py-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                class="tab-icon">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                <path d="M4 22h16" />
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+              </svg>
+              <span class="text-lg md:text-xl font-black uppercase italic tracking-tight">Results</span>
+            </div>
+          </p-tab>
+
+        </p-tablist>
+
+        <!-- CONTENUTO DEI PANNELLI (TABPANELS) -->
+        <p-tabpanels>
+
+          <!-- PANNELLO SCHEDULE (PROSSIMI MATCH) -->
+          <p-tabpanel value="0">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 animate-fade-in">
+              @for (match of matches; track match) {
+              <div (click)="openMatchDetails(match)"
+                class="group relative flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
+
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-indigo-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-                @if (match.teams && match.teams.length >= 2) {
-                  <div class="flex items-center gap-8 md:gap-16 flex-1 justify-center py-4 md:py-0"
-                    >
-                    <div class="flex flex-col items-center min-w-[100px]">
+
+                <div class="flex flex-col gap-1 relative z-10">
+                  <div class="flex items-center gap-2">
+                    <span class="text-indigo-500 text-[10px] uppercase tracking-widest font-mono">{{ match.utc | date:
+                      'MMM d, y' }}</span>
+                    <span class="text-white font-bold text-[12px]">// {{ match.utc | date: 'shortTime' }}</span>
+                  </div>
+
+                  @if (match.teams && match.teams.length >= 2) {
+                  <div class="flex flex-col gap-2 mt-3">
+                    <div class="flex items-center gap-3">
                       <span
-                        class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
-                        {{ match.teams[0].name }}
-                      </span>
+                        class="text-base font-black uppercase italic tracking-tight group-hover:text-indigo-400 transition-colors">{{
+                        match.teams[0].name }}</span>
                     </div>
-                    <div class="flex flex-col items-center">
-                      <span
-                      class="text-xs font-black italic text-indigo-500/50 group-hover:text-indigo-500 transition-colors">VS</span>
-                    </div>
-                    <div class="flex flex-col items-center min-w-[100px]">
-                      <span
-                        class="text-sm font-black uppercase tracking-widest text-white/60 group-hover:text-white transition-colors">
-                        {{ match.teams[1].name }}
-                      </span>
+                    <div class="flex items-center gap-3">
+                      <span class="text-base font-black uppercase italic tracking-tight text-white/70">{{
+                        match.teams[1].name }}</span>
                     </div>
                   </div>
-                }
-                <div
-                  class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5 min-w-[220px] justify-center">
-                  @if (match.img) {
-                    <img [src]="match.img" class="w-5 h-5 object-contain grayscale group-hover:grayscale-0 transition-all"
-                      >
                   }
-                  <span class="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover:text-white">{{
-                  match.event }}</span>
+                </div>
+
+                <!-- Evento Tag Destra -->
+                <div
+                  class="mt-4 md:mt-0 flex items-center gap-3 bg-black/40 px-4 py-2 rounded-xl border border-white/5 max-w-[200px] justify-center text-right relative z-10">
+                  @if (match.img) {
+                  <img [src]="match.img"
+                    class="w-4 h-4 object-contain grayscale group-hover:grayscale-0 transition-all">
+                  }
+                  <span
+                    class="text-[9px] font-mono font-black uppercase tracking-wider text-white/40 group-hover:text-white truncate">
+                    {{ match.event }}
+                  </span>
                 </div>
               </div>
-            }
-          </div>
-        </p-tabPanel>
+              }
+            </div>
+          </p-tabpanel>
 
-        <p-tabPanel header="Results">
-          <div class="grid grid-cols-1 gap-4 mt-6 animate-fade-in">
-            @for (result of resultMatches; track result) {
-              <div
-                class="group flex flex-col md:flex-row items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] transition-all duration-300">
-                <div class="flex flex-col items-center md:items-start min-w-[140px] mb-4 md:mb-0">
-                  <span class="text-indigo-500 text-[12px] uppercase tracking-widest font-bold">Final_Result</span>
-                  <span class="text-[11px] font-bold text-gray-500 uppercase italic">{{ result.ago }}</span>
+          <!-- PANNELLO RESULTS (MATCH CONCLUSI) -->
+          <p-tabpanel value="1">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 animate-fade-in">
+              @for (result of resultMatches; track result) {
+              <div (click)="openMatchDetails(result)"
+                class="group relative flex items-center justify-between p-6 bg-white/[0.02] border border-white/5 rounded-3xl hover:bg-white/[0.05] hover:border-indigo-500/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
+
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-indigo-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                 </div>
-                @if (result.teams && result.teams.length >= 2) {
-                  <div class="flex items-center gap-6 md:gap-16 flex-1 justify-center py-4 md:py-0"
-                    >
+
+                <div class="flex flex-col gap-1 relative z-10">
+                  <span class="text-indigo-400 text-[9px] font-mono uppercase tracking-widest">{{ result.ago ||
+                    'Final Result' }}</span>
+
+                  @if (result.teams && result.teams.length >= 2) {
+                  <div class="flex flex-col gap-1 mt-3">
                     <div class="flex items-center gap-4">
-                      <span class="text-sm md:text-lg font-black uppercase text-right w-24 md:w-32 transition-colors"
-                        [class.text-indigo-400]="(result.teams[0].score || '0') > (result.teams[1].score || '0')">
+                      <span class="text-base font-black uppercase italic tracking-tight transition-colors w-32 truncate"
+                        [class.text-indigo-400]="(result.teams[0].score || 0) > (result.teams[1].score || 0)">
                         {{ result.teams[0].name }}
                       </span>
-                      <span class="text-3xl font-black w-10 text-center">{{ result.teams[0].score || '0' }}</span>
+                      <span
+                        class="text-xl font-black font-mono bg-white/5 px-2 py-0.5 rounded-lg min-w-[28px] text-center">{{
+                        result.teams[0].score || '0' }}</span>
                     </div>
-                    <div class="text-white/10 font-black text-xl italic mx-2">-</div>
                     <div class="flex items-center gap-4">
-                      <span class="text-3xl font-black w-10 text-center">{{ result.teams[1].score || '0' }}</span>
-                      <span class="text-sm md:text-lg font-black uppercase text-left w-24 md:w-32 transition-colors"
-                        [class.text-indigo-400]="(result.teams[1].score || '0') > (result.teams[0].score || '0')">
+                      <span class="text-base font-black uppercase italic tracking-tight text-white/60 w-32 truncate"
+                        [class.text-indigo-400]="(result.teams[1].score || 0) > (result.teams[0].score || 0)">
                         {{ result.teams[1].name }}
                       </span>
+                      <span
+                        class="text-xl font-black font-mono bg-white/5 px-2 py-0.5 rounded-lg min-w-[28px] text-center text-white/50">{{
+                        result.teams[1].score || '0' }}</span>
                     </div>
                   </div>
-                }
-                <div class="mt-4 md:mt-0 flex flex-col items-center md:items-end min-w-[150px]">
-                  <div class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
-                    @if (result.img) {
-                      <img [src]="result.img" class="w-5 h-5 object-contain">
-                    }
-                    <span class="text-[12px] font-bold uppercase tracking-tighter">{{ result.event }}</span>
-                  </div>
+                  }
+                </div>
+
+                <!-- Evento Tag Destra -->
+                <div
+                  class="flex items-center gap-2 opacity-40 group-hover:opacity-100 transition-opacity max-w-[180px] relative z-10">
+                  @if (result.img) {
+                  <img [src]="result.img" class="w-4 h-4 object-contain">
+                  }
+                  <span class="text-[9px] font-mono font-bold uppercase tracking-wider truncate">{{ result.event
+                    }}</span>
                 </div>
               </div>
-            }
-          </div>
-        </p-tabPanel>
+              }
+            </div>
+          </p-tabpanel>
 
-      </p-tabView>
+        </p-tabpanels>
+      </p-tabs>
     </div>
   </div>
 </div>
+
+<!-- ======================================================= -->
+<!-- BOTTOM SHEET DI DETTAGLIO (AGGIORNATO A P-DRAWER V20)    -->
+<!-- ======================================================= -->
+<!-- <p-drawer [(visible)]="selectedMatch" position="bottom" styleClass="h-[85vh]" [blockScroll]="true" appendTo="body">
+
+  @if (selectedMatch) {
+  <div class="max-w-3xl mx-auto pt-4 pb-8 text-white animate-fade-in">
+
+     <div class="w-12 h-1 bg-white/20 rounded-full mx-auto mb-6 cursor-pointer" (click)="closeMatchDetails()"></div>
+
+     <div class="flex justify-between items-center mb-6">
+      <span class="text-indigo-400 font-mono text-[10px] uppercase tracking-[0.3em]">
+        // {{ selectedMatch.event || 'VCT CIRCUIT MATCH' }}
+      </span>
+      <button (click)="closeMatchDetails()"
+        class="text-white/40 hover:text-white font-mono text-xs uppercase tracking-wider transition-colors">
+        [ CLOSE ✕ ]
+      </button>
+    </div>
+
+     <div
+      class="grid grid-cols-3 items-center text-center py-8 bg-white/[0.02] border border-white/5 rounded-3xl px-4 mb-8 relative overflow-hidden">
+      <div
+        class="absolute -left-10 top-1/2 -translate-y-1/2 font-black italic text-8xl text-white/[0.01] uppercase select-none">
+        VS
+      </div>
+
+       <div class="flex flex-col items-center gap-2">
+        <span class="text-xl md:text-2xl font-black uppercase italic tracking-tight text-white">
+          {{ selectedMatch.teams?.[0]?.name || 'TEAM A' }}
+        </span>
+      </div>
+
+       <div class="flex flex-col items-center justify-center">
+        <span class="text-[9px] font-mono text-gray-500 uppercase tracking-widest mb-1">MATCH SCORE</span>
+        <div class="text-4xl md:text-5xl font-black italic tracking-tighter text-indigo-400 font-mono">
+          {{ selectedMatch.teams?.[0]?.score ?? '-' }}
+          <span class="text-white/20 font-light font-sans">:</span>
+          {{ selectedMatch.teams?.[1]?.score ?? '-' }}
+        </div>
+        @if (selectedMatch.utc) {
+        <span class="mt-3 text-[9px] font-mono px-3 py-1 bg-white/5 rounded-full text-gray-400 border border-white/5">
+          {{ selectedMatch.utc | date: 'shortTime' }} // {{ selectedMatch.utc | date: 'mediumDate' }}
+        </span>
+        } @else {
+        <span
+          class="mt-3 text-[9px] font-mono px-3 py-1 bg-indigo-500/10 text-indigo-400 rounded-full border border-indigo-500/10 font-bold uppercase">
+          COMPLETED
+        </span>
+        }
+      </div>
+
+         <div class="flex flex-col items-center gap-2">
+        <span class="text-xl md:text-2xl font-black uppercase italic tracking-tight text-white/80">
+          {{ selectedMatch.teams?.[1]?.name || 'TEAM B' }}
+        </span>
+      </div>
+    </div>
+
+
+    <div class="space-y-4">
+      <div class="flex items-center justify-between border-b border-white/5 pb-2">
+        <h5 class="text-[10px] font-mono text-gray-400 uppercase tracking-[0.2em]">// MAP_SELECTION_BREAKDOWN</h5>
+        <span class="text-[9px] font-mono text-indigo-400">BEST OF 3</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="p-4 bg-indigo-600/10 border border-indigo-500/20 rounded-2xl text-center">
+          <span class="block text-[9px] font-mono text-indigo-400 uppercase tracking-wider">MAP 1: BIND</span>
+          <span class="text-base font-black italic text-white mt-1 block">13 - 9</span>
+        </div>
+        <div class="p-4 bg-white/[0.02] border border-white/5 rounded-2xl text-center">
+          <span class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider">MAP 2: ASCENT</span>
+          <span class="text-base font-black italic text-gray-400 mt-1 block">11 - 13</span>
+        </div>
+        <div class="p-4 bg-white/[0.01] border border-white/5 rounded-2xl text-center opacity-50">
+          <span class="block text-[9px] font-mono text-gray-600 uppercase tracking-wider">MAP 3: SUNSET</span>
+          <span class="text-base font-black italic text-gray-600 mt-1 block">DECIDER</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  }
+</p-drawer> -->
 
 <app-footer />

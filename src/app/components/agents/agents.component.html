@@ -18,58 +18,74 @@
 
       <nav class="flex flex-wrap gap-2">
         @for (role of roles; track role) {
-          <button (click)="filterByRole(role)" [class.bg-indigo-600]="selectedRole === role"
-            [class.border-indigo-600]="selectedRole === role"
-            class="px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/10 transition-all bg-white/5 hover:bg-white/10 text-white">
-            {{ role }}
-          </button>
+        <button (click)="filterByRole(role)" [class.bg-indigo-600]="selectedRole === role"
+          [class.border-indigo-600]="selectedRole === role"
+          class="px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/10 transition-all bg-white/5 hover:bg-white/10 text-white">
+          {{ role }}
+        </button>
         }
       </nav>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      @for (agent of filteredAgents; track agent) {
-        <div
-          class="group relative bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 h-[500px] transition-all duration-500 hover:border-indigo-500/40 hover:-translate-y-3 overflow-hidden flex flex-col">
-          <span
-            class="absolute -bottom-4 -right-4 text-[7rem] font-black text-white/[0.02] uppercase pointer-events-none select-none italic transition-all group-hover:text-indigo-500/10">
-            {{ agent.displayName }}
+      @for (agent of filteredAgents; track agent.uuid) {
+      <div
+        class="group relative bg-white/[0.03] border border-white/10 rounded-[2.5rem] p-6 h-[500px] transition-all duration-500 hover:border-indigo-500/40 hover:-translate-y-3 overflow-hidden flex flex-col">
+        <span
+          class="absolute -bottom-4 -right-4 text-[7rem] font-black text-white/[0.02] uppercase pointer-events-none select-none italic transition-all group-hover:text-indigo-500/10">
+          {{ agent.displayName }}
+        </span>
+        <div class="relative z-10 flex items-center gap-3 mb-2">
+          @if (agent.role?.displayIcon) {
+          <img [src]="agent.role.displayIcon" class="w-4 h-4 opacity-50 invert" alt="role">
+          }
+          <span class="text-[11px] font-semibold text-indigo-400 uppercase tracking-widest">
+            {{ agent.role?.displayName || 'Unknown' }}
           </span>
-          <div class="relative z-10 flex items-center gap-3 mb-2">
-            @if (agent.role?.displayIcon) {
-              <img [src]="agent.role.displayIcon" class="w-4 h-4 opacity-50 invert"
-                alt="role">
-            }
-            <span class="text-[11px] font-semibold text-indigo-400 uppercase tracking-widest">{{
-            agent.role?.displayName || 'Unknown' }}</span>
+        </div>
+
+        <!-- Contenitore del Ritratto con controllo di caricamento -->
+        <div class="relative flex-1 flex items-center justify-center z-10 cursor-pointer"
+          [routerLink]="['/agents', agent.uuid]">
+
+          <div
+            class="absolute w-48 h-48 bg-indigo-600/10 blur-[70px] rounded-full group-hover:bg-indigo-600/20 transition-all">
           </div>
-          <div class="relative flex-1 flex items-center justify-center z-10 cursor-pointer"
-            [routerLink]="['/agents', agent.uuid]">
+
+          <!-- Usiamo $any(img) per dire a TypeScript di non controllare le proprietà custom al volo -->
+          <img [src]="agent.fullPortraitV2" [alt]="agent.displayName" #img (load)="$any(img).loaded = true"
+            [class.opacity-100]="$any(img).loaded" [class.scale-110]="$any(img).loaded && $any(img).hovered"
+            class="h-full w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] opacity-0 transition-all duration-700"
+            (mouseenter)="$any(img).hovered = true" (mouseleave)="$any(img).hovered = false">
+
+          <!-- Animazione custom visibile finché $any(img).loaded non è true -->
+          @if (!$any(img).loaded) {
+          <div class="absolute inset-0 flex flex-col items-center justify-center bg-transparent z-20">
+            <div class="w-6 h-6 bg-indigo-500 rotate-45 animate-ping opacity-75"></div>
             <div
-              class="absolute w-48 h-48 bg-indigo-600/10 blur-[70px] rounded-full group-hover:bg-indigo-600/20 transition-all">
-            </div>
-            <img [src]="agent.fullPortraitV2" [alt]="agent.displayName" loading="lazy"
-              class="h-full w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-700">
-            </div>
-            <div class="relative z-10 mt-auto pt-4 text-center">
-              <h3
-                class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none mb-4 group-hover:text-indigo-400 transition-colors">
-                {{ agent.displayName }}
-              </h3>
-              <button [routerLink]="['/agents', agent.uuid]"
-                class="w-full py-3 rounded-2xl border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">
-                Discover More
-              </button>
-            </div>
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+              class="absolute w-4 h-4 bg-indigo-600 rotate-45 border border-indigo-400 shadow-[0_0_15px_rgba(79,70,229,0.6)]">
             </div>
           </div>
-        }
+          }
+        </div>
+
+        <div class="relative z-10 mt-auto pt-4 text-center">
+          <h3
+            class="text-4xl font-black text-white uppercase italic tracking-tighter leading-none mb-4 group-hover:text-indigo-400 transition-colors">
+            {{ agent.displayName }}
+          </h3>
+          <button [routerLink]="['/agents', agent.uuid]"
+            class="w-full py-3 rounded-2xl border border-white/10 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">
+            Discover More
+          </button>
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+        </div>
       </div>
+      }
     </div>
   </div>
+</div>
 
-
-
-  <app-footer />
+<app-footer />

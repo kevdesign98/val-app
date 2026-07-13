@@ -4,7 +4,6 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { MapsService } from "../../service/maps-services/maps.service";
 
-
 @Component({
   selector: "app-maps",
   standalone: true,
@@ -15,7 +14,7 @@ import { MapsService } from "../../service/maps-services/maps.service";
 export class MapsComponent implements OnInit {
   maps: any[] = [];
 
-  // Mappe competitive
+  // Mappe competitive attive e passate
   compMaps = [
     "Abyss",
     "Ascent",
@@ -39,7 +38,7 @@ export class MapsComponent implements OnInit {
       next: (maps: any[]) => {
         this.maps = maps
           .filter((map: any) => this.compMaps.includes(map.displayName))
-          .sort((a, b) => a.displayName.localeCompare(b.displayName)); // Opzionale: ordine alfabetico
+          .sort((a, b) => a.displayName.localeCompare(b.displayName));
       },
       error: (err) => console.error("Errore nel caricamento mappe:", err),
     });

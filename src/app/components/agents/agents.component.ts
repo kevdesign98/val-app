@@ -32,7 +32,7 @@ export class AgentsComponent implements OnInit {
           index === self.findIndex((a) => a.displayName === agent.displayName)
       );
 
-      // 3. Mapping dei dati
+      // 3. Mapping dei dati (utile se userai i file locali .png in futuro)
       this.agents = uniqueAgents.map((agent: any) => ({
         ...agent,
         imageName:

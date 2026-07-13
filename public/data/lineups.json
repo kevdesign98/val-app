@@ -1,0 +1,90 @@
+[
+    {
+        "id": "lineup_001",
+        "title": "A-Site Default Plant from A-Main",
+        "description": "A classic and safe lineup to hit the A-Site default plant using the Shock Dart. Requires precise positioning on the corner of the container in A-Main.",
+        "map": "bind",
+        "agent": {
+            "name": "Sova",
+            "icon": "assets/agents/sova.png"
+        },
+        "ability": {
+            "name": "Shock Dart",
+            "key": "Q",
+            "icon": "assets/abilities/sova_q.png"
+        },
+        "side": "attack",
+        "site": "A",
+        "difficulty": "easy",
+        "credits": "AverageJonas",
+        "media": {
+            "type": "video",
+            "url": "assets/videos/lineups/bind-sova-a-main.mp4",
+            "preview": "assets/images/lineups/bind-sova-a-preview.jpg"
+        },
+        "steps": [
+            "Get stuck in the corner between the container and the wall in A-Main.",
+            "Aim on the intersection of the second antenna on the roof of the building in front.",
+            "Charge the bar to 1 bounce (1 Bounce) and half power (2 Bars).",
+            "Release the dart immediately after the checkpoint plant."
+        ]
+    },
+    {
+        "id": "lineup_002",
+        "title": "B-Site Snake Bite Post-Plant",
+        "description": "Fundamental lineup to deny the defuse on B-Site (behind the container) directly from B-Long. Perfectly covers the area for about 6 seconds.",
+        "map": "bind",
+        "agent": {
+            "name": "Viper",
+            "icon": "assets/agents/viper.png"
+        },
+        "ability": {
+            "name": "Snake Bite",
+            "key": "C",
+            "icon": "assets/abilities/viper_c.png"
+        },
+        "side": "attack",
+        "site": "B",
+        "difficulty": "medium",
+        "credits": "Unidra",
+        "media": {
+            "type": "image",
+            "url": "assets/images/lineups/bind-viper-b-long.jpg",
+            "preview": "assets/images/lineups/bind-viper-b-preview.jpg"
+        },
+        "steps": [
+            "Position yourself above the metal grating at B-Long aligning the reticle with the left edge.",
+            "Use the interface (HUD): align the tip of the fuel bar icon with the corner of the gray roof.",
+            "Throw the potion without jumping (Simple Left Click)."
+        ]
+    },
+    {
+        "id": "lineup_003",
+        "title": "A-Site Retake Nanoswarm Setup",
+        "description": "Advanced defensive setup to delay the entry into A-Site from A-Main. The grenades are hidden inside the brick textures.",
+        "map": "ascent",
+        "agent": {
+            "name": "Killjoy",
+            "icon": "assets/agents/killjoy.png"
+        },
+        "ability": {
+            "name": "Nanoswarm",
+            "key": "C",
+            "icon": "assets/abilities/killjoy_c.png"
+        },
+        "side": "defense",
+        "site": "A",
+        "difficulty": "hard",
+        "credits": "Kephrii",
+        "media": {
+            "type": "image",
+            "url": "assets/images/lineups/ascent-kj-a-site.jpg",
+            "preview": "assets/images/lineups/ascent-kj-preview.jpg"
+        },
+        "steps": [
+            "Get on top of the green boxes at A-Site before the buy phase.",
+            "Aim exactly at the dark crack between the two broken bricks on the column.",
+            "Do a Jump-Throw (jump and throw simultaneously) to trap the grenade."
+        ]
+    }
+]

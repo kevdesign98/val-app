@@ -153,4 +153,47 @@
 .bg-white-maps {
     background-color: #ece7e1;
 }
- 
+
+
+@keyframes scan-laser {
+    0% {
+        top: 0%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.animate-scan-laser {
+    animation: scan-laser 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-out {
+    animation: fade-out 1.7s ease-in-out forwards;
+}

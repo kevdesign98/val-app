@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from '../../components/footer/footer.component';
-
 import { StatsService } from '../../service/stats-services/stats.service';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { ActivatedRoute } from '@angular/router';

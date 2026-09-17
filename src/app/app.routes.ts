@@ -18,28 +18,29 @@ import { WeaponsListDashboardComponent } from "./pages/weapons-list-dashboard/we
 import { MatchesDashboardComponent } from "./pages/matches-dashboard/matches-dashboard.component";
 import { PrivacyComponent } from "./pages/privacy/privacy.component";
 import { LineupsComponent } from "./pages/lineups/lineups.component";
+import { TacticalLabsComponent } from "./pages/tactical-labs/tactical-labs.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
   { path: "Home", component: HomeComponent, title: 'ValApp - AI Coach & Tracker per Valorant' },
-  { path: "agents", component: AgentsComponent, title: 'Agenti - ValApp' },
-  { path: "weapons", component: WeaponsComponent, title: 'Armi - ValApp' },
-  { path: "maps", component: MapsComponent, title: 'Mappe - ValApp' },
-  { path: "list-matches", component: ListMatchesComponent, title: 'Partite - ValApp' },
-  { path: "stats", component: StatsComponent, title: 'Statistiche - ValApp' },
-  { path: "agents/:id", component: AgentsDetailsComponent, title: 'Dettagli Agente - ValApp' },
-  { path: "maps-strat/:uuid", component: MapStratComponent, title: 'Strategie Mappa - ValApp' },
-  { path: "signup", component: SignupComponent, title: 'Registrazione - ValApp' },
+  { path: "agents", component: AgentsComponent, title: 'Agents - ValApp' },
+  { path: "weapons", component: WeaponsComponent, title: 'Weapons - ValApp' },
+  { path: "maps", component: MapsComponent, title: 'Maps - ValApp' },
+  { path: "list-matches", component: ListMatchesComponent, title: 'Matches - ValApp' },
+  { path: "stats", component: StatsComponent, title: 'Stats - ValApp' },
+  { path: "agents/:id", component: AgentsDetailsComponent, title: 'Agents Details - ValApp' },
+  { path: "maps-strat/:uuid", component: MapStratComponent, title: 'Maps Strategy - ValApp' },
+  { path: "signup", component: SignupComponent, title: 'Sign-up - ValApp' },
   { path: "dashboard", component: DashboardComponent, title: 'Dashboard - ValApp' },
   { path: "login", component: LoginComponent, title: 'Login - ValApp' },
   { path: "esports", component: EsportsComponent, title: 'Esports - ValApp' },
-  { path: "teams-details", component: TeamsDetailsComponent, title: 'Dettagli Squadra - ValApp' },
+  { path: "teams-details", component: TeamsDetailsComponent, title: 'Teams Details - ValApp' },
   { path: "privacy", component: PrivacyComponent, title: 'Privacy & Cookie Policy - ValApp' },
   { path: "lineups", component: LineupsComponent, title: 'Lineups - ValApp' },
 
-  { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent, title: 'Agenti - ValApp' },
-  { path: "dashboard/weapons-list-dashboard", component: WeaponsListDashboardComponent, title: 'Armi - ValApp' },
-  { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent, title: 'Partite - ValApp' },
-  { path: 'dashboard/matches/:name/:tag', component: MatchesDashboardComponent, title: 'Partite - ValApp' },
+  { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent, title: 'Agents - ValApp' },
+  { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent, title: 'Matches - ValApp' },
+  { path: 'dashboard/matches/:name/:tag', component: MatchesDashboardComponent, title: 'Matches - ValApp' },
+  { path: "dashboard/tactical-labs/:name/:tag", component: TacticalLabsComponent, title: 'Tactical labs - ValApp' },
   { path: "**", component: NotFoundComponent, title: '404 - Pagina non trovata' },
 ];

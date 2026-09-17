@@ -70,7 +70,7 @@
 
                 <!-- Immagine di Anteprima / Preview -->
                 <div class="relative h-48 overflow-hidden bg-zinc-900">
-                    <img [src]="lineup.media.preview"
+                    <img [src]="getLineupPreview(lineup)" [alt]="lineup.title"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-70 group-hover:opacity-90">
                     <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
 
@@ -86,14 +86,16 @@
                         </span>
                     </div>
 
-                    <!-- Icona Abilità In Basso a Destra -->
+                    <!-- Icona Abilità / Agente In Basso a Destra -->
                     <div
                         class="absolute bottom-4 right-4 bg-black/80 border border-white/10 p-2 rounded-xl backdrop-blur-md flex items-center justify-center w-10 h-10 shadow-xl">
                         <span
-                            class="text-[10px] font-mono font-bold text-[#ff4655] absolute -top-1.5 -left-1.5 bg-white/10 rounded-md px-1 scale-75">{{
-                            lineup.ability.key }}</span>
-                        <img [src]="lineup.agent.icon" class="w-full h-full object-contain"
-                            [title]="lineup.ability.name">
+                            class="text-[10px] font-mono font-bold text-[#ff4655] absolute -top-1.5 -left-1.5 bg-white/10 rounded-md px-1 scale-75">
+                            {{ lineup.ability?.key || 'Q' }}
+                        </span>
+                        <img *ngIf="lineup.agent?.icon" [src]="lineup.agent.icon" class="w-full h-full object-contain"
+                            [title]="lineup.ability?.name">
+                        <i *ngIf="!lineup.agent?.icon" class="pi pi-bolt text-white/50 text-sm"></i>
                     </div>
                 </div>
 
@@ -104,10 +106,10 @@
                             <span class="text-[9px] font-mono uppercase tracking-widest text-white/40">// BY {{
                                 lineup.credits }}</span>
                             <span class="w-1.5 h-1.5 rounded-full" [ngClass]="{
-                  'bg-emerald-500': lineup.difficulty === 'easy',
-                  'bg-amber-500': lineup.difficulty === 'medium',
-                  'bg-red-500': lineup.difficulty === 'hard'
-                }"></span>
+                          'bg-emerald-500': lineup.difficulty === 'easy',
+                          'bg-amber-500': lineup.difficulty === 'medium',
+                          'bg-red-500': lineup.difficulty === 'hard'
+                        }"></span>
                             <span class="text-[9px] font-mono uppercase text-white/40">{{ lineup.difficulty }}</span>
                         </div>
                         <h3
@@ -121,7 +123,7 @@
 
                     <!-- Bottone di Dettaglio / Azione -->
                     <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-[11px] font-mono text-gray-500 uppercase">Steps: {{ lineup.steps.length
+                        <span class="text-[11px] font-mono text-gray-500 uppercase">Steps: {{ lineup.steps?.length || 0
                             }}</span>
                         <button (click)="openLineupDetails(lineup)"
                             class="text-xs font-mono font-black uppercase tracking-wider bg-white/5 group-hover:bg-[#ff4655] text-white/80 group-hover:text-white px-4 py-2 rounded-xl border border-white/5 group-hover:border-transparent transition-all">
@@ -132,7 +134,7 @@
 
             </div>
             } @empty {
-            <!-- Stato Vuoto se i filtri non trovano nulla -->
+            <!-- Stato Vuoto -->
             <div
                 class="col-span-full py-16 text-center border border-dashed border-white/10 rounded-3xl bg-white/[0.01]">
                 <span class="text-gray-500 font-mono text-xs block uppercase tracking-widest mb-2">//

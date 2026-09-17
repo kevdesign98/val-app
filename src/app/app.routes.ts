@@ -18,7 +18,7 @@ import { WeaponsListDashboardComponent } from "./pages/weapons-list-dashboard/we
 import { MatchesDashboardComponent } from "./pages/matches-dashboard/matches-dashboard.component";
 import { PrivacyComponent } from "./pages/privacy/privacy.component";
 import { LineupsComponent } from "./pages/lineups/lineups.component";
-import { TacticalLabsComponent } from "./pages/tactical-labs/tactical-labs.component";
+// import { TacticalLabsComponent } from "./pages/tactical-labs/tactical-labs.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },

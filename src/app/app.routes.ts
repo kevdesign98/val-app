@@ -41,6 +41,6 @@ export const routes: Routes = [
   { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent, title: 'Agents - ValApp' },
   { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent, title: 'Matches - ValApp' },
   { path: 'dashboard/matches/:name/:tag', component: MatchesDashboardComponent, title: 'Matches - ValApp' },
-  { path: "dashboard/tactical-labs/:name/:tag", component: TacticalLabsComponent, title: 'Tactical labs - ValApp' },
+  // { path: "dashboard/tactical-labs/:name/:tag", component: TacticalLabsComponent, title: 'Tactical labs - ValApp' },
   { path: "**", component: NotFoundComponent, title: '404 - Pagina non trovata' },
 ];

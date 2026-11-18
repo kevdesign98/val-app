@@ -18,7 +18,7 @@ import { WeaponsListDashboardComponent } from "./pages/weapons-list-dashboard/we
 import { MatchesDashboardComponent } from "./pages/matches-dashboard/matches-dashboard.component";
 import { PrivacyComponent } from "./pages/privacy/privacy.component";
 import { LineupsComponent } from "./pages/lineups/lineups.component";
-import { TacticalLabsComponent } from "./pages/tactical-labs/tactical-labs.component";
+// import { TacticalLabsComponent } from "./pages/tactical-labs/tactical-labs.component";
 
 export const routes: Routes = [
   { path: "", redirectTo: "Home", pathMatch: "full" },
@@ -41,6 +41,6 @@ export const routes: Routes = [
   { path: "dashboard/agents-list-dashboard", component: AgentsListDashboardComponent, title: 'Agents - ValApp' },
   { path: "dashboard/matches-dashboard", component: MatchesDashboardComponent, title: 'Matches - ValApp' },
   { path: 'dashboard/matches/:name/:tag', component: MatchesDashboardComponent, title: 'Matches - ValApp' },
-  { path: "dashboard/tactical-labs/:name/:tag", component: TacticalLabsComponent, title: 'Tactical labs - ValApp' },
+  // { path: "dashboard/tactical-labs/:name/:tag", component: TacticalLabsComponent, title: 'Tactical labs - ValApp' },
   { path: "**", component: NotFoundComponent, title: '404 - Pagina non trovata' },
 ];

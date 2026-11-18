@@ -26,6 +26,21 @@ export class LineupsComponent implements OnInit {
   selectedLineup: any | null = null;
   displayModal: boolean = false;
 
+  // Mappatura delle immagini statiche locali delle mappe
+  // Assicurati che i file esistano in 'src/assets/maps/' o modifica con i tuoi path
+  mapPreviews: { [key: string]: string } = {
+    abyss: 'assets/maps/abyss.png',
+    ascent: 'assets/maps/ascent.png',
+    bind: 'assets/maps/bind.png',
+    breeze: 'assets/maps/breeze.png',
+    fracture: 'assets/maps/fracture.png',
+    haven: 'assets/maps/haven.png',
+    lotus: 'assets/maps/lotus.png',
+    pearl: 'assets/maps/pearl.png',
+    split: 'assets/maps/split.png',
+    sunset: 'assets/maps/sunset.png',
+  };
+
   maps = [
     { label: 'All Maps', value: null },
     { label: 'Abyss', value: 'abyss' },
@@ -83,12 +98,27 @@ export class LineupsComponent implements OnInit {
       next: (data) => {
         this.allLineups = data;
         this.filteredLineups = [...this.allLineups];
-        console.log('Lineups caricate con successo:', this.allLineups);
       },
       error: (err) => {
         console.error('Errore nel caricamento del file JSON delle lineups:', err);
       }
     });
+  }
+
+  /**
+    * Restituisce l'immagine statica della mappa dalla cartella assets.
+    * Utilizza il nome della mappa presente nel lineup per comporre il path.
+    */
+  getLineupPreview(lineup: any): string {
+    if (!lineup?.map) {
+      return 'assets/maps/default.png';
+    }
+
+    const mapKey = lineup.map.toLowerCase().trim();
+
+    // Se la mappa è registrata in mapPreviews prende il path definito, 
+    // altrimenti genera dinamicamente il path basato sul nome della mappa
+    return this.mapPreviews[mapKey] || `assets/maps/${mapKey}.png`;
   }
 
   setSide(side: string): void {
@@ -98,15 +128,12 @@ export class LineupsComponent implements OnInit {
 
   filterLineups(): void {
     this.filteredLineups = this.allLineups.filter(lineup => {
-      // Controllo Mappa (gestisce case-insensitive se necessario)
       const matchMap = !this.selectedMap ||
         lineup.map?.toLowerCase() === this.selectedMap.toLowerCase();
 
-      // Controllo Agente
       const matchAgent = !this.selectedAgent ||
         lineup.agent?.name?.toLowerCase() === this.selectedAgent.toLowerCase();
 
-      // Controllo Fazione (Attack/Defense)
       const matchSide = this.selectedSide === 'all' ||
         lineup.side?.toLowerCase() === this.selectedSide.toLowerCase();
 
@@ -114,23 +141,13 @@ export class LineupsComponent implements OnInit {
     });
   }
 
-
-
-
   openLineupDetails(lineup: any): void {
-
     this.selectedLineup = lineup;
-
     this.displayModal = true;
-
   }
 
-
   closeLineupDetails(): void {
-
     this.displayModal = false;
-
     this.selectedLineup = null;
-
   }
 }

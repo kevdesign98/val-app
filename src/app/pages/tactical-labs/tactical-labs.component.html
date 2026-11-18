@@ -1,0 +1,273 @@
+<div class="min-h-screen bg-[#050505] text-white pt-24 pb-20 relative overflow-hidden">
+    <app-sidebar class="hidden md:block" />
+
+    <!-- Effetti di Sfondo Cyberpunk -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-rose-500/5 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+
+        <!-- HEADER: NEURAL TACTICAL LAB -->
+        <div
+            class="relative rounded-[2.5rem] p-8 md:p-12 mb-12 border border-white/10 bg-gradient-to-r from-black via-zinc-950 to-transparent shadow-2xl">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(99,102,241,0.4)] animate-pulse">
+                    <i class="pi pi-eye text-2xl text-white"></i>
+                </div>
+                <div class="text-center md:text-left">
+                    <span class="text-rose-500 font-mono tracking-[0.3em] text-[10px] uppercase block mb-1">
+                        // COGNITIVE_ANALYSIS_UNIT
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-black uppercase italic tracking-tighter">
+                        Neural Tactical Lab
+                    </h1>
+                    <p class="text-gray-400 font-medium italic text-sm mt-1">
+                        Deep analysis of your combat data, patterns, and training routines.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRIGLIA PRINCIPALE DEL REPORT -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- COLONNA SINISTRA & CENTRALE: PERFORMANCE, MAPPE & ANATOMIA -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- DIAGNOSTICA PRESTAZIONI & TIMELINE -->
+                <div
+                    class="bg-white/[0.02] border border-white/5 p-6 rounded-3xl relative overflow-hidden group hover:border-indigo-500/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-lg font-black uppercase italic tracking-tight text-white flex items-center gap-2">
+                            <span class="w-2 h-2 bg-indigo-500 rounded-full animate-ping"></span>
+                            Performance Diagnostics
+                        </h3>
+                        <span class="font-mono text-[10px] text-gray-500">// CRITICAL_FLAWS</span>
+                    </div>
+
+                    <!-- PrimeNG v20 MeterGroup Custom -->
+                    <p-meterGroup [value]="tacticalFlaws" labelPosition="start"
+                        class="custom-meter-group"></p-meterGroup>
+
+                    <!-- TIMELINE DEL PIANO DI ALLENAMENTO -->
+                    <div class="mt-8 pt-6 border-t border-white/5">
+                        <h4 class="text-xs font-mono text-indigo-400 uppercase tracking-wider mb-4">// SUGGESTED_ROUTINE
+                        </h4>
+                        <p-timeline [value]="trainingSteps" class="custom-timeline">
+                            <ng-template #content let-step>
+                                <div class="mb-4 pl-2">
+                                    <span class="block text-sm font-bold text-white uppercase tracking-tight">
+                                        {{ step.title }}
+                                    </span>
+                                    <span class="text-xs text-gray-400 font-medium mt-1 block">
+                                        {{ step.desc }}
+                                    </span>
+                                </div>
+                            </ng-template>
+                        </p-timeline>
+                    </div>
+                </div>
+
+                <!-- GRAFICO PERFORMANCE PER MAPPA -->
+                <div
+                    class="bg-white/[0.02] border border-white/5 p-6 rounded-3xl relative overflow-hidden group hover:border-indigo-500/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-lg font-black uppercase italic tracking-tight text-white flex items-center gap-2">
+                            <i class="pi pi-map text-indigo-400"></i>
+                            Map Performance Matrix
+                        </h3>
+                        <span class="font-mono text-[10px] text-gray-500">// WINRATE_ANALYTICS</span>
+                    </div>
+
+                    <div class="h-[280px] w-full relative flex items-center justify-center">
+                        <!-- Carica il grafico solo quando i dati sono pronti per evitare flash bianchi o errori asincroni -->
+                        <p-chart *ngIf="mapChartData" type="bar" [data]="mapChartData" [options]="mapChartOptions"
+                            class="w-full h-full"></p-chart>
+                    </div>
+                </div>
+
+                <!-- SPATIAL HEATMAP ANALYSIS -->
+                <div
+                    class="bg-white/[0.02] border border-white/5 p-6 rounded-3xl relative overflow-hidden group hover:border-amber-500/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3
+                            class="text-lg font-black uppercase italic tracking-tight text-white flex items-center gap-2">
+                            <i class="pi pi-th-large text-amber-500"></i>
+                            Spatial Heatmap Tracker
+                        </h3>
+                        <span
+                            class="text-[9px] font-mono text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest">
+                            BETA_MODULE
+                        </span>
+                    </div>
+
+                    <!-- Visualizzatore Mappa con Overlay Punti Critici -->
+                    <div
+                        class="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/5 bg-black/40 group/map">
+                        <img [src]="selectedLabMapData.imageUrl || 'https://media.valorant-api.com/maps/7eae2356-43c2-4a21-e134-e582e4778e68/splash.png'"
+                            [alt]="selectedLabMapData.name"
+                            class="w-full h-full object-cover opacity-30 blur-[0.5px] group-hover/map:opacity-40 transition-opacity duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent">
+                        </div>
+
+                        <!-- Punti caldi dinamici simulati (Primi ingaggi / Hotspots) -->
+                        <div
+                            class="absolute top-[35%] left-[45%] w-14 h-14 bg-red-500/50 rounded-full blur-xl animate-pulse">
+                        </div>
+                        <div class="absolute top-[38%] left-[47%] w-6 h-6 bg-amber-400/70 rounded-full blur-lg"></div>
+
+                        <div
+                            class="absolute top-[58%] left-[28%] w-16 h-16 bg-indigo-500/40 rounded-full blur-xl animate-pulse delay-75">
+                        </div>
+                        <div class="absolute top-[61%] left-[30%] w-8 h-8 bg-purple-400/60 rounded-full blur-lg"></div>
+
+                        <!-- Info tag contestuale all'interno del riquadro mappa -->
+                        <div
+                            class="absolute bottom-4 left-4 z-10 bg-black/75 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-white">
+                                {{ selectedLabMapData.name || 'Bind' }} — Hot Spot A-Lamps
+                            </p>
+                            <span class="text-[9px] font-bold text-gray-500 uppercase tracking-tight">
+                                Massima densità di contatti a fuoco iniziali
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLONNA DESTRA: ANATOMIA ACCURACY & LIVE AI FEED -->
+            <div class="lg:col-span-1 space-y-8">
+
+                <!-- STATISTICHE DI PRECISIONE TESTA/CORPO/GAMBE -->
+                <div
+                    class="bg-gradient-to-b from-zinc-950 to-black border border-white/5 rounded-3xl p-6 relative group hover:border-rose-500/20 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
+                            <h3
+                                class="text-sm font-mono tracking-widest text-gray-300 uppercase flex items-center gap-2">
+                                <i class="pi pi-target text-rose-500"></i>
+                                Ballistic Anatomy
+                            </h3>
+                            <span
+                                class="text-[9px] font-mono text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20 uppercase tracking-widest">
+                                VECTOR_SCAN
+                            </span>
+                        </div>
+
+                        <!-- Box Grafico + Dati -->
+                        <div class="grid grid-cols-2 gap-4 items-center mb-6">
+                            <div class="h-[140px] flex items-center justify-center">
+                                <p-chart *ngIf="accuracyChartData" type="doughnut" [data]="accuracyChartData"
+                                    [options]="accuracyChartOptions" class="w-full h-full"></p-chart>
+                            </div>
+
+                            <!-- Valori Percentuali Reali collegati alle proprietà aggregate -->
+                            <div class="space-y-3 font-mono">
+                                <div class="border-l-2 border-indigo-500 pl-2">
+                                    <span class="text-[9px] text-gray-500 uppercase block">Headshot</span>
+                                    <span class="text-xl font-black text-white italic">{{ accuracyStats.head }}%</span>
+                                </div>
+                                <div class="border-l-2 border-amber-500 pl-2">
+                                    <span class="text-[9px] text-gray-500 uppercase block">Bodyshot</span>
+                                    <span class="text-xl font-black text-white italic">{{ accuracyStats.body }}%</span>
+                                </div>
+                                <div class="border-l-2 border-rose-500 pl-2">
+                                    <span class="text-[9px] text-gray-500 uppercase block">Legshot</span>
+                                    <span class="text-xl font-black text-white italic">{{ accuracyStats.leg }}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Widget dell'Arma Più Utilizzata -->
+                    <div
+                        class="bg-white/[0.02] rounded-xl p-3 border border-white/5 flex items-center justify-between text-xs font-mono">
+                        <div>
+                            <span class="text-[8px] text-gray-500 block uppercase tracking-wider">Primary Choice</span>
+                            <span class="font-bold text-gray-300">Vandal</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[8px] text-gray-500 block uppercase tracking-wider">Avg Kill Time</span>
+                            <span class="font-bold text-emerald-400">240ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AFFINITY MATRIX -->
+                <div
+                    class="bg-white/[0.02] border border-white/5 p-6 rounded-3xl group hover:border-purple-500/20 transition-all duration-300">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-mono tracking-widest text-gray-300 uppercase">Role Affinity Matrix</h3>
+                        <span class="font-mono text-[10px] text-gray-500">// RADAR_SCAN</span>
+                    </div>
+
+                    <div class="flex flex-col gap-4 items-center">
+                        <div class="p-2 bg-black/20 rounded-2xl w-full flex justify-center items-center">
+                            <p-chart *ngIf="radarData" type="radar" [data]="radarData" [options]="radarOptions"
+                                width="180px" height="180px"></p-chart>
+                        </div>
+
+                        <div class="w-full space-y-2 text-xs">
+                            <div class="p-2.5 bg-indigo-500/5 border border-indigo-500/10 rounded-xl">
+                                <span class="font-mono text-indigo-400 uppercase block font-bold text-[11px]">
+                                    Duelist (85%)
+                                </span>
+                                <p class="text-gray-400 mt-0.5 text-[11px] leading-tight">
+                                    Tracking ad altissima predisposizione per gli ingaggi diretti iniziali.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE AI TACTICAL FEED (IL COACH OLOGRAFICO) -->
+                <div
+                    class="bg-gradient-to-b from-zinc-950 to-black border border-white/5 rounded-3xl p-6 flex flex-col justify-between relative group hover:border-rose-500/20 transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]"></div>
+                                <h3 class="text-sm font-mono tracking-widest text-gray-300 uppercase">AI_COACH_LOG</h3>
+                            </div>
+                            <span
+                                class="text-[9px] font-mono px-2 py-0.5 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded">ONLINE</span>
+                        </div>
+
+                        <div class="space-y-4 font-mono text-xs text-gray-400 leading-relaxed">
+                            <div
+                                class="p-3 bg-white/[0.02] border border-l-2 border-l-indigo-500 border-white/5 rounded-r-xl">
+                                <span class="text-indigo-400 text-[10px] block mb-1">[ANALYSIS #01]</span>
+                                <p class="typing-effect">
+                                    Rilevato pattern aggressivo asimmetrico. Stai compensando il posizionamento errato
+                                    del mirino aumentando la velocità di click.
+                                </p>
+                            </div>
+
+                            <div
+                                class="p-3 bg-rose-500/5 border border-l-2 border-l-rose-500 border-rose-500/10 rounded-r-xl">
+                                <span class="text-rose-400 text-[10px] block mb-1">[ALERT #04]</span>
+                                <p class="text-gray-300">
+                                    Alto tasso di First Blood subiti negli ultimi 3 match su <span
+                                        class="text-white font-bold">Ascent</span>. Evita l'angolo B-Main nei primi
+                                    secondi senza flash.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="w-full mt-6 py-3 bg-white/5 border border-white/10 hover:bg-indigo-600 hover:border-indigo-500 hover:text-white rounded-xl font-mono text-xs uppercase tracking-wider transition-all duration-300 shadow-md">
+                        // RUN_DIAGNOSTICS_RE-SCAN
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

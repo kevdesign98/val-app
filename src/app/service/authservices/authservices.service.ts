@@ -9,6 +9,7 @@ interface User {
   tag: string;
   region: string;
   token: string;
+  isLocalAdmin?: boolean; // Estensione dell'interfaccia originale per supportare il bypass
 }
 
 @Injectable({
@@ -36,6 +37,24 @@ export class AuthservicesService {
 
     localStorage.setItem('vlr_user', JSON.stringify(user));
     this.currentUserSubject.next(user);
+  }
+
+  /**
+   * Metodo di bypass dedicato per il testing in ambiente locale.
+   * Evita di effettuare chiamate HTTP verso API esterne quando scadute o bloccate da CORS.
+   */
+  loginAsLocalAdmin(name: string, tag: string): void {
+    const user: User = {
+      name: name,
+      tag: tag,
+      region: 'eu',
+      token: 'fake-jwt-token',
+      isLocalAdmin: true
+    };
+
+    localStorage.setItem('vlr_user', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    this.router.navigate(['/dashboard']);
   }
 
   logout() {
